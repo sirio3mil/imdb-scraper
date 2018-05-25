@@ -1,0 +1,13 @@
+{
+  "name": "sirio3mil/imdb-scraper",
+  "description": "Internet movie database's website scraper in PHP",
+  "type": "library",
+  "require": {
+    "php": ">=7.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "ImdbScraper\\": "src/"
+    }
+  }
+}
