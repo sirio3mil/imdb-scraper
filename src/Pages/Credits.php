@@ -6,7 +6,7 @@
  * Time: 15:07
  */
 
-namespace App\Libraries\Scrapers\Imdb\Pages;
+namespace ImdbScraper\Pages;
 
 
 class Credits extends Page

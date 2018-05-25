@@ -6,9 +6,9 @@
  * Time: 17:22
  */
 
-namespace App\Libraries\Scrapers\Imdb\Pages;
+namespace ImdbScraper\Pages;
 
-use App\Libraries\Scrapers\Imdb\Utils\Cleaner;
+use ImdbScraper\Utils\Cleaner;
 
 class Home extends Page
 {

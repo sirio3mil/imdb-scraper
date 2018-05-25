@@ -6,7 +6,7 @@
  * Time: 17:11
  */
 
-namespace App\Libraries\Scrapers\Imdb\Pages;
+namespace ImdbScraper\Pages;
 
 
 class ParentalGuide extends Page

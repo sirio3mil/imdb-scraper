@@ -8,7 +8,7 @@
 
 namespace Tests\Feature;
 
-use App\Libraries\Scrapers\Imdb\Pages\Home;
+use ImdbScraper\Pages\Home;
 use PHPUnit\Framework\TestCase;
 
 class MovieHomeTest extends TestCase

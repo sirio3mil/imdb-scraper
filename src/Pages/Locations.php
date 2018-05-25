@@ -6,7 +6,7 @@
  * Time: 16:52
  */
 
-namespace App\Libraries\Scrapers\Imdb\Pages;
+namespace ImdbScraper\Pages;
 
 
 class Locations extends Page

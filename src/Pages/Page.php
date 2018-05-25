@@ -6,10 +6,10 @@
  * Time: 13:28
  */
 
-namespace App\Libraries\Scrapers\Imdb\Pages;
+namespace ImdbScraper\Pages;
 
-use App\Libraries\Scrapers\Imdb\Utils\Cleaner;
-use App\Libraries\Scrapers\Imdb\Utils\Getter;
+use ImdbScraper\Utils\Cleaner;
+use ImdbScraper\Utils\Getter;
 
 class Page
 {

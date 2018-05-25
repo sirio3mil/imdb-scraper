@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Libraries\Scrapers\Imdb;
+namespace ImdbScraper;
 
-use App\Libraries\Scrapers\Imdb\Pages\Home;
-use App\Libraries\Scrapers\Imdb\Pages\Credits;
-use App\Libraries\Scrapers\Imdb\Pages\EpisodesList;
-use App\Libraries\Scrapers\Imdb\Pages\Keywords;
-use App\Libraries\Scrapers\Imdb\Pages\Locations;
-use App\Libraries\Scrapers\Imdb\Pages\ParentalGuide;
-use App\Libraries\Scrapers\Imdb\Pages\ReleaseInfo;
+use ImdbScraper\Pages\Home;
+use ImdbScraper\Pages\Credits;
+use ImdbScraper\Pages\EpisodesList;
+use ImdbScraper\Pages\Keywords;
+use ImdbScraper\Pages\Locations;
+use ImdbScraper\Pages\ParentalGuide;
+use ImdbScraper\Pages\ReleaseInfo;
 
 class Main
 {

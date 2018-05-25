@@ -6,7 +6,7 @@
  * Time: 15:40
  */
 
-namespace App\Libraries\Scrapers\Imdb\Pages;
+namespace ImdbScraper\Pages;
 
 
 class EpisodesList extends Page
