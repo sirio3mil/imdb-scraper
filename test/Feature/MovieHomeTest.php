@@ -65,7 +65,7 @@ class MovieHomeTest extends TestCase
 
     public function testGetRecommendations()
     {
-        $this->assertArraySubset(['6791096'], $this->imdbScrapper->getRecommendations());
+        $this->assertContains('6791096', $this->imdbScrapper->getRecommendations());
     }
 
     public function testGetCountries()
