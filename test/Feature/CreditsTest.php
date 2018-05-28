@@ -41,12 +41,7 @@ class CreditsTest extends TestCase
 
     public function testGetDirectors()
     {
-        $directors = $this->imdbScrapper->getDirectors();
-        $ids = [];
-        /** @var People $director */
-        foreach ($directors as $director){
-            $ids[] = $director->getImdbNumber();
-        }
-        $this->assertContains(2657, $ids);
+        $director = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
+        $this->assertEquals([$director], $this->imdbScrapper->getDirectors());
     }
 }
