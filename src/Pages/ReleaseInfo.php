@@ -8,7 +8,7 @@
 
 namespace ImdbScraper\Pages;
 
-use ImdbScraper\Objects\Release;
+use ImdbScraper\Model\Release;
 
 
 class ReleaseInfo extends Page

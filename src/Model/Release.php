@@ -6,7 +6,7 @@
  * Time: 16:24
  */
 
-namespace ImdbScraper\Objects;
+namespace ImdbScraper\Model;
 
 
 class Release
