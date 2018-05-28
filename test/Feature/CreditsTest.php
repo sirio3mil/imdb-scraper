@@ -31,13 +31,23 @@ class CreditsTest extends TestCase
 
     public function testGetWriters()
     {
-
+        $writers = $this->imdbScrapper->getWriters();
+        $ids = [];
+        /** @var People $writer */
+        foreach ($writers as $writer){
+            $ids[] = $writer->getImdbNumber();
+        }
+        $this->assertContains(425138, $ids);
     }
 
     public function testGetDirectors()
     {
-        /** @var People $people */
-        $people = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
-        $this->assertEquals([$people], $this->imdbScrapper->getDirectors());
+        $directors = $this->imdbScrapper->getDirectors();
+        $ids = [];
+        /** @var People $director */
+        foreach ($directors as $director){
+            $ids[] = $director->getImdbNumber();
+        }
+        $this->assertContains(2657, $ids);
     }
 }

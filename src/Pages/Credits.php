@@ -52,14 +52,19 @@ class Credits extends Page
      * @param array $matches
      * @return People[]
      */
-    protected function getPeople(array $matches): array
+    protected function getUniquePeople(array $matches): array
     {
         /** @var People[] $peoples */
         $peoples = [];
+        $ids = [];
         if ($matches && !empty($matches[0])) {
             $keys = count($matches[0]);
-            for ($i = 0; $i < $keys; ++$i){
-                $peoples[] = (new People())->setFullName($matches[3][$i])->setImdbNumber(intval($matches[1][$i]));
+            for ($i = 0; $i < $keys; ++$i) {
+                $imdbNumber = intval($matches[1][$i]);
+                if ($imdbNumber && !in_array($imdbNumber, $ids)) {
+                    $peoples[] = (new People())->setFullName($matches[3][$i])->setImdbNumber($imdbNumber);
+                    $ids[] = $imdbNumber;
+                }
             }
         }
         return $peoples;
@@ -76,7 +81,7 @@ class Credits extends Page
             preg_match_all(static::CREDITS_PATTERN, $this->directorsContent, $matches);
         }
 
-        return $this->getPeople($matches);
+        return $this->getUniquePeople($matches);
     }
 
     public function getWriters()
@@ -85,7 +90,7 @@ class Credits extends Page
         if (!empty($this->writersContent)) {
             preg_match_all(static::CREDITS_PATTERN, $this->writersContent, $matches);
         }
-        return $matches;
+        return $this->getUniquePeople($matches);
     }
 
     public function getCast()
