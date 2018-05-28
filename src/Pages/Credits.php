@@ -9,6 +9,8 @@
 namespace ImdbScraper\Pages;
 
 
+use ImdbScraper\Model\People;
+
 class Credits extends Page
 {
 
@@ -46,13 +48,35 @@ class Credits extends Page
         return $this;
     }
 
-    public function getDirectors()
+    /**
+     * @param array $matches
+     * @return People[]
+     */
+    protected function getPeople(array $matches): array
+    {
+        /** @var People[] $peoples */
+        $peoples = [];
+        if ($matches && !empty($matches[0])) {
+            $keys = count($matches[0]);
+            for ($i = 0; $i < $keys; ++$i){
+                $peoples[] = (new People())->setFullName($matches[3][$i])->setImdbNumber(intval($matches[1][$i]));
+            }
+        }
+        return $peoples;
+    }
+
+    /**
+     * @return People[]
+     */
+    public function getDirectors(): array
     {
         $matches = [];
+
         if (!empty($this->directorsContent)) {
             preg_match_all(static::CREDITS_PATTERN, $this->directorsContent, $matches);
         }
-        return $matches;
+
+        return $this->getPeople($matches);
     }
 
     public function getWriters()
