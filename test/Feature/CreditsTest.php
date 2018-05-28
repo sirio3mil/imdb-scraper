@@ -26,7 +26,6 @@ class CreditsTest extends TestCase
 
     public function testGetCast()
     {
-
     }
 
     public function testGetWriters()

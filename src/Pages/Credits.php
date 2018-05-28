@@ -26,6 +26,42 @@ class Credits extends Page
         $this->setFolder('fullcredits');
     }
 
+    /**
+     * @param string $directorsContent
+     * @return Credits
+     */
+    public function setDirectorsContent(string $directorsContent): Credits
+    {
+        $this->directorsContent = $directorsContent;
+        return $this;
+    }
+
+    /**
+     * @param string $writersContent
+     * @return Credits
+     */
+    public function setWritersContent(string $writersContent): Credits
+    {
+        $this->writersContent = $writersContent;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirectorsContent(): ?string
+    {
+        return $this->directorsContent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWritersContent(): ?string
+    {
+        return $this->writersContent;
+    }
+
     public function setContent(?string $content): Page
     {
         parent::setContent($content);
@@ -34,14 +70,14 @@ class Credits extends Page
             $arrayTemp = explode("Directed by", $this->content);
             $arrayTemp = explode("</table>", $arrayTemp[1]);
             if (!empty($arrayTemp[0])) {
-                $this->directorsContent = $arrayTemp[0];
+                $this->setDirectorsContent($arrayTemp[0]);
             }
         }
         if (strpos($this->content, "Writing Credits") !== false) {
             $arrayTemp = explode("Writing Credits", $this->content);
             $arrayTemp = explode("</table>", $arrayTemp[1]);
             if (!empty($arrayTemp[0])) {
-                $this->writersContent = $arrayTemp[0];
+                $this->setWritersContent($arrayTemp[0]);
             }
         }
 
@@ -78,7 +114,7 @@ class Credits extends Page
         $matches = [];
 
         if (!empty($this->directorsContent)) {
-            preg_match_all(static::CREDITS_PATTERN, $this->directorsContent, $matches);
+            preg_match_all(static::CREDITS_PATTERN, $this->getDirectorsContent(), $matches);
         }
 
         return $this->getUniquePeople($matches);
@@ -88,7 +124,7 @@ class Credits extends Page
     {
         $matches = [];
         if (!empty($this->writersContent)) {
-            preg_match_all(static::CREDITS_PATTERN, $this->writersContent, $matches);
+            preg_match_all(static::CREDITS_PATTERN, $this->getWritersContent(), $matches);
         }
         return $this->getUniquePeople($matches);
     }
@@ -96,7 +132,7 @@ class Credits extends Page
     public function getCast()
     {
         $matches = [];
-        preg_match_all(static::CAST_PATTERN, $this->content_cast, $matches);
+        preg_match_all(static::CAST_PATTERN, $this->getContent(), $matches);
         return $matches;
     }
 
