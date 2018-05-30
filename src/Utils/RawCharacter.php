@@ -16,8 +16,6 @@ trait RawCharacter
 
     protected $alias;
 
-    protected $parenthesisData;
-
     protected $rawCharacter;
 
     /**
@@ -26,14 +24,6 @@ trait RawCharacter
     public function getRawCharacter(): ?string
     {
         return $this->rawCharacter;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParenthesisData(): ?array
-    {
-        return $this->parenthesisData;
     }
 
     /**
@@ -59,16 +49,6 @@ trait RawCharacter
     public function setRawCharacter(string $rawCharacter): RawCharacter
     {
         $this->rawCharacter = $rawCharacter;
-        return $this;
-    }
-
-    /**
-     * @param mixed $parenthesisData
-     * @return RawCharacter
-     */
-    public function setParenthesisData(array $parenthesisData): RawCharacter
-    {
-        $this->parenthesisData = $parenthesisData;
         return $this;
     }
 
