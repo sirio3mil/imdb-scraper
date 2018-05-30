@@ -9,6 +9,7 @@
 namespace ImdbScraper\Pages;
 
 
+use ImdbScraper\Model\CastPeople;
 use ImdbScraper\Model\People;
 
 class Credits extends Page
@@ -99,6 +100,28 @@ class Credits extends Page
                 $imdbNumber = intval($matches[1][$i]);
                 if ($imdbNumber && !in_array($imdbNumber, $ids)) {
                     $peoples[] = (new People())->setFullName($matches[3][$i])->setImdbNumber($imdbNumber);
+                    $ids[] = $imdbNumber;
+                }
+            }
+        }
+        return $peoples;
+    }
+
+    /**
+     * @param array $matches
+     * @return CastPeople[]
+     */
+    protected function getUniqueCastPeople(array $matches): array
+    {
+        /** @var People[] $peoples */
+        $peoples = [];
+        $ids = [];
+        if ($matches && !empty($matches[0])) {
+            $keys = count($matches[0]);
+            for ($i = 0; $i < $keys; ++$i) {
+                $imdbNumber = intval($matches[1][$i]);
+                if ($imdbNumber && !in_array($imdbNumber, $ids)) {
+                    $peoples[] = (new CastPeople())->setRawCharacter($matches[5][$i])->setFullName($matches[3][$i])->setImdbNumber($imdbNumber);
                     $ids[] = $imdbNumber;
                 }
             }
