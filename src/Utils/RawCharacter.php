@@ -121,123 +121,61 @@ trait RawCharacter
                             $resultado = str_replace(" ($dato)", "", $resultado);
                             $resultado = str_replace("($dato)", "", $resultado);
                         }
-                    } elseif (stripos($dato, "voice") !== false) {
-                        $resultado = str_replace(" ($dato)", " (voz)", $resultado);
-                        $resultado = str_replace("($dato)", "(voz)", $resultado);
                     }
                 }
             }
         }
     }
 
-    protected function cleanRawCharacterVoice(string $rawData)
+    protected function cleanRawCharacterVoice(string $rawData): RawCharacter
     {
-        $coincidencias = [];
-        preg_match_all('/\(([^\)]+)\)/', $rawData, $coincidencias);
-        if (!empty($coincidencias)) {
-            array_shift($coincidencias);
-            foreach ($coincidencias as $partes) {
-                foreach ($partes as $dato) {
-                    if (stripos($dato, "voice") !== false) {
-                        $resultado = str_replace(" ($dato)", " (voz)", $resultado);
-                        $resultado = str_replace("($dato)", "(voz)", $resultado);
-                    } elseif (stripos($dato, "uncredited") !== false) {
-                        $resultado = str_replace(" ($dato)", " (sin acreditar)", $resultado);
-                        $resultado = str_replace("($dato)", "(sin acreditar)", $resultado);
-                    } elseif (stripos($dato, "as ") !== false) {
-                        $resultado = str_replace("(as ", "(como ", $resultado);
-                    }
-                }
-            }
+        if (stripos($rawData, "voice") !== false) {
+            $this->replaceRawCharacter("($rawData)", "(voz)");
         }
+        return $this;
     }
 
-    protected function cleanRawCharacterUncredited(string $rawData)
+    protected function cleanRawCharacterUncredited(string $rawData): RawCharacter
     {
-        $coincidencias = [];
-        preg_match_all('/\(([^\)]+)\)/', $rawData, $coincidencias);
-        if (!empty($coincidencias)) {
-            array_shift($coincidencias);
-            foreach ($coincidencias as $partes) {
-                foreach ($partes as $dato) {
-                    if (stripos($dato, "uncredited") !== false) {
-                        $resultado = str_replace(" ($dato)", " (sin acreditar)", $resultado);
-                        $resultado = str_replace("($dato)", "(sin acreditar)", $resultado);
-                    }
-                }
-            }
+        if (stripos($rawData, "uncredited") !== false) {
+            $this->replaceRawCharacter("($rawData)", "(sin acreditar)");
         }
+        return $this;
     }
 
-    protected function cleanRawCharacterArchiveFootage(string $rawData)
+    protected function cleanRawCharacterArchiveFootage(string $rawData): RawCharacter
     {
-        $coincidencias = [];
-        preg_match_all('/\(([^\)]+)\)/', $rawData, $coincidencias);
-        if (!empty($coincidencias)) {
-            array_shift($coincidencias);
-            foreach ($coincidencias as $partes) {
-                foreach ($partes as $dato) {
-                    if (stripos($dato, "archive footage") !== false) {
-                        $resultado = str_replace(" ($dato)", " (tomas de archivo)", $resultado);
-                        $resultado = str_replace("($dato)", "(tomas de archivo)", $resultado);
-                    }
-                }
-            }
+        if (stripos($rawData, "archive footage") !== false) {
+            $this->replaceRawCharacter("($rawData)", "(tomas de archivo)");
         }
+        return $this;
     }
 
-    protected function cleanRawCharacterUnconfirmed(string $rawData)
+    protected function cleanRawCharacterUnconfirmed(string $rawData): RawCharacter
     {
-        $coincidencias = [];
-        preg_match_all('/\(([^\)]+)\)/', $rawData, $coincidencias);
-        if (!empty($coincidencias)) {
-            array_shift($coincidencias);
-            foreach ($coincidencias as $partes) {
-                foreach ($partes as $dato) {
-                    if (stripos($dato, "unconfirmed") !== false) {
-                        $resultado = str_replace(" ($dato)", " (sin confirmar)", $resultado);
-                        $resultado = str_replace("($dato)", "(sin confirmar)", $resultado);
-                    }
-                }
-            }
+        if (stripos($rawData, "unconfirmed") !== false) {
+            $this->replaceRawCharacter("($rawData)", "(sin confirmar)");
         }
+        return $this;
     }
 
-    protected function cleanRawCharacterCredited(string $rawData)
+    protected function cleanRawCharacterCredited(string $rawData): RawCharacter
     {
-        $coincidencias = [];
-        preg_match_all('/\(([^\)]+)\)/', $rawData, $coincidencias);
-        if (!empty($coincidencias)) {
-            array_shift($coincidencias);
-            foreach ($coincidencias as $partes) {
-                foreach ($partes as $dato) {
-                    if (stripos($dato, "credited") !== false) {
-                        $resultado = str_replace(" ($dato)", "", $resultado);
-                        $resultado = str_replace("($dato)", "", $resultado);
-                    }
-                }
-            }
+        if (stripos($rawData, "credited") !== false) {
+            $this->replaceRawCharacter("($rawData)", "");
         }
+        return $this;
     }
 
-    protected function cleanRawCharacterScenesDeleted(string $rawData)
+    protected function cleanRawCharacterScenesDeleted(string $rawData): RawCharacter
     {
-        $coincidencias = [];
-        preg_match_all('/\(([^\)]+)\)/', $rawData, $coincidencias);
-        if (!empty($coincidencias)) {
-            array_shift($coincidencias);
-            foreach ($coincidencias as $partes) {
-                foreach ($partes as $dato) {
-                    if (stripos($dato, "scenes deleted") !== false) {
-                        $resultado = str_replace(" ($dato)", " (escenas eliminadas)", $resultado);
-                        $resultado = str_replace("($dato)", "(escenas eliminadas)", $resultado);
-                    }
-                }
-            }
+        if (stripos($rawData, "scenes deleted") !== false) {
+            $this->replaceRawCharacter("($rawData)", "(escenas eliminadas)");
         }
+        return $this;
     }
 
-    protected function cleanRawCharacterSelf(string $rawData)
+    protected function cleanRawCharacterSelf(): RawCharacter
     {
         $replacements = [
             'Herself' => 'ella misma',
@@ -246,19 +184,23 @@ trait RawCharacter
             '(at '    => '(en'
         ];
         foreach ($replacements as $target => $replacement) {
-            $rawData = str_ireplace($target, $replacement, $rawData);
+            $this->replaceRawCharacter($target, $replacement);
         }
-        return $rawData;
+        return $this;
     }
 
-    public function cleanRawAlias(string $rawData)
+    public function cleanRawAlias(string $rawData): RawCharacter
     {
-                    if (stripos($rawData, "as ") === 0) {
-                        $resultado = str_replace(" ($dato)", "", $this->getRawCharacter());
-                        $resultado = str_replace("($dato)", "", $resultado);
-                        $nombre = trim(str_replace("como ", "", $dato));
-                        break;
-                    }
+        if (stripos($rawData, "as ") === 0) {
+            $this->replaceRawCharacter("($rawData)", "");
+            $this->setAlias(trim(str_replace("as ", "", $rawData)));
+        }
+        return $this;
+    }
+
+    public function replaceRawCharacter(string $target, string $replacement): RawCharacter
+    {
+        return $this->setRawCharacter(str_ireplace($target, $replacement, $this->getRawCharacter()));
     }
 
     /**
@@ -293,12 +235,8 @@ trait RawCharacter
                     if (stripos($data, 'scenes deleted') !== false) {
                         $this->cleanRawCharacterScenesDeleted($data);
                     }
-                    if (stripos($data, 'himself') !== false || stripos($data, 'herself') !== false) {
-                        $this->cleanRawCharacterSelf($data);
-                    }
-                    if (stripos($data, 'as ') !== false) {
-                        $this->cleanRawAlias($data);
-                    }
+                    $this->cleanRawCharacterSelf();
+                    $this->cleanRawAlias($data);
                 }
             }
         }
