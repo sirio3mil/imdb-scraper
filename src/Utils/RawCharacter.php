@@ -18,6 +18,16 @@ trait RawCharacter
 
     protected $rawCharacter;
 
+    protected $isRawCharacterCleaned;
+
+    /**
+     * @return bool
+     */
+    public function getIsRawCharacterCleaned(): ?bool
+    {
+        return $this->isRawCharacterCleaned;
+    }
+
     /**
      * @return string
      */
@@ -31,6 +41,9 @@ trait RawCharacter
      */
     public function getCharacter(): ?string
     {
+        if (!$this->getIsRawCharacterCleaned()) {
+            $this->cleanRawCharacter();
+        }
         return $this->character;
     }
 
@@ -39,7 +52,20 @@ trait RawCharacter
      */
     public function getAlias(): ?string
     {
+        if (!$this->getIsRawCharacterCleaned()) {
+            $this->cleanRawCharacter();
+        }
         return $this->alias;
+    }
+
+    /**
+     * @param bool $isRawCharacterCleaned
+     * @return RawCharacter
+     */
+    public function setIsRawCharacterCleaned(bool $isRawCharacterCleaned): RawCharacter
+    {
+        $this->isRawCharacterCleaned = $isRawCharacterCleaned;
+        return $this;
     }
 
     /**
@@ -219,6 +245,7 @@ trait RawCharacter
      */
     protected function cleanRawCharacter(): RawCharacter
     {
+        $this->setIsRawCharacterCleaned(true);
         $this->replaceAdditionalTexts();
         $matches = [];
         preg_match_all('/\(([^\)]+)\)/', $this->getRawCharacter(), $matches);
