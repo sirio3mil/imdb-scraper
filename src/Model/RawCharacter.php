@@ -83,6 +83,7 @@ trait RawCharacter
                 }
             }
         }
+        $this->setCharacter($this->getRawCharacter());
         return $this;
     }
 
@@ -110,7 +111,7 @@ trait RawCharacter
      */
     protected function replaceInRawCharacter(string $target, string $replacement): CastPeople
     {
-        return $this->setRawCharacter(str_ireplace($target, $replacement, $this->getRawCharacter()));
+        return $this->setRawCharacter(trim(str_ireplace($target, $replacement, $this->getRawCharacter())));
     }
 
     /**

@@ -29,19 +29,26 @@ class CreditsTest extends TestCase
 
     public function testGetCast()
     {
-        $found = false;
+        $found = 0;
         /** @var CastPeopleList $cast */
         $cast = $this->imdbScrapper->getCast();
         /** @var CastPeople $actor */
         foreach ($cast as $actor) {
-            if ($actor->getImdbNumber() === 8569954) {
-                $found = true;
-                $this->assertEquals('Nina Cuso', $actor->getFullName());
-                $this->assertEquals('Vogue Editor', $actor->getCharacter());
-                $this->assertEquals('Christina Mancuso', $actor->getAlias());
+            switch ($actor->getImdbNumber()) {
+                case 8551937:
+                    ++$found;
+                    $this->assertEquals('Courtney Gonzalez', $actor->getFullName());
+                    $this->assertEquals('Bergdorf Patron (sin acreditar)', $actor->getCharacter());
+                    break;
+                case 8569954:
+                    ++$found;
+                    $this->assertEquals('Nina Cuso', $actor->getFullName());
+                    $this->assertEquals('Vogue Editor', $actor->getCharacter());
+                    $this->assertEquals('Christina Mancuso', $actor->getAlias());
+                    break;
             }
         }
-        $this->assertEquals(true, $found);
+        $this->assertEquals(2, $found);
     }
 
     public function testGetWriters()
