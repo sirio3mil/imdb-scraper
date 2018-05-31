@@ -208,8 +208,8 @@ trait RawCharacter
         $replacements = [
             'Herself' => 'ella misma',
             'Himself' => 'él mismo',
-            ' at '    => ' en ',
-            '(at '    => '(en'
+            ' at ' => ' en ',
+            '(at ' => '(en'
         ];
         foreach ($replacements as $target => $replacement) {
             $this->replaceInRawCharacter($target, $replacement);
@@ -245,8 +245,9 @@ trait RawCharacter
      */
     protected function cleanRawCharacter(): RawCharacter
     {
-        $this->setIsRawCharacterCleaned(true);
-        $this->replaceAdditionalTexts();
+        $this->setIsRawCharacterCleaned(true)
+            ->setRawCharacter(trim(strip_tags($this->getRawCharacter())))
+            ->replaceAdditionalTexts();
         $matches = [];
         preg_match_all('/\(([^\)]+)\)/', $this->getRawCharacter(), $matches);
         if ($matches) {
