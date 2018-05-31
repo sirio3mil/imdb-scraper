@@ -9,6 +9,7 @@
 namespace Tests\Feature;
 
 use ImdbScraper\Model\People;
+use ImdbScraper\Model\PeopleList;
 use ImdbScraper\Pages\Credits;
 use PHPUnit\Framework\TestCase;
 
@@ -33,7 +34,7 @@ class CreditsTest extends TestCase
         $writers = $this->imdbScrapper->getWriters();
         $ids = [];
         /** @var People $writer */
-        foreach ($writers as $writer){
+        foreach ($writers as $writer) {
             $ids[] = $writer->getImdbNumber();
         }
         $this->assertContains(425138, $ids);
@@ -42,6 +43,6 @@ class CreditsTest extends TestCase
     public function testGetDirectors()
     {
         $director = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
-        $this->assertEquals([$director], $this->imdbScrapper->getDirectors());
+        $this->assertEquals(new PeopleList([$director]), $this->imdbScrapper->getDirectors());
     }
 }

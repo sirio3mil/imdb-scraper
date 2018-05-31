@@ -11,9 +11,9 @@ namespace ImdbScraper\Model;
 
 class CastPeopleList extends PeopleList
 {
-    public function __construct()
+    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
     {
-        parent::__construct();
-        $this->className = 'CastPeople';
+        parent::__construct($input, $flags, $iterator_class);
+        $this->className = 'ImdbScraper\Model\CastPeople';
     }
 }

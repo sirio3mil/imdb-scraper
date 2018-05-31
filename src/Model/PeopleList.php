@@ -8,16 +8,15 @@
 
 namespace ImdbScraper\Model;
 
-
 class PeopleList extends \ArrayObject
 {
 
     protected $className;
 
-    public function __construct()
+    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
     {
-        parent::__construct();
-        $this->className = 'People';
+        parent::__construct($input, $flags, $iterator_class);
+        $this->className = 'ImdbScraper\Model\People';
     }
 
     /**
