@@ -10,7 +10,9 @@ namespace ImdbScraper\Pages;
 
 
 use ImdbScraper\Model\CastPeople;
+use ImdbScraper\Model\CastPeopleList;
 use ImdbScraper\Model\People;
+use ImdbScraper\Model\PeopleList;
 
 class Credits extends Page
 {
@@ -25,42 +27,6 @@ class Credits extends Page
     public function __construct()
     {
         $this->setFolder('fullcredits');
-    }
-
-    /**
-     * @param string $directorsContent
-     * @return Credits
-     */
-    public function setDirectorsContent(string $directorsContent): Credits
-    {
-        $this->directorsContent = $directorsContent;
-        return $this;
-    }
-
-    /**
-     * @param string $writersContent
-     * @return Credits
-     */
-    public function setWritersContent(string $writersContent): Credits
-    {
-        $this->writersContent = $writersContent;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDirectorsContent(): ?string
-    {
-        return $this->directorsContent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getWritersContent(): ?string
-    {
-        return $this->writersContent;
     }
 
     public function setContent(?string $content): Page
@@ -86,53 +52,9 @@ class Credits extends Page
     }
 
     /**
-     * @param array $matches
-     * @return People[]
+     * @return PeopleList
      */
-    protected function getUniquePeople(array $matches): array
-    {
-        /** @var People[] $peoples */
-        $peoples = [];
-        $ids = [];
-        if ($matches && !empty($matches[0])) {
-            $keys = count($matches[0]);
-            for ($i = 0; $i < $keys; ++$i) {
-                $imdbNumber = intval($matches[1][$i]);
-                if ($imdbNumber && !in_array($imdbNumber, $ids)) {
-                    $peoples[] = (new People())->setFullName($matches[3][$i])->setImdbNumber($imdbNumber);
-                    $ids[] = $imdbNumber;
-                }
-            }
-        }
-        return $peoples;
-    }
-
-    /**
-     * @param array $matches
-     * @return CastPeople[]
-     */
-    protected function getUniqueCastPeople(array $matches): array
-    {
-        /** @var People[] $peoples */
-        $peoples = [];
-        $ids = [];
-        if ($matches && !empty($matches[0])) {
-            $keys = count($matches[0]);
-            for ($i = 0; $i < $keys; ++$i) {
-                $imdbNumber = intval($matches[1][$i]);
-                if ($imdbNumber && !in_array($imdbNumber, $ids)) {
-                    $peoples[] = (new CastPeople())->setRawCharacter($matches[5][$i])->setFullName($matches[3][$i])->setImdbNumber($imdbNumber);
-                    $ids[] = $imdbNumber;
-                }
-            }
-        }
-        return $peoples;
-    }
-
-    /**
-     * @return People[]
-     */
-    public function getDirectors(): array
+    public function getDirectors(): PeopleList
     {
         $matches = [];
 
@@ -143,7 +65,37 @@ class Credits extends Page
         return $this->getUniquePeople($matches);
     }
 
-    public function getWriters()
+    /**
+     * @return string
+     */
+    public function getDirectorsContent(): ?string
+    {
+        return $this->directorsContent;
+    }
+
+    /**
+     * @param string $directorsContent
+     * @return Credits
+     */
+    public function setDirectorsContent(string $directorsContent): Credits
+    {
+        $this->directorsContent = $directorsContent;
+        return $this;
+    }
+
+    /**
+     * @param array $matches
+     * @return PeopleList
+     */
+    protected function getUniquePeople(array $matches): PeopleList
+    {
+        return (new PeopleList())->appendAll($matches);
+    }
+
+    /**
+     * @return PeopleList
+     */
+    public function getWriters(): PeopleList
     {
         $matches = [];
         if (!empty($this->writersContent)) {
@@ -152,11 +104,41 @@ class Credits extends Page
         return $this->getUniquePeople($matches);
     }
 
-    public function getCast()
+    /**
+     * @return string
+     */
+    public function getWritersContent(): ?string
+    {
+        return $this->writersContent;
+    }
+
+    /**
+     * @param string $writersContent
+     * @return Credits
+     */
+    public function setWritersContent(string $writersContent): Credits
+    {
+        $this->writersContent = $writersContent;
+        return $this;
+    }
+
+    /**
+     * @return CastPeopleList
+     */
+    public function getCast(): CastPeopleList
     {
         $matches = [];
         preg_match_all(static::CAST_PATTERN, $this->getContent(), $matches);
-        return $matches;
+        return $this->getUniqueCastPeople($matches);
+    }
+
+    /**
+     * @param array $matches
+     * @return CastPeopleList
+     */
+    protected function getUniqueCastPeople(array $matches): CastPeopleList
+    {
+        return (new CastPeopleList())->appendAll($matches);
     }
 
 }

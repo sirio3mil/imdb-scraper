@@ -14,4 +14,16 @@ use ImdbScraper\Utils\RawCharacter;
 class CastPeople extends People
 {
     use RawCharacter;
+
+    /**
+     * @param array $rawData
+     * @param int $position
+     * @return RegexMatchRawData
+     */
+    public function importData(array $rawData, int $position): RegexMatchRawData
+    {
+        return $this->setRawCharacter($rawData[5][$position])
+            ->setFullName($rawData[3][$position])
+            ->setImdbNumber(intval($rawData[1][$position]));
+    }
 }

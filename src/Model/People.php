@@ -9,12 +9,20 @@
 namespace ImdbScraper\Model;
 
 
-class People
+class People implements RegexMatchRawData
 {
 
     protected $fullName;
 
     protected $imdbNumber;
+
+    /**
+     * @return mixed
+     */
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
 
     /**
      * @param string $fullName
@@ -24,6 +32,14 @@ class People
     {
         $this->fullName = $fullName;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getImdbNumber(): ?int
+    {
+        return $this->imdbNumber;
     }
 
     /**
@@ -37,19 +53,13 @@ class People
     }
 
     /**
-     * @return mixed
+     * @param array $rawData
+     * @param int $position
+     * @return RegexMatchRawData
      */
-    public function getFullName(): ?string
+    public function importData(array $rawData, int $position): RegexMatchRawData
     {
-        return $this->fullName;
+        return $this->setFullName($rawData[3][$position])
+            ->setImdbNumber(intval($rawData[1][$position]));
     }
-
-    /**
-     * @return int
-     */
-    public function getImdbNumber(): ?int
-    {
-        return $this->imdbNumber;
-    }
-
 }
