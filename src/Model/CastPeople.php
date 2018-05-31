@@ -8,9 +8,6 @@
 
 namespace ImdbScraper\Model;
 
-
-use ImdbScraper\Utils\RawCharacter;
-
 class CastPeople extends People
 {
     use RawCharacter;

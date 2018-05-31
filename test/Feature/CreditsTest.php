@@ -8,6 +8,8 @@
 
 namespace Tests\Feature;
 
+use ImdbScraper\Model\CastPeople;
+use ImdbScraper\Model\CastPeopleList;
 use ImdbScraper\Model\People;
 use ImdbScraper\Model\PeopleList;
 use ImdbScraper\Pages\Credits;
@@ -27,10 +29,24 @@ class CreditsTest extends TestCase
 
     public function testGetCast()
     {
+        $found = false;
+        /** @var CastPeopleList $cast */
+        $cast = $this->imdbScrapper->getCast();
+        /** @var CastPeople $actor */
+        foreach ($cast as $actor) {
+            if ($actor->getImdbNumber() === 8569954) {
+                $found = true;
+                $this->assertEquals('Nina Cuso', $actor->getFullName());
+                $this->assertEquals('Vogue Editor', $actor->getCharacter());
+                $this->assertEquals('Christina Mancuso', $actor->getAlias());
+            }
+        }
+        $this->assertEquals(true, $found);
     }
 
     public function testGetWriters()
     {
+        /** @var PeopleList $writers */
         $writers = $this->imdbScrapper->getWriters();
         $ids = [];
         /** @var People $writer */
@@ -42,6 +58,7 @@ class CreditsTest extends TestCase
 
     public function testGetDirectors()
     {
+        /** @var People $director */
         $director = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
         $this->assertEquals(new PeopleList([$director]), $this->imdbScrapper->getDirectors());
     }
