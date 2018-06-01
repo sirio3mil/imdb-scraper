@@ -9,6 +9,8 @@
 namespace ImdbScraper\Model;
 
 
+use ImdbScraper\Mapper\Country;
+
 class AlsoKnownAs implements RegexMatchRawData
 {
     /** @var string */
@@ -19,9 +21,6 @@ class AlsoKnownAs implements RegexMatchRawData
 
     /** @var string */
     protected $description;
-    
-    /** @var string */
-    protected $language;
 
     /**
      * @return string
@@ -62,24 +61,6 @@ class AlsoKnownAs implements RegexMatchRawData
     /**
      * @return string
      */
-    public function getLanguage(): string
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param string $language
-     * @return AlsoKnownAs
-     */
-    public function setLanguage(string $language): AlsoKnownAs
-    {
-        $this->language = $language;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
@@ -112,7 +93,20 @@ class AlsoKnownAs implements RegexMatchRawData
      */
     protected function splitCountry(string $rawData): AlsoKnownAs
     {
-        
-        return $this;
+        $rawData = trim($rawData);
+        if (empty($rawData)) {
+            return $this;
+        }
+        $countryName = $rawData;
+        $description = null;
+        if (strpos($rawData, '(') !== false) {
+            $parts = explode("(", str_replace(")", "", $rawData));
+            $countryName = trim($parts[0]);
+            $description = trim($parts[1]);
+        }
+        $this->setCountry(Country::getMappedValue($countryName));
+        if ($description) {
+            $this->setDescription($description);
+        }
     }
 }
