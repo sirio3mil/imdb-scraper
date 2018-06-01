@@ -37,7 +37,7 @@ class Page
 
     public function getContent(): string
     {
-        return $this->content || '';
+        return $this->content ? $this->content : '';
     }
 
     public function setContent(?string $content): Page
