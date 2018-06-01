@@ -32,13 +32,45 @@ class Home extends Page
 
     protected const SEASON_SPLITTER = '<h4 class="float-left">Seasons</h4>';
 
+    /** @var int */
     protected $season;
+    
+    /** @var int */
+    protected $seasons;
+    
+    /** @var int */
     protected $episode;
+    
+    /** @var string */
     protected $title;
 
+    /** @var bool */
     protected $episodeFlag;
+    
+    /** @var bool */
     protected $tvShow;
 
+    /**
+     * @return int
+     */
+    public function getSeasons(): int
+    {
+        return $this->seasons;
+    }
+
+    /**
+     * @param int $seasons
+     * @return Page
+     */
+    public function setSeasons(int $seasons): Page
+    {
+        $this->seasons = $seasons;
+        return $this;
+    }
+    
+    /**
+     * @return bool
+     */
     public function isTvShow(): bool
     {
         if($this->tvShow === null){
@@ -47,34 +79,23 @@ class Home extends Page
         return $this->tvShow;
     }
 
-    public function isEpisode(): bool
+    /**
+     * @return int|null
+     */
+    public function getTvShow(): ?int
     {
-        if($this->episodeFlag === null){
-            $this->setTvShowFlags();
+        if ($this->isEpisode()) {
+            preg_match_all(static::TV_SHOW_PATTERN, $this->content, $matches);
+            if(!empty($matches[1][0])){
+                return (int)($matches[1][0]);
+            }
         }
-        return $this->episodeFlag;
+        return null;
     }
 
-    public function setContent(?string $content): Page
-    {
-        parent::setContent($content);
-        if (!$this->content) {
-            throw new \Exception("Error fetching content from $this->url");
-        }
-        return $this;
-    }
-
-    public function haveReleaseInfo(): bool
-    {
-        if (strpos($this->content, "Also Known As:") === false) {
-            return false;
-        }
-        if (strpos($this->content, "Release Date:") === false) {
-            return false;
-        }
-        return true;
-    }
-
+    /**
+     * @return Home
+     */
     public function setTvShowFlags(): Home
     {
         $this->episodeFlag = false;
@@ -94,6 +115,61 @@ class Home extends Page
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEpisode(): bool
+    {
+        if($this->episodeFlag === null){
+            $this->setTvShowFlags();
+        }
+        return $this->episodeFlag;
+    }
+
+    /**
+     * @param null|string $content
+     * @return Page
+     * @throws \Exception
+     */
+    public function setContent(?string $content): Page
+    {
+        parent::setContent($content);
+        if (!$this->content) {
+            throw new \Exception("Error fetching content from " . $this->getFullUrl());
+        }
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function haveReleaseInfo(): bool
+    {
+        if (strpos($this->content, "Also Known As:") === false) {
+            return false;
+        }
+        if (strpos($this->content, "Release Date:") === false) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return null|string
+     * @throws \Exception
+     */
+    public function getTitle(): ?string
+    {
+        if(is_null($this->title)){
+            $this->setTitle();
+        }
+        return $this->title;
+    }
+
+    /**
+     * @return Home
+     * @throws \Exception
+     */
     public function setTitle(): Home
     {
         $matches = [];
@@ -122,25 +198,9 @@ class Home extends Page
         return $this;
     }
 
-    public function getTitle(): ?string
-    {
-        if(is_null($this->title)){
-            $this->setTitle();
-        }
-        return $this->title;
-    }
-
-    public function getTvShow(): ?int
-    {
-        if ($this->isEpisode()) {
-            preg_match_all(static::TV_SHOW_PATTERN, $this->content, $matches);
-            if(!empty($matches[1][0])){
-                return (int)($matches[1][0]);
-            }
-        }
-        return null;
-    }
-
+    /**
+     * @return int|null
+     */
     public function getYear(): ?int
     {
         preg_match_all(static::YEAR_PATTERN, $this->content, $matches);
@@ -150,12 +210,18 @@ class Home extends Page
         return null;
     }
 
+    /**
+     * @return int|null
+     */
     public function getDuration(): ?int
     {
         preg_match_all(static::DURATION_PATTERN, $this->content, $matches);
         return (!empty($matches[1][0])) ? (int)trim($matches[1][0]) : null;
     }
 
+    /**
+     * @return int
+     */
     public function getScore(): int
     {
         $matches = array();
@@ -166,6 +232,9 @@ class Home extends Page
         return intval(filter_var($matches[1][0], FILTER_SANITIZE_NUMBER_INT)) / 20;
     }
 
+    /**
+     * @return int
+     */
     public function getVotes(): int
     {
         $matches = array();
@@ -176,6 +245,9 @@ class Home extends Page
         return intval(filter_var($matches[1][0], FILTER_SANITIZE_NUMBER_INT));
     }
 
+    /**
+     * @return null|string
+     */
     public function getColor(): ?string
     {
         $matches = array();
@@ -183,6 +255,9 @@ class Home extends Page
         return (!empty($matches[2][0])) ? Cleaner::clearField(strip_tags($matches[2][0])) : null;
     }
 
+    /**
+     * @return array
+     */
     public function getSounds(): array
     {
         $sounds = [];
@@ -196,6 +271,9 @@ class Home extends Page
         return $sounds;
     }
 
+    /**
+     * @return array
+     */
     public function getRecommendations(): array
     {
         $recommended = [];
@@ -209,6 +287,9 @@ class Home extends Page
         return $recommended;
     }
 
+    /**
+     * @return array
+     */
     public function getCountries(): array
     {
         $countries = [];
@@ -222,6 +303,9 @@ class Home extends Page
         return array_unique($countries);
     }
 
+    /**
+     * @return array
+     */
     public function getLanguages(): array
     {
         $languages = [];
@@ -235,6 +319,9 @@ class Home extends Page
         return array_unique($languages);
     }
 
+    /**
+     * @return array
+     */
     public function getGenres(): array
     {
         $genres = [];
@@ -250,6 +337,9 @@ class Home extends Page
         return array_unique($genres);
     }
 
+    /**
+     * @return Home
+     */
     public function setSeasonData(): Home
     {
         if ($this->isEpisode()) {
@@ -258,24 +348,9 @@ class Home extends Page
         return $this;
     }
 
-    protected function setSeasonNumber(): Home
-    {
-        $matches = [];
-        preg_match_all(static::SEASON_PATTERN, $this->content, $matches);
-        if (!empty($matches[1][0]) && is_numeric($matches[1][0])) {
-            $this->season = (int)($matches[1][0]);
-        }
-        return $this;
-    }
-
-    public function getSeasonNumber(): ?int
-    {
-        if ($this->isEpisode() && is_null($this->season)) {
-            $this->setSeasonNumber();
-        }
-        return $this->season;
-    }
-
+    /**
+     * @return Home
+     */
     protected function setEpisodeNumber(): Home
     {
         $matches = [];
@@ -286,6 +361,33 @@ class Home extends Page
         return $this;
     }
 
+    /**
+     * @return Home
+     */
+    protected function setSeasonNumber(): Home
+    {
+        $matches = [];
+        preg_match_all(static::SEASON_PATTERN, $this->content, $matches);
+        if (!empty($matches[1][0]) && is_numeric($matches[1][0])) {
+            $this->season = (int)($matches[1][0]);
+        }
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getSeasonNumber(): ?int
+    {
+        if ($this->isEpisode() && is_null($this->season)) {
+            $this->setSeasonNumber();
+        }
+        return $this->season;
+    }
+
+    /**
+     * @return int|null
+     */
     public function getEpisodeNumber(): ?int
     {
         if ($this->isEpisode() && is_null($this->episode)) {

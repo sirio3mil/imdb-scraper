@@ -4,7 +4,6 @@ namespace ImdbScraper;
 
 use ImdbScraper\Pages\Home;
 use ImdbScraper\Pages\Credits;
-use ImdbScraper\Pages\Episodes;
 use ImdbScraper\Pages\Keywords;
 use ImdbScraper\Pages\Locations;
 use ImdbScraper\Pages\ParentalGuide;
@@ -13,21 +12,25 @@ use ImdbScraper\Pages\ReleaseInfo;
 class Main
 {
 
+    /** @var int */
     protected $imdbNumber;
 
-    /** @var Pages\Home $homePage */
+    /** @var Home */
     protected $homePage;
-    /** @var Pages\ReleaseInfo $releaseInfo */
+
+    /** @var ReleaseInfo */
     protected $releaseInfo;
-    /** @var Pages\Credits $credits */
+
+    /** @var Credits */
     protected $credits;
-    /** @var Pages\Episodes $episodesList */
-    protected $episodesList;
-    /** @var Pages\Locations $locations */
+
+    /** @var Locations */
     protected $locations;
-    /** @var Pages\Keywords $keywords */
+
+    /** @var Keywords */
     protected $keywords;
-    /** @var Pages\ParentalGuide $parentalGuide */
+
+    /** @var ParentalGuide */
     protected $parentalGuide;
 
     public function __construct(int $imdbNumber)
@@ -43,7 +46,6 @@ class Main
             ->setImdbNumber()
             ->setReleaseInfo()
             ->setCredits()
-            ->setEpisodesList()
             ->setLocations();
     }
 
@@ -55,7 +57,7 @@ class Main
 
     public function getHome(): Home
     {
-        if(!$this->homePage instanceof Home){
+        if (!$this->homePage instanceof Home) {
             $this->setHome();
         }
         return $this->homePage;
@@ -63,7 +65,7 @@ class Main
 
     public function getReleaseInfo(): ReleaseInfo
     {
-        if(!$this->releaseInfo instanceof ReleaseInfo){
+        if (!$this->releaseInfo instanceof ReleaseInfo) {
             $this->setReleaseInfo();
         }
         return $this->releaseInfo;
@@ -80,7 +82,7 @@ class Main
 
     public function getCredits(): Credits
     {
-        if(!$this->credits instanceof Credits){
+        if (!$this->credits instanceof Credits) {
             $this->setCredits();
         }
         return $this->credits;
@@ -92,26 +94,9 @@ class Main
         return $this;
     }
 
-    public function getEpisodesList(): Episodes
-    {
-        if(!$this->episodesList instanceof Episodes){
-            $this->setEpisodesList();
-        }
-        return $this->episodesList;
-    }
-
-    public function setEpisodesList(): Main
-    {
-        $this->episodesList = (new Episodes())->setImdbNumber($this->imdbNumber);
-        if ($this->getHome()->isTvShow()) {
-            $this->episodesList->setContentFromUrl();
-        }
-        return $this;
-    }
-
     public function getLocations(): Locations
     {
-        if(!$this->locations instanceof Locations){
+        if (!$this->locations instanceof Locations) {
             $this->setLocations();
         }
         return $this->locations;
@@ -125,7 +110,7 @@ class Main
 
     public function getKeywords(): Keywords
     {
-        if(!$this->keywords instanceof Keywords){
+        if (!$this->keywords instanceof Keywords) {
             $this->setKeywords();
         }
         return $this->keywords;
@@ -139,7 +124,7 @@ class Main
 
     public function getParentalGuide(): ParentalGuide
     {
-        if(!$this->parentalGuide instanceof ParentalGuide){
+        if (!$this->parentalGuide instanceof ParentalGuide) {
             $this->setParentalGuide();
         }
         return $this->parentalGuide;
