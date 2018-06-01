@@ -40,7 +40,7 @@ class MovieHomeTest extends TestCase
 
     public function testGetLanguages()
     {
-        $this->assertEquals(['English'], $this->imdbScrapper->getLanguages());
+        $this->assertEquals(['English', 'Norwegian', 'Spanish', 'French'], $this->imdbScrapper->getLanguages());
     }
 
     public function testIsTvShow()

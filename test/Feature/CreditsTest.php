@@ -43,7 +43,7 @@ class CreditsTest extends TestCase
                 case 8569954:
                     ++$found;
                     $this->assertEquals('Nina Cuso', $actor->getFullName());
-                    $this->assertEquals('Vogue Editor', $actor->getCharacter());
+                    $this->assertEquals('Vogue Editor (sin acreditar)', $actor->getCharacter());
                     $this->assertEquals('Christina Mancuso', $actor->getAlias());
                     break;
             }
