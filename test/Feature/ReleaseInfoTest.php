@@ -8,7 +8,9 @@
 
 namespace Tests\Feature;
 
+use ImdbScraper\Lists\AlsoKnownAsList;
 use ImdbScraper\Lists\ReleaseList;
+use ImdbScraper\Model\AlsoKnownAs;
 use ImdbScraper\Model\Release;
 use ImdbScraper\Pages\ReleaseInfo;
 use PHPUnit\Framework\TestCase;
@@ -27,11 +29,30 @@ class ReleaseInfoTest extends TestCase
 
     public function testGetAlsoKnownAs()
     {
-
+        /** @var int $found */
+        $found = 0;
+        /** @var AlsoKnownAsList $alsoKnownAs */
+        $alsoKnownAs = $this->imdbScrapper->getAlsoKnownAs();
+        /** @var AlsoKnownAs $known */
+        foreach ($alsoKnownAs as $known) {
+            switch ($known->getCountry()) {
+                case 'Bulgaria':
+                    ++$found;
+                    $this->assertThat($known->getTitle(), $this->logicalOr(
+                        $this->equalTo('Дедпул 2')
+                    ));
+                    $this->assertThat($known->getDescription(), $this->logicalOr(
+                        $this->equalTo('Bulgarian title')
+                    ));
+                    break;
+            }
+        }
+        $this->assertGreaterThanOrEqual(1, $found);
     }
 
     public function testGetReleaseDates()
     {
+        /** @var int $found */
         $found = 0;
         /** @var ReleaseList $releases */
         $releases = $this->imdbScrapper->getReleaseDates();

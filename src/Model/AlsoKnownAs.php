@@ -108,5 +108,6 @@ class AlsoKnownAs implements RegexMatchRawData
         if ($description) {
             $this->setDescription($description);
         }
+        return $this;
     }
 }

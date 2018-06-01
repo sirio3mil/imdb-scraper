@@ -8,6 +8,7 @@
 
 namespace ImdbScraper\Pages;
 
+use ImdbScraper\Lists\AlsoKnownAsList;
 use ImdbScraper\Lists\ReleaseList;
 
 class ReleaseInfo extends Page
@@ -31,10 +32,13 @@ class ReleaseInfo extends Page
         return (new ReleaseList())->appendAll($matches);
     }
 
-    public function getAlsoKnownAs(): array
+    /**
+     * @return AlsoKnownAsList
+     */
+    public function getAlsoKnownAs(): AlsoKnownAsList
     {
         $matches = [];
         preg_match_all(static::OTHER_TITLES_PATTERN, $this->getContent(), $matches);
-        return $matches;
+        return (new AlsoKnownAsList())->appendAll($matches);
     }
 }
