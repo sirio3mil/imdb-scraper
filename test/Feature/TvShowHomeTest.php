@@ -32,4 +32,9 @@ class TvShowHomeTest extends TestCase
     {
         $this->assertEquals(true, $this->imdbScrapper->isTvShow());
     }
+
+    public function testGetSeasons()
+    {
+        $this->assertEquals(8, $this->imdbScrapper->getSeasons());
+    }
 }

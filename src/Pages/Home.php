@@ -28,25 +28,23 @@ class Home extends Page
     protected const RECOMMENDATIONS_PATTERN = '|data-tconst=\"tt([0-9]{7})\"|U';
     protected const GENRE_PATTERN = '|genre/([^>]+)>([^>]+)<|U';
     protected const SEASON_PATTERN = '|>Season ([0-9]{1,2}) <|U';
+    protected const SEASONS_PATTERN = '|episodes\?season=([0-9]{1,2})|U';
     protected const EPISODE_PATTERN = '|> Episode ([0-9]{1,2})<|U';
 
     protected const SEASON_SPLITTER = '<h4 class="float-left">Seasons</h4>';
 
     /** @var int */
     protected $season;
-    
-    /** @var int */
-    protected $seasons;
-    
+
     /** @var int */
     protected $episode;
-    
+
     /** @var string */
     protected $title;
 
     /** @var bool */
     protected $episodeFlag;
-    
+
     /** @var bool */
     protected $tvShow;
 
@@ -55,25 +53,20 @@ class Home extends Page
      */
     public function getSeasons(): int
     {
-        return $this->seasons;
+        $matches = [];
+        preg_match_all(static::SEASONS_PATTERN, $this->content, $matches);
+        if ($matches) {
+            return count($matches[0]);
+        }
+        return 0;
     }
 
-    /**
-     * @param int $seasons
-     * @return Page
-     */
-    public function setSeasons(int $seasons): Page
-    {
-        $this->seasons = $seasons;
-        return $this;
-    }
-    
     /**
      * @return bool
      */
     public function isTvShow(): bool
     {
-        if($this->tvShow === null){
+        if ($this->tvShow === null) {
             $this->setTvShowFlags();
         }
         return $this->tvShow;
@@ -86,7 +79,7 @@ class Home extends Page
     {
         if ($this->isEpisode()) {
             preg_match_all(static::TV_SHOW_PATTERN, $this->content, $matches);
-            if(!empty($matches[1][0])){
+            if (!empty($matches[1][0])) {
                 return (int)($matches[1][0]);
             }
         }
@@ -120,7 +113,7 @@ class Home extends Page
      */
     public function isEpisode(): bool
     {
-        if($this->episodeFlag === null){
+        if ($this->episodeFlag === null) {
             $this->setTvShowFlags();
         }
         return $this->episodeFlag;
@@ -160,7 +153,7 @@ class Home extends Page
      */
     public function getTitle(): ?string
     {
-        if(is_null($this->title)){
+        if (is_null($this->title)) {
             $this->setTitle();
         }
         return $this->title;
@@ -251,7 +244,7 @@ class Home extends Page
     public function getColor(): ?string
     {
         $matches = array();
-        preg_match_all(static::COLOR_PATTERN, $this->content,$matches);
+        preg_match_all(static::COLOR_PATTERN, $this->content, $matches);
         return (!empty($matches[2][0])) ? Cleaner::clearField(strip_tags($matches[2][0])) : null;
     }
 
@@ -262,7 +255,7 @@ class Home extends Page
     {
         $sounds = [];
         $matches = [];
-        preg_match_all(static::SOUND_PATTERN, $this->content,$matches);
+        preg_match_all(static::SOUND_PATTERN, $this->content, $matches);
         if (array_key_exists(2, $matches) && is_array($matches[2])) {
             foreach ($matches[2] as $sound) {
                 $sounds[] = Cleaner::clearField($sound);
@@ -295,7 +288,7 @@ class Home extends Page
         $countries = [];
         $matches = [];
         preg_match_all(static::COUNTRY_PATTERN, $this->content, $matches);
-        if(array_key_exists(2, $matches) && is_array($matches[2])) {
+        if (array_key_exists(2, $matches) && is_array($matches[2])) {
             foreach ($matches[2] as $country) {
                 $countries[] = Country::getMappedValue(Cleaner::clearField($country));
             }
@@ -311,7 +304,7 @@ class Home extends Page
         $languages = [];
         $matches = [];
         preg_match_all(static::LANGUAGE_PATTERN, $this->content, $matches);
-        if(array_key_exists(2, $matches) && is_array($matches[2])) {
+        if (array_key_exists(2, $matches) && is_array($matches[2])) {
             foreach ($matches[2] as $language) {
                 $languages[] = Cleaner::clearField($language);
             }
@@ -327,9 +320,9 @@ class Home extends Page
         $genres = [];
         $matches = [];
         preg_match_all(static::GENRE_PATTERN, $this->content, $matches);
-        if(array_key_exists(2, $matches) && is_array($matches[2])) {
+        if (array_key_exists(2, $matches) && is_array($matches[2])) {
             foreach ($matches[2] as $key => $genre) {
-                if(stripos($matches[1][$key], "tt_stry_gnr")) {
+                if (stripos($matches[1][$key], "tt_stry_gnr")) {
                     $genres[] = Cleaner::clearField($genre);
                 }
             }
