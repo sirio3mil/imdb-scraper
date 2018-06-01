@@ -9,9 +9,9 @@
 namespace Tests\Feature;
 
 use ImdbScraper\Model\CastPeople;
-use ImdbScraper\Model\CastPeopleList;
+use ImdbScraper\Lists\CastPeopleList;
 use ImdbScraper\Model\People;
-use ImdbScraper\Model\PeopleList;
+use ImdbScraper\Lists\PeopleList;
 use ImdbScraper\Pages\Credits;
 use PHPUnit\Framework\TestCase;
 

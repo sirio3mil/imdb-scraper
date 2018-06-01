@@ -6,7 +6,7 @@
  * Time: 9:52
  */
 
-namespace ImdbScraper\Model;
+namespace ImdbScraper\Lists;
 
 
 abstract class RegexList extends \ArrayObject
@@ -20,15 +20,10 @@ abstract class RegexList extends \ArrayObject
      */
     public function appendAll(array $matches): RegexList
     {
-        $ids = [];
         if ($matches && !empty($matches[0])) {
             $keys = count($matches[0]);
             for ($i = 0; $i < $keys; ++$i) {
-                $imdbNumber = intval($matches[1][$i]);
-                if ($imdbNumber && !in_array($imdbNumber, $ids)) {
-                    $this->append((new $this->className())->importData($matches, $i));
-                    $ids[] = $imdbNumber;
-                }
+                $this->append((new $this->className())->importData($matches, $i));
             }
         }
         return $this;

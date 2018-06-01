@@ -6,7 +6,7 @@
  * Time: 9:54
  */
 
-namespace ImdbScraper\Model;
+namespace ImdbScraper\Lists;
 
 
 class ReleaseList extends RegexList
