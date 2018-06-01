@@ -137,10 +137,9 @@ class Episode implements RegexMatchRawData
     protected function parseDate(string $rawData): Episode
     {
         // TODO: refactor this method in another model
-        if(stripos($rawData, '.') !== false){
+        if (stripos($rawData, '.') !== false) {
             $monthFormat = "M.";
-        }
-        else{
+        } else {
             $monthFormat = "F";
         }
         $datetime = null;
