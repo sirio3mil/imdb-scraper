@@ -9,19 +9,20 @@
 namespace ImdbScraper\Model;
 
 
-class Release
+class Release implements RegexMatchRawData
 {
+    /** @var string */
     protected $country;
 
+    /** @var \DateTime */
     protected $date;
 
+    /** @var string */
     protected $details;
 
-    public function setFromScrapper(array $match): Release
+    public function getCountry(): string
     {
-        $this->setCountry($match[2]);
-        $this->setDateFromScrapper($match[3], $match[5]);
-        $this->setDetails($match[6]);
+        return $this->country;
     }
 
     public function setCountry(string $country): Release
@@ -30,25 +31,18 @@ class Release
         return $this;
     }
 
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    public function setDateFromScrapper(string $dayMonth, int $year): Release
-    {
-        $this->date = \DateTime::createFromFormat("d F Y", "{$dayMonth} {$year}");
-        return $this;
-    }
-
     public function getDate(): \DateTime
     {
         return $this->date;
     }
 
-    public function setDetails(string $details): Release
+    /**
+     * @param \DateTime $date
+     * @return Release
+     */
+    public function setDate(\DateTime $date): Release
     {
-        $this->details = $details;
+        $this->date = $date;
         return $this;
     }
 
@@ -57,4 +51,21 @@ class Release
         return $this->details;
     }
 
+    public function setDetails(string $details): Release
+    {
+        $this->details = $details;
+        return $this;
+    }
+
+    /**
+     * @param array $rawData
+     * @param int $position
+     * @return RegexMatchRawData
+     */
+    public function importData(array $rawData, int $position): RegexMatchRawData
+    {
+        $this->setCountry($rawData[2][$position])
+            ->setDate(\DateTime::createFromFormat("d F Y", "{$rawData[3][$position]} {$rawData[5][$position]}"))
+            ->setDetails($rawData[6][$position]);
+    }
 }

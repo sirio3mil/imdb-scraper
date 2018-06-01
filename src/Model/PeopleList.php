@@ -11,6 +11,7 @@ namespace ImdbScraper\Model;
 class PeopleList extends \ArrayObject
 {
 
+    /** @var string */
     protected $className;
 
     public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")

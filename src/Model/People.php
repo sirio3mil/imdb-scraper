@@ -12,12 +12,14 @@ namespace ImdbScraper\Model;
 class People implements RegexMatchRawData
 {
 
+    /** @var string */
     protected $fullName;
 
+    /** @var int */
     protected $imdbNumber;
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFullName(): ?string
     {
