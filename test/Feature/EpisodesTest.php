@@ -8,10 +8,10 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Pages\EpisodesList;
+use ImdbScraper\Pages\Episodes;
 use PHPUnit\Framework\TestCase;
 
-class EpisodesListTest extends TestCase
+class EpisodesTest extends TestCase
 {
 
     public function testGetEpisodes()

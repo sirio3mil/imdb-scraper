@@ -9,7 +9,7 @@
 namespace ImdbScraper\Pages;
 
 
-class EpisodesList extends Page
+class Episodes extends Page
 {
 
     protected const EPISODE_LIST_PATTERN = '|<a href=\"/title/([^>]+)\">|U';
