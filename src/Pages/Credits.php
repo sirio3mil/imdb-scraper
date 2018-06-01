@@ -8,11 +8,8 @@
 
 namespace ImdbScraper\Pages;
 
-
-use ImdbScraper\Model\CastPeople;
-use ImdbScraper\Model\CastPeopleList;
-use ImdbScraper\Model\People;
-use ImdbScraper\Model\PeopleList;
+use ImdbScraper\Lists\CastPeopleList;
+use ImdbScraper\Lists\PeopleList;
 
 class Credits extends Page
 {
@@ -57,12 +54,10 @@ class Credits extends Page
     public function getDirectors(): PeopleList
     {
         $matches = [];
-
         if (!empty($this->directorsContent)) {
             preg_match_all(static::CREDITS_PATTERN, $this->getDirectorsContent(), $matches);
         }
-
-        return $this->getUniquePeople($matches);
+        return (new PeopleList())->appendAll($matches);
     }
 
     /**
@@ -84,15 +79,6 @@ class Credits extends Page
     }
 
     /**
-     * @param array $matches
-     * @return PeopleList
-     */
-    protected function getUniquePeople(array $matches): PeopleList
-    {
-        return (new PeopleList())->appendAll($matches);
-    }
-
-    /**
      * @return PeopleList
      */
     public function getWriters(): PeopleList
@@ -101,7 +87,7 @@ class Credits extends Page
         if (!empty($this->writersContent)) {
             preg_match_all(static::CREDITS_PATTERN, $this->getWritersContent(), $matches);
         }
-        return $this->getUniquePeople($matches);
+        return (new PeopleList())->appendAll($matches);
     }
 
     /**
@@ -129,16 +115,6 @@ class Credits extends Page
     {
         $matches = [];
         preg_match_all(static::CAST_PATTERN, $this->getContent(), $matches);
-        return $this->getUniqueCastPeople($matches);
-    }
-
-    /**
-     * @param array $matches
-     * @return CastPeopleList
-     */
-    protected function getUniqueCastPeople(array $matches): CastPeopleList
-    {
         return (new CastPeopleList())->appendAll($matches);
     }
-
 }

@@ -8,8 +8,7 @@
 
 namespace ImdbScraper\Pages;
 
-use ImdbScraper\Model\Release;
-
+use ImdbScraper\Lists\ReleaseList;
 
 class ReleaseInfo extends Page
 {
@@ -22,32 +21,20 @@ class ReleaseInfo extends Page
         $this->setFolder('releaseinfo');
     }
 
-    public function getReleaseDates(): array
+    /**
+     * @return ReleaseList
+     */
+    public function getReleaseDates(): ReleaseList
     {
-        $releases = [];
-        if ($this->content) {
-            preg_match_all(static::RELEASE_DATE_PATTERN, $this->content, $matches);
-            /*
-             * 2 USA
-             * 3 29 September
-             * 5 2014
-             * 6 detail
-             */
-            foreach ($matches as $match) {
-                $releases[] = (new Release())->setFromScrapper($match);
-            }
-        }
-
-        /** var Release[] $matches */
-        return $releases;
+        $matches = [];
+        preg_match_all(static::RELEASE_DATE_PATTERN, $this->getContent(), $matches);
+        return (new ReleaseList())->appendAll($matches);
     }
 
     public function getAlsoKnownAs(): array
     {
-        $matches = array();
-        if (!empty($this->content)) {
-            preg_match_all(static::OTHER_TITLES_PATTERN, $this->content, $matches);
-        }
+        $matches = [];
+        preg_match_all(static::OTHER_TITLES_PATTERN, $this->getContent(), $matches);
         return $matches;
     }
 }

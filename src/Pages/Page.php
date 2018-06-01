@@ -35,15 +35,15 @@ class Page
         return $this;
     }
 
+    public function getContent(): string
+    {
+        return $this->content || '';
+    }
+
     public function setContent(?string $content): Page
     {
         $this->content = $content;
         return $this;
-    }
-
-    public function getContent(): ?string
-    {
-        return $this->content;
     }
 
     public function setContentFromUrl(): Page
@@ -52,10 +52,12 @@ class Page
         return $this;
     }
 
-    protected function setBaseUrl(): Page
+    public function getFullUrl(): string
     {
-        $this->baseUrl = 'https://www.imdb.com/title/tt' . str_pad($this->imdbNumber, 7, 0, STR_PAD_LEFT) . '/';
-        return $this;
+        if(!$this->fullUrl){
+            $this->setFullUrl();
+        }
+        return $this->fullUrl;
     }
 
     public function setFullUrl(): Page
@@ -75,11 +77,9 @@ class Page
         return $this->baseUrl;
     }
 
-    public function getFullUrl(): string
+    protected function setBaseUrl(): Page
     {
-        if(!$this->fullUrl){
-            $this->setFullUrl();
-        }
-        return $this->fullUrl;
+        $this->baseUrl = 'https://www.imdb.com/title/tt' . str_pad($this->imdbNumber, 7, 0, STR_PAD_LEFT) . '/';
+        return $this;
     }
 }
