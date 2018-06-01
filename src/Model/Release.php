@@ -88,6 +88,7 @@ class Release implements RegexMatchRawData
 
     protected static function parseDate(string $rawData): ?\DateTime
     {
+        // TODO: dates month format is M if month name length greater than 3 otherwise F
         $datetime = null;
         $rawData = trim($rawData);
         if (substr_count($rawData, " ") === 2) {

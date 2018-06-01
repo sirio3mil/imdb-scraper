@@ -12,7 +12,8 @@ namespace ImdbScraper\Pages;
 class Episodes extends Page
 {
 
-    protected const EPISODE_LIST_PATTERN = '|<a href=\"/title/([^>]+)\">|U';
+    protected const EPISODE_LIST_PATTERN = '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"><div class="airdate">([^>]+)</div><strong><a href="/title/tt([0-9]{7})/\?ref_=ttep_ep([0-9]{1,2})" title="([^>]+)" itemprop="name">([^>]+)</a></strong>|U';
+
     /** @var int */
     protected $season;
 
