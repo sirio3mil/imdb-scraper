@@ -14,11 +14,6 @@ use PHPUnit\Framework\TestCase;
 class ReleaseInfoTest extends TestCase
 {
 
-    public function testGetPreviousReleaseDate()
-    {
-
-    }
-
     public function testGetAlsoKnownAs()
     {
 

@@ -42,22 +42,6 @@ class ReleaseInfo extends Page
         return $releases;
     }
 
-    public static function getPreviousReleaseDate(int $timestamp, array $releases): int
-    {
-        $min = $timestamp;
-        if (!$releases){
-            return 0;
-        }
-        /** @var Release $release */
-        foreach ($releases as $release){
-            $actual = $release->getDate()->getTimestamp();
-            if ($actual && $min > $actual) {
-                $min = $actual;
-            }
-        }
-        return $min;
-    }
-
     public function getAlsoKnownAs(): array
     {
         $matches = array();
