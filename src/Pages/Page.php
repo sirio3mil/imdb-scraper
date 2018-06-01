@@ -54,7 +54,7 @@ class Page
 
     public function getFullUrl(): string
     {
-        if(!$this->fullUrl){
+        if (!$this->fullUrl) {
             $this->setFullUrl();
         }
         return $this->fullUrl;
@@ -63,7 +63,7 @@ class Page
     public function setFullUrl(): Page
     {
         $this->fullUrl = $this->getBaseUrl();
-        if($this->folder){
+        if ($this->folder) {
             $this->fullUrl .= $this->folder;
         }
         return $this;
@@ -71,7 +71,7 @@ class Page
 
     public function getBaseUrl(): string
     {
-        if(!$this->baseUrl){
+        if (!$this->baseUrl) {
             $this->setBaseUrl();
         }
         return $this->baseUrl;
