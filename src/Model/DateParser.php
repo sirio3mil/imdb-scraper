@@ -9,8 +9,6 @@
 namespace ImdbScraper\Model;
 
 
-use ImdbScraper\Pages\Page;
-
 trait DateParser
 {
 
@@ -30,9 +28,9 @@ trait DateParser
 
     /**
      * @param \DateTime|null $date
-     * @return Page
+     * @return RegexMatchRawData
      */
-    public function setDate(?\DateTime $date): Page
+    public function setDate(?\DateTime $date): RegexMatchRawData
     {
         $this->date = $date;
         return $this;
@@ -48,9 +46,9 @@ trait DateParser
 
     /**
      * @param bool $isFullDate
-     * @return Episode
+     * @return RegexMatchRawData
      */
-    public function setIsFullDate(bool $isFullDate): Episode
+    public function setIsFullDate(bool $isFullDate): RegexMatchRawData
     {
         $this->isFullDate = $isFullDate;
         return $this;
@@ -58,9 +56,9 @@ trait DateParser
 
     /**
      * @param string $rawData
-     * @return Page
+     * @return RegexMatchRawData
      */
-    protected function parseDate(string $rawData): Page
+    protected function parseDate(string $rawData): RegexMatchRawData
     {
         if (stripos($rawData, '.') !== false) {
             $monthFormat = "M.";

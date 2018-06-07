@@ -15,7 +15,7 @@ class Episodes extends Page
 {
 
     /** @var string */
-    protected const EPISODE_LIST_PATTERN = '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"><div class="airdate">([^>]+)</div><strong><a href="/title/tt([0-9]{7})/\?ref_=ttep_ep([0-9]{1,2})" title="([^>]+)" itemprop="name">([^>]+)</a></strong>|U';
+    protected const EPISODE_LIST_PATTERN = '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"/><div class="airdate">([^>]+)</div><strong><a href="/title/tt([0-9]{7})/\?ref_=ttep_ep([0-9]{1,2})"title="([^>]+)" itemprop="name">([^>]+)</a></strong>|U';
 
     /** @var int */
     protected $season;
