@@ -65,10 +65,14 @@ class Release implements RegexMatchRawData
     {
         return $this->setCountry($rawData[2][$position])
             ->parseDate($rawData[3][$position])
-            ->setDetails(self::parseDetails($rawData[4][$position]));
+            ->parseDetails($rawData[4][$position]);
     }
 
-    protected static function parseDetails(string $rawData): array
+    /**
+     * @param string $rawData
+     * @return Release
+     */
+    protected function parseDetails(string $rawData): Release
     {
         $rawData = trim($rawData);
         $details = [];
@@ -83,6 +87,6 @@ class Release implements RegexMatchRawData
         } elseif (!empty($rawData)) {
             $details[] = $rawData;
         }
-        return $details;
+        return $this->setDetails($details);
     }
 }
