@@ -9,14 +9,21 @@
 namespace ImdbScraper\Pages;
 
 
+use ImdbScraper\Lists\EpisodeList;
+
 class Episodes extends Page
 {
 
+    /** @var string */
     protected const EPISODE_LIST_PATTERN = '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"><div class="airdate">([^>]+)</div><strong><a href="/title/tt([0-9]{7})/\?ref_=ttep_ep([0-9]{1,2})" title="([^>]+)" itemprop="name">([^>]+)</a></strong>|U';
 
     /** @var int */
     protected $season;
 
+    /**
+     * Episodes constructor.
+     * @param int $season
+     */
     public function __construct(int $season)
     {
         $this->setSeason($season)->setFolder('episodes?season=' + $this->getSeason());
@@ -40,24 +47,15 @@ class Episodes extends Page
         return $this;
     }
 
-    public function getEpisodes(): array
+    /**
+     * @return EpisodeList
+     */
+    public function getEpisodes(): EpisodeList
     {
-        if (!$this->content) {
-            return [];
+        $matches = [];
+        if (!empty($this->content)) {
+            preg_match_all(static::EPISODE_LIST_PATTERN, $this->content, $matches);
         }
-        preg_match_all(static::EPISODE_LIST_PATTERN, $this->content, $matches);
-        if (empty($matches[1])) {
-            return [];
-        }
-        $episodes = [];
-        foreach ($matches[1] as $url) {
-            $number = str_replace('tt', '', $url);
-            $parts = explode("/", $number);
-            $number = (int)($parts[0]);
-            if (!in_array($number, $episodes)) {
-                $episodes[] = $number;
-            }
-        }
-        return $episodes;
+        return (new EpisodeList())->appendAll($matches);
     }
 }
