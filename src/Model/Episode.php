@@ -12,38 +12,16 @@ namespace ImdbScraper\Model;
 class Episode implements RegexMatchRawData
 {
 
+    use DateParser;
+
     /** @var int */
     protected $episodeNumber;
-
-    /** @var \DateTime */
-    protected $date;
 
     /** @var int */
     protected $imdbNumber;
 
     /** @var string */
     protected $title;
-
-    /** @var bool */
-    protected $isFullDate;
-
-    /**
-     * @return bool
-     */
-    public function getIsFullDate(): bool
-    {
-        return $this->isFullDate;
-    }
-
-    /**
-     * @param bool $isFullDate
-     * @return Episode
-     */
-    public function setIsFullDate(bool $isFullDate): Episode
-    {
-        $this->isFullDate = $isFullDate;
-        return $this;
-    }
 
     /**
      * @return string
@@ -60,24 +38,6 @@ class Episode implements RegexMatchRawData
     public function setTitle(string $title): Episode
     {
         $this->title = $title;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDate(): \DateTime
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param \DateTime|null $date
-     * @return Episode
-     */
-    public function setDate(?\DateTime $date): Episode
-    {
-        $this->date = $date;
         return $this;
     }
 
@@ -128,35 +88,5 @@ class Episode implements RegexMatchRawData
             ->setImdbNumber(intval($rawData[3][$position]))
             ->setTitle($rawData[6][$position])
             ->parseDate($rawData[2][$position]);
-    }
-
-    /**
-     * @param string $rawData
-     * @return Episode
-     */
-    protected function parseDate(string $rawData): Episode
-    {
-        // TODO: refactor this method in another model
-        if (stripos($rawData, '.') !== false) {
-            $monthFormat = "M.";
-        } else {
-            $monthFormat = "F";
-        }
-        $datetime = null;
-        $this->setIsFullDate(false);
-        $rawData = trim($rawData);
-        if (substr_count($rawData, " ") === 2) {
-            $datetime = \DateTime::createFromFormat("d {$monthFormat} Y", $rawData);
-            $this->setIsFullDate(true);
-        } elseif (substr_count($rawData, " ") === 1) {
-            $datetime = \DateTime::createFromFormat("{$monthFormat} Y", $rawData);
-        } else {
-            $datetime = \DateTime::createFromFormat("Y", $rawData);
-        }
-        if (!$datetime) {
-            $datetime = null;
-            $this->setIsFullDate(false);
-        }
-        return $this->setDate($datetime);
     }
 }

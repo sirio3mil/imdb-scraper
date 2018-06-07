@@ -11,11 +11,11 @@ namespace ImdbScraper\Model;
 
 class Release implements RegexMatchRawData
 {
+
+    use DateParser;
+
     /** @var string */
     protected $country;
-
-    /** @var \DateTime */
-    protected $date;
 
     /** @var array */
     protected $details;
@@ -35,24 +35,6 @@ class Release implements RegexMatchRawData
     public function setCountry(string $country): Release
     {
         $this->country = $country;
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDate(): \DateTime
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param \DateTime $date
-     * @return Release
-     */
-    public function setDate(?\DateTime $date): Release
-    {
-        $this->date = $date;
         return $this;
     }
 
@@ -82,24 +64,8 @@ class Release implements RegexMatchRawData
     public function importData(array $rawData, int $position): RegexMatchRawData
     {
         return $this->setCountry($rawData[2][$position])
-            ->setDate(self::parseDate($rawData[3][$position]))
+            ->parseDate($rawData[3][$position])
             ->setDetails(self::parseDetails($rawData[4][$position]));
-    }
-
-    protected static function parseDate(string $rawData): ?\DateTime
-    {
-        // TODO: dates month format is M if month name length greater than 3 otherwise F
-        $datetime = null;
-        $rawData = trim($rawData);
-        if (substr_count($rawData, " ") === 2) {
-            $datetime = \DateTime::createFromFormat("d F Y", $rawData);
-        } elseif (substr_count($rawData, " ") === 1) {
-            $datetime = \DateTime::createFromFormat("F Y", $rawData);
-        }
-        if (!$datetime) {
-            $datetime = null;
-        }
-        return $datetime;
     }
 
     protected static function parseDetails(string $rawData): array
