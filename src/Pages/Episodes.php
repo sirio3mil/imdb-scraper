@@ -21,12 +21,12 @@ class Episodes extends Page
     protected $season;
 
     /**
-     * Episodes constructor.
-     * @param int $season
+     * @param string $folder
+     * @return Page
      */
-    public function __construct(int $season)
+    public function setFolder(string $folder): Page
     {
-        $this->setSeason($season)->setFolder('episodes?season=' + $this->getSeason());
+        return parent::setFolder('episodes?season=' . $folder);
     }
 
     /**
@@ -39,12 +39,12 @@ class Episodes extends Page
 
     /**
      * @param int $season
-     * @return Episodes
+     * @return Page
      */
-    public function setSeason(int $season): Episodes
+    public function setSeason(int $season): Page
     {
         $this->season = $season;
-        return $this;
+        return $this->setFolder(strval($this->season));
     }
 
     /**
