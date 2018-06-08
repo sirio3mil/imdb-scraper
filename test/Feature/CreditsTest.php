@@ -40,11 +40,11 @@ class CreditsTest extends TestCase
                     $this->assertEquals('Courtney Gonzalez', $actor->getFullName());
                     $this->assertEquals('Bergdorf Patron (sin acreditar)', $actor->getCharacter());
                     break;
-                case 8569954:
+                case 939026:
                     ++$found;
-                    $this->assertEquals('Nina Cuso', $actor->getFullName());
-                    $this->assertEquals('Vogue Editor (sin acreditar)', $actor->getCharacter());
-                    $this->assertEquals('Christina Mancuso', $actor->getAlias());
+                    $this->assertEquals('Daniel May Wong', $actor->getFullName());
+                    $this->assertEquals('Costume Exhibit Guard', $actor->getCharacter());
+                    $this->assertEquals('Daniel M. Wong', $actor->getAlias());
                     break;
             }
         }
