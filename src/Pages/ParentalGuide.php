@@ -9,23 +9,28 @@
 namespace ImdbScraper\Pages;
 
 
+use ImdbScraper\Lists\CertificateList;
+
 class ParentalGuide extends Page
 {
+
+    /** @var string */
+    protected const CERTIFICATE_PATTERN = '|<a href="/search/title\?certificates=([A-Z]+):([^>]+)">([^>]+):([^>]+)</a>([^<]*)<|U';
 
     public function __construct()
     {
         $this->setFolder('parentalguide');
     }
 
-    public function getCertificates(): array
+    /**
+     * @return CertificateList
+     */
+    public function getCertificates(): CertificateList
     {
         $matches = [];
-        if (!$this->isChapter && (strpos($this->content, "See all certifications") !== false)) {
-            $html = file_get_contents($this->url . "parentalguide");
-            if (!empty($html)) {
-                preg_match_all('|<a href=\"/search/title\?certificates=([^>]+)\">([^>]+)</a>|U', $html, $matches);
-            }
+        if (!empty($this->content)) {
+            preg_match_all(static::CERTIFICATE_PATTERN, $this->content, $matches);
         }
-        return $matches;
+        return (new CertificateList())->appendAll($matches);
     }
 }
