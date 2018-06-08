@@ -9,25 +9,43 @@
 namespace ImdbScraper\Pages;
 
 
+use ImdbScraper\Lists\KeywordList;
+
 class Keywords extends Page
 {
 
-    protected const KEYWORD_PATTERN = '|/keyword/([^>]+)\?|U';
+    /** @var string */
+    protected const KEYWORD_PATTERN = '|<a href="/keyword/([^>]+)\?ref_=ttkw_kw_([0-9]+)">([^>]+)</a></div><div class="did-you-know-actions"><div class="interesting-count-text"><a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
+
+    /** @var string */
+    protected const TOTAL_KEYWORD_PATTERN = '|<div class="desc">Showing all ([0-9]+) plot keywords</div>|U';
 
     public function __construct()
     {
         $this->setFolder('keywords');
     }
 
-    public function getKeywords(): array
+    /**
+     * @return int
+     */
+    public function getTotalKeywords(): int
     {
         $matches = [];
-        if (strpos($this->content, "Plot Keywords:") !== false) {
-            $html = file_get_contents();
-            if (!empty($html)) {
-                preg_match_all(static::KEYWORD_PATTERN, $html, $matches);
-            }
+        if (!empty($this->content)) {
+            preg_match_all(static::TOTAL_KEYWORD_PATTERN, $this->content, $matches);
         }
-        return $matches;
+        return (!empty($matches[1]) && !empty($matches[1][0])) ? intval($matches[1][0]) : 0;
+    }
+
+    /**
+     * @return KeywordList
+     */
+    public function getKeywords(): KeywordList
+    {
+        $matches = [];
+        if (!empty($this->content)) {
+            preg_match_all(static::KEYWORD_PATTERN, $this->content, $matches);
+        }
+        return (new KeywordList())->appendAll($matches);
     }
 }
