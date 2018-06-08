@@ -9,25 +9,28 @@
 namespace ImdbScraper\Pages;
 
 
+use ImdbScraper\Lists\LocationList;
+
 class Locations extends Page
 {
+
+    /** @var string */
+    protected const LOCATIONS_PATTERN = '|<dt><a ([^>]+)>([^>]+)</a></dt><dd>([^>]+)</dd><div class="did-you-know-actions"><a ([^>]+)>([^>]+)</a>|U';
 
     public function __construct()
     {
         $this->setFolder('locations');
     }
 
-    public function getLocations()
+    /**
+     * @return LocationList
+     */
+    public function getLocations(): LocationList
     {
-        $matches = array();
-        if (strpos($this->content, "Filming Locations:") !== false) {
-            $html = static::clean();
-            if (!empty($html)) {
-                preg_match_all('|/search/title\?locations=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U', $html,
-                    $matches);
-                return $matches;
-            }
+        $matches = [];
+        if (!empty($this->content)) {
+            preg_match_all(static::LOCATIONS_PATTERN, $this->content, $matches);
         }
-        return $matches;
+        return (new LocationList())->appendAll($matches);
     }
 }

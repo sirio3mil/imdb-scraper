@@ -12,7 +12,10 @@ namespace ImdbScraper\Model;
 class Keyword implements RegexMatchRawData
 {
 
-    protected const RELEVANT_VOTES_PATTERN = '|([0-9]+) of ([0-9]+) found this relevant|U';
+    use VoteParser;
+
+    /** @var string */
+    protected const VOTES_PATTERN = '|([0-9]+) of ([0-9]+) found this relevant|U';
 
     /** @var string */
     protected $url;
@@ -22,12 +25,6 @@ class Keyword implements RegexMatchRawData
 
     /** @var int */
     protected $imdbNumber;
-
-    /** @var int */
-    protected $relevantVotes;
-
-    /** @var int */
-    protected $totalVotes;
 
     /**
      * @return int
@@ -66,42 +63,6 @@ class Keyword implements RegexMatchRawData
     }
 
     /**
-     * @return int
-     */
-    public function getRelevantVotes(): int
-    {
-        return $this->relevantVotes;
-    }
-
-    /**
-     * @param int $relevantVotes
-     * @return Keyword
-     */
-    public function setRelevantVotes(int $relevantVotes): Keyword
-    {
-        $this->relevantVotes = $relevantVotes;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotalVotes(): int
-    {
-        return $this->totalVotes;
-    }
-
-    /**
-     * @param int $totalVotes
-     * @return Keyword
-     */
-    public function setTotalVotes(int $totalVotes): Keyword
-    {
-        $this->totalVotes = $totalVotes;
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getUrl(): string
@@ -130,20 +91,5 @@ class Keyword implements RegexMatchRawData
             ->setKeyword($rawData[3][$position])
             ->setImdbNumber(intval($rawData[4][$position]))
             ->parseVotes($rawData[5][$position]);
-    }
-
-    /**
-     * @param string $rawData
-     * @return Keyword
-     */
-    protected function parseVotes(string $rawData): Keyword
-    {
-        $matches = [];
-        preg_match_all(static::RELEVANT_VOTES_PATTERN, $rawData, $matches);
-        if (!empty($matches[0])) {
-            $this->setRelevantVotes(intval($matches[1][0]));
-            $this->setTotalVotes(intval($matches[2][0]));
-        }
-        return $this;
     }
 }
