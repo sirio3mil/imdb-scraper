@@ -10,12 +10,10 @@ namespace ImdbScraper\Mapper;
 
 
 use ImdbScraper\Iterator\EpisodeIterator;
+use ImdbScraper\Parser\EpisodeListParser;
 
 class EpisodeListMapper extends AbstractPageMapper
 {
-
-    /** @var string */
-    protected const EPISODE_LIST_PATTERN = '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"/><div class="airdate">([^>]+)</div><strong><a href="/title/tt([0-9]{7})/\?ref_=ttep_ep([0-9]{1,2})"title="([^>]+)" itemprop="name">([^>]+)</a></strong>|U';
 
     /** @var int */
     protected $season;
@@ -52,10 +50,6 @@ class EpisodeListMapper extends AbstractPageMapper
      */
     public function getEpisodes(): EpisodeIterator
     {
-        $matches = [];
-        if (!empty($this->content)) {
-            preg_match_all(static::EPISODE_LIST_PATTERN, $this->content, $matches);
-        }
-        return (new EpisodeIterator())->appendAll($matches);
+        return (new EpisodeListParser($this))->getIterator();
     }
 }
