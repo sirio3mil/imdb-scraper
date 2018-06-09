@@ -32,7 +32,7 @@ class People implements RegexMatchRawData
      */
     public function setFullName(string $fullName): People
     {
-        $this->fullName = $fullName;
+        $this->fullName = trim($fullName);
         return $this;
     }
 
