@@ -9,7 +9,7 @@
 namespace ImdbScraper\Model;
 
 
-use ImdbScraper\Mapper\Country;
+use ImdbScraper\Helper\CountryName;
 
 class AlsoKnownAs implements RegexMatchRawData
 {
@@ -104,7 +104,7 @@ class AlsoKnownAs implements RegexMatchRawData
             $countryName = trim($parts[0]);
             $description = trim($parts[1]);
         }
-        $this->setCountry(Country::getMappedValue($countryName));
+        $this->setCountry(CountryName::getMappedValue($countryName));
         if ($description) {
             $this->setDescription($description);
         }

@@ -8,18 +8,18 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Main;
+use ImdbScraper\Controller\MainController;
 use PHPUnit\Framework\TestCase;
 
 class MovieMainTest extends TestCase
 {
 
-    /** @var Main $imdbScrapper */
+    /** @var MainController $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = new Main(1563742);
+        $this->imdbScrapper = new MainController(1563742);
         parent::__construct($name, $data, $dataName);
     }
 

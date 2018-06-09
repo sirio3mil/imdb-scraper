@@ -9,7 +9,7 @@
 namespace ImdbScraper\Model;
 
 
-use ImdbScraper\Mapper\Country;
+use ImdbScraper\Helper\CountryName;
 
 class Certificate implements RegexMatchRawData
 {
@@ -106,7 +106,7 @@ class Certificate implements RegexMatchRawData
     public function importData(array $rawData, int $position): RegexMatchRawData
     {
         return $this->setIsoCountryCode($rawData[1][$position])
-            ->setCountryName(Country::getMappedValue($rawData[3][$position]))
+            ->setCountryName(CountryName::getMappedValue($rawData[3][$position]))
             ->setCertification($rawData[4][$position])
             ->parseDetails($rawData[5][$position]);
     }

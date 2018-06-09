@@ -8,20 +8,20 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Lists\KeywordList;
+use ImdbScraper\Iterator\KeywordIterator;
 use ImdbScraper\Model\Keyword;
-use ImdbScraper\Pages\Keywords;
+use ImdbScraper\Mapper\KeywordMapper;
 use PHPUnit\Framework\TestCase;
 
 class KeywordsTest extends TestCase
 {
 
-    /** @var Keywords $imdbScrapper */
+    /** @var KeywordMapper $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = (new Keywords())->setImdbNumber(5463162)->setContentFromUrl();
+        $this->imdbScrapper = (new KeywordMapper())->setImdbNumber(5463162)->setContentFromUrl();
         parent::__construct($name, $data, $dataName);
     }
 
@@ -32,7 +32,7 @@ class KeywordsTest extends TestCase
 
     public function testGetKeywords()
     {
-        /** @var KeywordList $keywords */
+        /** @var KeywordIterator $keywords */
         $keywords = $this->imdbScrapper->getKeywords();
         /** @var Keyword $keyword */
         $keyword = $keywords->getIterator()->current();

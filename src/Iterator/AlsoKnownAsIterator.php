@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: reynier.delarosa
- * Date: 31/05/2018
- * Time: 13:18
+ * Date: 01/06/2018
+ * Time: 12:43
  */
 
-namespace ImdbScraper\Lists;
+namespace ImdbScraper\Iterator;
 
-class PeopleList extends RegexList
+
+class AlsoKnownAsIterator extends AbstractRegexIterator
 {
-
     public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
     {
         parent::__construct($input, $flags, $iterator_class);
-        $this->className = 'ImdbScraper\Model\People';
+        $this->modelClassName = 'ImdbScraper\Model\AlsoKnownAs';
     }
 }

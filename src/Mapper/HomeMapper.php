@@ -6,12 +6,12 @@
  * Time: 17:22
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Mapper\Country;
-use ImdbScraper\Utils\Cleaner;
+use ImdbScraper\Helper\CountryName;
+use ImdbScraper\Helper\Cleaner;
 
-class Home extends Page
+class HomeMapper extends AbstractPageMapper
 {
     protected const IMDB_NUMBER_PATTERN = '|title/tt([^>]+)/|U';
     protected const TITLE_PATTERN = '|<title>([^>]+) \(|U';
@@ -87,9 +87,9 @@ class Home extends Page
     }
 
     /**
-     * @return Home
+     * @return HomeMapper
      */
-    public function setTvShowFlags(): Home
+    public function setTvShowFlags(): HomeMapper
     {
         $this->episodeFlag = false;
         $matches = [
@@ -121,10 +121,10 @@ class Home extends Page
 
     /**
      * @param null|string $content
-     * @return Page
+     * @return AbstractPageMapper
      * @throws \Exception
      */
-    public function setContent(?string $content): Page
+    public function setContent(?string $content): AbstractPageMapper
     {
         parent::setContent($content);
         if (!$this->content) {
@@ -160,10 +160,10 @@ class Home extends Page
     }
 
     /**
-     * @return Home
+     * @return HomeMapper
      * @throws \Exception
      */
-    public function setTitle(): Home
+    public function setTitle(): HomeMapper
     {
         $matches = [];
         preg_match_all(static::TITLE_PATTERN, $this->content, $matches);
@@ -290,7 +290,7 @@ class Home extends Page
         preg_match_all(static::COUNTRY_PATTERN, $this->content, $matches);
         if (array_key_exists(2, $matches) && is_array($matches[2])) {
             foreach ($matches[2] as $country) {
-                $countries[] = Country::getMappedValue(Cleaner::clearField($country));
+                $countries[] = CountryName::getMappedValue(Cleaner::clearField($country));
             }
         }
         return array_unique($countries);
@@ -331,9 +331,9 @@ class Home extends Page
     }
 
     /**
-     * @return Home
+     * @return HomeMapper
      */
-    public function setSeasonData(): Home
+    public function setSeasonData(): HomeMapper
     {
         if ($this->isEpisode()) {
             $this->setSeasonNumber()->setEpisodeNumber();
@@ -342,9 +342,9 @@ class Home extends Page
     }
 
     /**
-     * @return Home
+     * @return HomeMapper
      */
-    protected function setEpisodeNumber(): Home
+    protected function setEpisodeNumber(): HomeMapper
     {
         $matches = [];
         preg_match_all(static::EPISODE_PATTERN, $this->content, $matches);
@@ -355,9 +355,9 @@ class Home extends Page
     }
 
     /**
-     * @return Home
+     * @return HomeMapper
      */
-    protected function setSeasonNumber(): Home
+    protected function setSeasonNumber(): HomeMapper
     {
         $matches = [];
         preg_match_all(static::SEASON_PATTERN, $this->content, $matches);

@@ -6,12 +6,12 @@
  * Time: 13:27
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Lists\AlsoKnownAsList;
-use ImdbScraper\Lists\ReleaseList;
+use ImdbScraper\Iterator\AlsoKnownAsIterator;
+use ImdbScraper\Iterator\ReleaseIterator;
 
-class ReleaseInfo extends Page
+class ReleaseMapper extends AbstractPageMapper
 {
 
     protected const RELEASE_DATE_PATTERN = '|<td><a href=\"([^>]+)\">([^>]+)</a></td><td class=\"release_date\">([^>]+)</td><td>([^>]*)</td>|U';
@@ -23,22 +23,22 @@ class ReleaseInfo extends Page
     }
 
     /**
-     * @return ReleaseList
+     * @return ReleaseIterator
      */
-    public function getReleaseDates(): ReleaseList
+    public function getReleaseDates(): ReleaseIterator
     {
         $matches = [];
         preg_match_all(static::RELEASE_DATE_PATTERN, $this->getContent(), $matches);
-        return (new ReleaseList())->appendAll($matches);
+        return (new ReleaseIterator())->appendAll($matches);
     }
 
     /**
-     * @return AlsoKnownAsList
+     * @return AlsoKnownAsIterator
      */
-    public function getAlsoKnownAs(): AlsoKnownAsList
+    public function getAlsoKnownAs(): AlsoKnownAsIterator
     {
         $matches = [];
         preg_match_all(static::OTHER_TITLES_PATTERN, $this->getContent(), $matches);
-        return (new AlsoKnownAsList())->appendAll($matches);
+        return (new AlsoKnownAsIterator())->appendAll($matches);
     }
 }

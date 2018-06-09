@@ -6,12 +6,12 @@
  * Time: 13:28
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Utils\Cleaner;
-use ImdbScraper\Utils\Getter;
+use ImdbScraper\Helper\Cleaner;
+use ImdbScraper\Helper\Getter;
 
-class Page
+abstract class AbstractPageMapper
 {
     /** @var string */
     protected $content;
@@ -30,9 +30,9 @@ class Page
 
     /**
      * @param int $imdbNumber
-     * @return Page
+     * @return AbstractPageMapper
      */
-    public function setImdbNumber(int $imdbNumber): Page
+    public function setImdbNumber(int $imdbNumber): AbstractPageMapper
     {
         $this->imdbNumber = $imdbNumber;
         return $this;
@@ -40,9 +40,9 @@ class Page
 
     /**
      * @param string $folder
-     * @return Page
+     * @return AbstractPageMapper
      */
-    public function setFolder(string $folder): Page
+    public function setFolder(string $folder): AbstractPageMapper
     {
         $this->folder = $folder;
         return $this;
@@ -58,19 +58,19 @@ class Page
 
     /**
      * @param null|string $content
-     * @return Page
+     * @return AbstractPageMapper
      */
-    public function setContent(?string $content): Page
+    public function setContent(?string $content): AbstractPageMapper
     {
         $this->content = $content;
         return $this;
     }
 
     /**
-     * @return Page
+     * @return AbstractPageMapper
      * @throws \Exception
      */
-    public function setContentFromUrl(): Page
+    public function setContentFromUrl(): AbstractPageMapper
     {
         $this->setContent(Cleaner::clearText(Getter::getUrlContent($this->getFullUrl())));
         return $this;
@@ -88,9 +88,9 @@ class Page
     }
 
     /**
-     * @return Page
+     * @return AbstractPageMapper
      */
-    public function setFullUrl(): Page
+    public function setFullUrl(): AbstractPageMapper
     {
         $this->fullUrl = $this->getBaseUrl();
         if ($this->folder) {
@@ -111,9 +111,9 @@ class Page
     }
 
     /**
-     * @return Page
+     * @return AbstractPageMapper
      */
-    protected function setBaseUrl(): Page
+    protected function setBaseUrl(): AbstractPageMapper
     {
         $this->baseUrl = 'https://www.imdb.com/title/tt' . str_pad($this->imdbNumber, 7, 0, STR_PAD_LEFT) . '/';
         return $this;

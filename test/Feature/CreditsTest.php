@@ -9,28 +9,28 @@
 namespace Tests\Feature;
 
 use ImdbScraper\Model\CastPeople;
-use ImdbScraper\Lists\CastPeopleList;
+use ImdbScraper\Iterator\CastPeopleIterator;
 use ImdbScraper\Model\People;
-use ImdbScraper\Lists\PeopleList;
-use ImdbScraper\Pages\Credits;
+use ImdbScraper\Iterator\PeopleIterator;
+use ImdbScraper\Mapper\CastMapper;
 use PHPUnit\Framework\TestCase;
 
 class CreditsTest extends TestCase
 {
 
-    /** @var Credits $imdbScrapper */
+    /** @var CastMapper $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = (new Credits())->setImdbNumber(5164214)->setContentFromUrl();
+        $this->imdbScrapper = (new CastMapper())->setImdbNumber(5164214)->setContentFromUrl();
         parent::__construct($name, $data, $dataName);
     }
 
     public function testGetCast()
     {
         $found = 0;
-        /** @var CastPeopleList $cast */
+        /** @var CastPeopleIterator $cast */
         $cast = $this->imdbScrapper->getCast();
         /** @var CastPeople $actor */
         foreach ($cast as $actor) {
@@ -53,7 +53,7 @@ class CreditsTest extends TestCase
 
     public function testGetWriters()
     {
-        /** @var PeopleList $writers */
+        /** @var PeopleIterator $writers */
         $writers = $this->imdbScrapper->getWriters();
         $ids = [];
         /** @var People $writer */
@@ -67,6 +67,6 @@ class CreditsTest extends TestCase
     {
         /** @var People $director */
         $director = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
-        $this->assertEquals(new PeopleList([$director]), $this->imdbScrapper->getDirectors());
+        $this->assertEquals(new PeopleIterator([$director]), $this->imdbScrapper->getDirectors());
     }
 }

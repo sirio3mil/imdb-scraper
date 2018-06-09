@@ -8,18 +8,18 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Pages\Home;
+use ImdbScraper\Mapper\HomeMapper;
 use PHPUnit\Framework\TestCase;
 
 class EpisodeHomeTest extends TestCase
 {
 
-    /** @var Home $imdbScrapper */
+    /** @var HomeMapper $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = (new Home())->setImdbNumber(5655178)->setContentFromUrl();
+        $this->imdbScrapper = (new HomeMapper())->setImdbNumber(5655178)->setContentFromUrl();
         parent::__construct($name, $data, $dataName);
     }
 

@@ -6,12 +6,12 @@
  * Time: 17:11
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
 
-use ImdbScraper\Lists\CertificateList;
+use ImdbScraper\Iterator\CertificateIterator;
 
-class ParentalGuide extends Page
+class ParentalGuideMapper extends AbstractPageMapper
 {
 
     /** @var string */
@@ -23,14 +23,14 @@ class ParentalGuide extends Page
     }
 
     /**
-     * @return CertificateList
+     * @return CertificateIterator
      */
-    public function getCertificates(): CertificateList
+    public function getCertificates(): CertificateIterator
     {
         $matches = [];
         if (!empty($this->content)) {
             preg_match_all(static::CERTIFICATE_PATTERN, $this->content, $matches);
         }
-        return (new CertificateList())->appendAll($matches);
+        return (new CertificateIterator())->appendAll($matches);
     }
 }

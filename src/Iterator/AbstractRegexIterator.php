@@ -6,24 +6,24 @@
  * Time: 9:52
  */
 
-namespace ImdbScraper\Lists;
+namespace ImdbScraper\Iterator;
 
 
-abstract class RegexList extends \ArrayObject
+abstract class AbstractRegexIterator extends \ArrayObject
 {
     /** @var string */
-    protected $className;
+    protected $modelClassName;
 
     /**
      * @param array $matches
-     * @return RegexList
+     * @return AbstractRegexIterator
      */
-    public function appendAll(array $matches): RegexList
+    public function appendAll(array $matches): AbstractRegexIterator
     {
         if ($matches && !empty($matches[0])) {
             $keys = count($matches[0]);
             for ($i = 0; $i < $keys; ++$i) {
-                $this->append((new $this->className())->importData($matches, $i));
+                $this->append((new $this->modelClassName())->importData($matches, $i));
             }
         }
         return $this;

@@ -6,7 +6,7 @@
  * Time: 11:22
  */
 
-namespace ImdbScraper\Utils;
+namespace ImdbScraper\Helper;
 
 use Curl\Curl;
 

@@ -6,7 +6,7 @@
  * Time: 13:06
  */
 
-namespace ImdbScraper\Utils;
+namespace ImdbScraper\Helper;
 
 
 class Cleaner

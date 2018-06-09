@@ -6,10 +6,10 @@
  * Time: 22:58
  */
 
-namespace ImdbScraper\Mapper;
+namespace ImdbScraper\Helper;
 
 
-class Country
+class CountryName
 {
     public static function getMappedValue(string $value): string
     {

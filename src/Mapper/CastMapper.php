@@ -6,12 +6,12 @@
  * Time: 15:07
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Lists\CastPeopleList;
-use ImdbScraper\Lists\PeopleList;
+use ImdbScraper\Iterator\CastPeopleIterator;
+use ImdbScraper\Iterator\PeopleIterator;
 
-class Credits extends Page
+class CastMapper extends AbstractPageMapper
 {
 
     protected const CREDITS_PATTERN = '|<a href=\"/name/nm([^>]+)/([^>]+)\"> ([^>]+)</a>|U';
@@ -26,7 +26,7 @@ class Credits extends Page
         $this->setFolder('fullcredits');
     }
 
-    public function setContent(?string $content): Page
+    public function setContent(?string $content): AbstractPageMapper
     {
         parent::setContent($content);
 
@@ -37,8 +37,8 @@ class Credits extends Page
                 $this->setDirectorsContent($arrayTemp[0]);
             }
         }
-        if (strpos($this->content, "Writing Credits") !== false) {
-            $arrayTemp = explode("Writing Credits", $this->content);
+        if (strpos($this->content, "Writing CastMapper") !== false) {
+            $arrayTemp = explode("Writing CastMapper", $this->content);
             $arrayTemp = explode("</table>", $arrayTemp[1]);
             if (!empty($arrayTemp[0])) {
                 $this->setWritersContent($arrayTemp[0]);
@@ -49,15 +49,15 @@ class Credits extends Page
     }
 
     /**
-     * @return PeopleList
+     * @return PeopleIterator
      */
-    public function getDirectors(): PeopleList
+    public function getDirectors(): PeopleIterator
     {
         $matches = [];
         if (!empty($this->directorsContent)) {
             preg_match_all(static::CREDITS_PATTERN, $this->getDirectorsContent(), $matches);
         }
-        return (new PeopleList())->appendAll($matches);
+        return (new PeopleIterator())->appendAll($matches);
     }
 
     /**
@@ -70,24 +70,24 @@ class Credits extends Page
 
     /**
      * @param string $directorsContent
-     * @return Credits
+     * @return CastMapper
      */
-    public function setDirectorsContent(string $directorsContent): Credits
+    public function setDirectorsContent(string $directorsContent): CastMapper
     {
         $this->directorsContent = $directorsContent;
         return $this;
     }
 
     /**
-     * @return PeopleList
+     * @return PeopleIterator
      */
-    public function getWriters(): PeopleList
+    public function getWriters(): PeopleIterator
     {
         $matches = [];
         if (!empty($this->writersContent)) {
             preg_match_all(static::CREDITS_PATTERN, $this->getWritersContent(), $matches);
         }
-        return (new PeopleList())->appendAll($matches);
+        return (new PeopleIterator())->appendAll($matches);
     }
 
     /**
@@ -100,21 +100,21 @@ class Credits extends Page
 
     /**
      * @param string $writersContent
-     * @return Credits
+     * @return CastMapper
      */
-    public function setWritersContent(string $writersContent): Credits
+    public function setWritersContent(string $writersContent): CastMapper
     {
         $this->writersContent = $writersContent;
         return $this;
     }
 
     /**
-     * @return CastPeopleList
+     * @return CastPeopleIterator
      */
-    public function getCast(): CastPeopleList
+    public function getCast(): CastPeopleIterator
     {
         $matches = [];
         preg_match_all(static::CAST_PATTERN, $this->getContent(), $matches);
-        return (new CastPeopleList())->appendAll($matches);
+        return (new CastPeopleIterator())->appendAll($matches);
     }
 }

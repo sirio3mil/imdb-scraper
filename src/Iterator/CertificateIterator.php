@@ -1,20 +1,19 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: reynier.delarosa
+ * User: sirio
  * Date: 08/06/2018
- * Time: 13:00
+ * Time: 23:46
  */
 
-namespace ImdbScraper\Lists;
+namespace ImdbScraper\Iterator;
 
 
-class LocationList extends RegexList
+class CertificateIterator extends AbstractRegexIterator
 {
-
     public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
     {
         parent::__construct($input, $flags, $iterator_class);
-        $this->className = 'ImdbScraper\Model\Location';
+        $this->modelClassName = 'ImdbScraper\Model\Certificate';
     }
 }

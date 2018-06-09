@@ -1,19 +1,19 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: sirio
- * Date: 07/06/2018
- * Time: 22:31
+ * User: reynier.delarosa
+ * Date: 31/05/2018
+ * Time: 13:18
  */
 
-namespace ImdbScraper\Lists;
+namespace ImdbScraper\Iterator;
 
-
-class EpisodeList extends RegexList
+class PeopleIterator extends AbstractRegexIterator
 {
+
     public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
     {
         parent::__construct($input, $flags, $iterator_class);
-        $this->className = 'ImdbScraper\Model\Episode';
+        $this->modelClassName = 'ImdbScraper\Model\People';
     }
 }

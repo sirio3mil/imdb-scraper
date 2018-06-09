@@ -8,20 +8,20 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Lists\CertificateList;
+use ImdbScraper\Iterator\CertificateIterator;
 use ImdbScraper\Model\Certificate;
-use ImdbScraper\Pages\ParentalGuide;
+use ImdbScraper\Mapper\ParentalGuideMapper;
 use PHPUnit\Framework\TestCase;
 
 class ParentalGuideTest extends TestCase
 {
 
-    /** @var ParentalGuide $imdbScrapper */
+    /** @var ParentalGuideMapper $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = (new ParentalGuide())->setImdbNumber(5463162)->setContentFromUrl();
+        $this->imdbScrapper = (new ParentalGuideMapper())->setImdbNumber(5463162)->setContentFromUrl();
         parent::__construct($name, $data, $dataName);
     }
 
@@ -29,7 +29,7 @@ class ParentalGuideTest extends TestCase
     {
         /** @var int $found */
         $found = 0;
-        /** @var CertificateList $certificates */
+        /** @var CertificateIterator $certificates */
         $certificates = $this->imdbScrapper->getCertificates();
         /** @var Certificate $certificate */
         foreach ($certificates as $certificate) {

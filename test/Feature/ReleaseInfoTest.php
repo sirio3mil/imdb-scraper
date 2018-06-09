@@ -8,22 +8,22 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Lists\AlsoKnownAsList;
-use ImdbScraper\Lists\ReleaseList;
+use ImdbScraper\Iterator\AlsoKnownAsIterator;
+use ImdbScraper\Iterator\ReleaseIterator;
 use ImdbScraper\Model\AlsoKnownAs;
 use ImdbScraper\Model\Release;
-use ImdbScraper\Pages\ReleaseInfo;
+use ImdbScraper\Mapper\ReleaseMapper;
 use PHPUnit\Framework\TestCase;
 
 class ReleaseInfoTest extends TestCase
 {
 
-    /** @var ReleaseInfo $imdbScrapper */
+    /** @var ReleaseMapper $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = (new ReleaseInfo())->setImdbNumber(5463162)->setContentFromUrl();
+        $this->imdbScrapper = (new ReleaseMapper())->setImdbNumber(5463162)->setContentFromUrl();
         parent::__construct($name, $data, $dataName);
     }
 
@@ -31,7 +31,7 @@ class ReleaseInfoTest extends TestCase
     {
         /** @var int $found */
         $found = 0;
-        /** @var AlsoKnownAsList $alsoKnownAs */
+        /** @var AlsoKnownAsIterator $alsoKnownAs */
         $alsoKnownAs = $this->imdbScrapper->getAlsoKnownAs();
         /** @var AlsoKnownAs $known */
         foreach ($alsoKnownAs as $known) {
@@ -54,7 +54,7 @@ class ReleaseInfoTest extends TestCase
     {
         /** @var int $found */
         $found = 0;
-        /** @var ReleaseList $releases */
+        /** @var ReleaseIterator $releases */
         $releases = $this->imdbScrapper->getReleaseDates();
         /** @var Release $release */
         foreach ($releases as $release) {

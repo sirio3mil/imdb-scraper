@@ -6,12 +6,12 @@
  * Time: 15:40
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
 
-use ImdbScraper\Lists\EpisodeList;
+use ImdbScraper\Iterator\EpisodeIterator;
 
-class Episodes extends Page
+class EpisodeListMapper extends AbstractPageMapper
 {
 
     /** @var string */
@@ -22,9 +22,9 @@ class Episodes extends Page
 
     /**
      * @param string $folder
-     * @return Page
+     * @return AbstractPageMapper
      */
-    public function setFolder(string $folder): Page
+    public function setFolder(string $folder): AbstractPageMapper
     {
         return parent::setFolder('episodes?season=' . $folder);
     }
@@ -39,23 +39,23 @@ class Episodes extends Page
 
     /**
      * @param int $season
-     * @return Page
+     * @return AbstractPageMapper
      */
-    public function setSeason(int $season): Page
+    public function setSeason(int $season): AbstractPageMapper
     {
         $this->season = $season;
         return $this->setFolder(strval($this->season));
     }
 
     /**
-     * @return EpisodeList
+     * @return EpisodeIterator
      */
-    public function getEpisodes(): EpisodeList
+    public function getEpisodes(): EpisodeIterator
     {
         $matches = [];
         if (!empty($this->content)) {
             preg_match_all(static::EPISODE_LIST_PATTERN, $this->content, $matches);
         }
-        return (new EpisodeList())->appendAll($matches);
+        return (new EpisodeIterator())->appendAll($matches);
     }
 }

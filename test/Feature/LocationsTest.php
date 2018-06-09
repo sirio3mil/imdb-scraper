@@ -8,26 +8,26 @@
 
 namespace Tests\Feature;
 
-use ImdbScraper\Lists\LocationList;
+use ImdbScraper\Iterator\LocationIterator;
 use ImdbScraper\Model\Location;
-use ImdbScraper\Pages\Locations;
+use ImdbScraper\Mapper\LocationMapper;
 use PHPUnit\Framework\TestCase;
 
 class LocationsTest extends TestCase
 {
 
-    /** @var Locations $imdbScrapper */
+    /** @var LocationMapper $imdbScrapper */
     protected $imdbScrapper;
 
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
-        $this->imdbScrapper = (new Locations())->setImdbNumber(3778644)->setContentFromUrl();
+        $this->imdbScrapper = (new LocationMapper())->setImdbNumber(3778644)->setContentFromUrl();
         parent::__construct($name, $data, $dataName);
     }
 
     public function testGetLocations()
     {
-        /** @var LocationList $locations */
+        /** @var LocationIterator $locations */
         $locations = $this->imdbScrapper->getLocations();
         /** @var Location $location */
         $location = $locations->getIterator()->current();

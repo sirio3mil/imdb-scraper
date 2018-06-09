@@ -6,12 +6,12 @@
  * Time: 17:02
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
 
-use ImdbScraper\Lists\KeywordList;
+use ImdbScraper\Iterator\KeywordIterator;
 
-class Keywords extends Page
+class KeywordMapper extends AbstractPageMapper
 {
 
     /** @var string */
@@ -38,14 +38,14 @@ class Keywords extends Page
     }
 
     /**
-     * @return KeywordList
+     * @return KeywordIterator
      */
-    public function getKeywords(): KeywordList
+    public function getKeywords(): KeywordIterator
     {
         $matches = [];
         if (!empty($this->content)) {
             preg_match_all(static::KEYWORD_PATTERN, $this->content, $matches);
         }
-        return (new KeywordList())->appendAll($matches);
+        return (new KeywordIterator())->appendAll($matches);
     }
 }

@@ -6,12 +6,12 @@
  * Time: 16:52
  */
 
-namespace ImdbScraper\Pages;
+namespace ImdbScraper\Mapper;
 
 
-use ImdbScraper\Lists\LocationList;
+use ImdbScraper\Iterator\LocationIterator;
 
-class Locations extends Page
+class LocationMapper extends AbstractPageMapper
 {
 
     /** @var string */
@@ -23,14 +23,14 @@ class Locations extends Page
     }
 
     /**
-     * @return LocationList
+     * @return LocationIterator
      */
-    public function getLocations(): LocationList
+    public function getLocations(): LocationIterator
     {
         $matches = [];
         if (!empty($this->content)) {
             preg_match_all(static::LOCATIONS_PATTERN, $this->content, $matches);
         }
-        return (new LocationList())->appendAll($matches);
+        return (new LocationIterator())->appendAll($matches);
     }
 }

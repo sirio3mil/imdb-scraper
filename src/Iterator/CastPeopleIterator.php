@@ -6,14 +6,14 @@
  * Time: 13:29
  */
 
-namespace ImdbScraper\Lists;
+namespace ImdbScraper\Iterator;
 
 
-class CastPeopleList extends RegexList
+class CastPeopleIterator extends AbstractRegexIterator
 {
     public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
     {
         parent::__construct($input, $flags, $iterator_class);
-        $this->className = 'ImdbScraper\Model\CastPeople';
+        $this->modelClassName = 'ImdbScraper\Model\CastPeople';
     }
 }
