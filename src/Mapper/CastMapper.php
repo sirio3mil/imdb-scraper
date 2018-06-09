@@ -37,8 +37,8 @@ class CastMapper extends AbstractPageMapper
                 $this->setDirectorsContent($arrayTemp[0]);
             }
         }
-        if (strpos($this->content, "Writing CastMapper") !== false) {
-            $arrayTemp = explode("Writing CastMapper", $this->content);
+        if (strpos($this->content, "Writing Credits") !== false) {
+            $arrayTemp = explode("Writing Credits", $this->content);
             $arrayTemp = explode("</table>", $arrayTemp[1]);
             if (!empty($arrayTemp[0])) {
                 $this->setWritersContent($arrayTemp[0]);
