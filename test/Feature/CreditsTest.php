@@ -9,9 +9,9 @@
 namespace Tests\Feature;
 
 use ImdbScraper\Model\CastPeople;
-use ImdbScraper\Iterator\CastPeopleIterator;
+use ImdbScraper\Iterator\CastIterator;
 use ImdbScraper\Model\People;
-use ImdbScraper\Iterator\PeopleIterator;
+use ImdbScraper\Iterator\PersonIterator;
 use ImdbScraper\Mapper\CastMapper;
 use PHPUnit\Framework\TestCase;
 
@@ -30,7 +30,7 @@ class CreditsTest extends TestCase
     public function testGetCast()
     {
         $found = 0;
-        /** @var CastPeopleIterator $cast */
+        /** @var CastIterator $cast */
         $cast = $this->imdbScrapper->getCast();
         /** @var CastPeople $actor */
         foreach ($cast as $actor) {
@@ -53,7 +53,7 @@ class CreditsTest extends TestCase
 
     public function testGetWriters()
     {
-        /** @var PeopleIterator $writers */
+        /** @var PersonIterator $writers */
         $writers = $this->imdbScrapper->getWriters();
         $ids = [];
         /** @var People $writer */
@@ -67,6 +67,6 @@ class CreditsTest extends TestCase
     {
         /** @var People $director */
         $director = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
-        $this->assertEquals(new PeopleIterator([$director]), $this->imdbScrapper->getDirectors());
+        $this->assertEquals(new PersonIterator([$director]), $this->imdbScrapper->getDirectors());
     }
 }

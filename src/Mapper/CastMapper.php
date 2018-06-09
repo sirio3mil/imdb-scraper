@@ -8,15 +8,14 @@
 
 namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Iterator\CastPeopleIterator;
-use ImdbScraper\Iterator\PeopleIterator;
+use ImdbScraper\Iterator\CastIterator;
+use ImdbScraper\Iterator\PersonIterator;
+use ImdbScraper\Parser\CastParser;
+use ImdbScraper\Parser\DirectorParser;
+use ImdbScraper\Parser\WriterParser;
 
 class CastMapper extends AbstractPageMapper
 {
-
-    protected const DIRECTOR_PATTERN = '|<a href="/name/nm([^>]+)/?ref_=ttfc_fc_dr([0-9]+)">([^>]+)</a>|U';
-    protected const WRITERS_PATTERN = '|<a href="/name/nm([^>]+)/?ref_=ttfc_fc_wr([0-9]+)">([^>]+)</a>|U';
-    protected const CAST_PATTERN = '|<a href=\"/name/nm([^>]+)/([^>]+)\"itemprop=\'url\'><span class=\"itemprop\" itemprop=\"name\">([^>]+)</span></a></td><td class=\"ellipsis\">(.*)</td><td class=\"character\">(.*)</td>|U';
 
     public function __construct()
     {
@@ -24,36 +23,26 @@ class CastMapper extends AbstractPageMapper
     }
 
     /**
-     * @return PeopleIterator
+     * @return PersonIterator
      */
-    public function getDirectors(): PeopleIterator
+    public function getDirectors(): PersonIterator
     {
-        $matches = [];
-        if (!empty($this->content)) {
-            preg_match_all(static::DIRECTOR_PATTERN, $this->content, $matches);
-        }
-        return (new PeopleIterator())->appendAll($matches);
+        return (new DirectorParser($this))->getIterator();
     }
 
     /**
-     * @return PeopleIterator
+     * @return PersonIterator
      */
-    public function getWriters(): PeopleIterator
+    public function getWriters(): PersonIterator
     {
-        $matches = [];
-        if (!empty($this->content)) {
-            preg_match_all(static::WRITERS_PATTERN, $this->content, $matches);
-        }
-        return (new PeopleIterator())->appendAll($matches);
+        return (new WriterParser($this))->getIterator();
     }
 
     /**
-     * @return CastPeopleIterator
+     * @return CastIterator
      */
-    public function getCast(): CastPeopleIterator
+    public function getCast(): CastIterator
     {
-        $matches = [];
-        preg_match_all(static::CAST_PATTERN, $this->getContent(), $matches);
-        return (new CastPeopleIterator())->appendAll($matches);
+        return (new CastParser($this))->getIterator();
     }
 }
