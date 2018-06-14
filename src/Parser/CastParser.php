@@ -19,6 +19,6 @@ class CastParser extends AbstractIteratorParser
 
     public function __construct(CastMapper $pageMapper)
     {
-        parent::__construct($pageMapper,'ImdbScraper\Iterator\CastIterator');
+        parent::__construct($pageMapper, 'ImdbScraper\Iterator\CastIterator');
     }
 }
