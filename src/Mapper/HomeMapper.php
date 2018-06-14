@@ -12,10 +12,12 @@ use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Parser\ColorParser;
 use ImdbScraper\Parser\DurationParser;
+use ImdbScraper\Parser\EpisodeNumberParser;
 use ImdbScraper\Parser\GenreParser;
 use ImdbScraper\Parser\LanguageParser;
 use ImdbScraper\Parser\OriginalTitleParser;
 use ImdbScraper\Parser\RecommendationParser;
+use ImdbScraper\Parser\SeasonNumberParser;
 use ImdbScraper\Parser\SoundParser;
 use ImdbScraper\Parser\TotalSeasonsParser;
 use ImdbScraper\Parser\TitleParser;
@@ -27,9 +29,6 @@ class HomeMapper extends AbstractPageMapper
 {
 
     protected const COUNTRY_PATTERN = '|country_of_origin=([^>]+)>([^>]+)<|U';
-    protected const SEASON_PATTERN = '|>Season ([0-9]{1,2}) <|U';
-    protected const EPISODE_PATTERN = '|> Episode ([0-9]{1,2})<|U';
-
     protected const SEASON_SPLITTER = '<h4 class="float-left">Seasons</h4>';
 
     /** @var int */
@@ -262,11 +261,7 @@ class HomeMapper extends AbstractPageMapper
      */
     protected function setEpisodeNumber(): HomeMapper
     {
-        $matches = [];
-        preg_match_all(static::EPISODE_PATTERN, $this->content, $matches);
-        if (!empty($matches[1][0]) && is_numeric($matches[1][0])) {
-            $this->episode = (int)($matches[1][0]);
-        }
+        $this->episode = (new EpisodeNumberParser($this))->setPosition(1)->getValue();
         return $this;
     }
 
@@ -275,11 +270,7 @@ class HomeMapper extends AbstractPageMapper
      */
     protected function setSeasonNumber(): HomeMapper
     {
-        $matches = [];
-        preg_match_all(static::SEASON_PATTERN, $this->content, $matches);
-        if (!empty($matches[1][0]) && is_numeric($matches[1][0])) {
-            $this->season = (int)($matches[1][0]);
-        }
+        $this->season = (new SeasonNumberParser($this))->setPosition(1)->getValue();
         return $this;
     }
 
