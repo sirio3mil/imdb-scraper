@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser;
 
 
+use ImdbScraper\Iterator\AbstractRegexIterator;
 use ImdbScraper\Mapper\AbstractPageMapper;
 
 abstract class AbstractIteratorParser extends AbstractParser

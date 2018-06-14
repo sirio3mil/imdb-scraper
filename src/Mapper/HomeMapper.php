@@ -16,6 +16,7 @@ use ImdbScraper\Parser\GenreParser;
 use ImdbScraper\Parser\LanguageParser;
 use ImdbScraper\Parser\OriginalTitleParser;
 use ImdbScraper\Parser\RecommendationParser;
+use ImdbScraper\Parser\ScoreParser;
 use ImdbScraper\Parser\SeasonNumberParser;
 use ImdbScraper\Parser\SoundParser;
 use ImdbScraper\Parser\TotalSeasonsParser;
