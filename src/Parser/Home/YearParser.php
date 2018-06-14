@@ -6,7 +6,7 @@
  * Time: 16:59
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class YearParser extends AbstractIntegerParser

@@ -8,22 +8,22 @@
 
 namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Parser\ColorParser;
-use ImdbScraper\Parser\CountryParser;
-use ImdbScraper\Parser\DurationParser;
-use ImdbScraper\Parser\EpisodeNumberParser;
-use ImdbScraper\Parser\GenreParser;
-use ImdbScraper\Parser\LanguageParser;
-use ImdbScraper\Parser\OriginalTitleParser;
-use ImdbScraper\Parser\RecommendationParser;
-use ImdbScraper\Parser\ScoreParser;
-use ImdbScraper\Parser\SeasonNumberParser;
-use ImdbScraper\Parser\SoundParser;
-use ImdbScraper\Parser\TotalSeasonsParser;
-use ImdbScraper\Parser\TitleParser;
-use ImdbScraper\Parser\TvShowParser;
-use ImdbScraper\Parser\VotesParser;
-use ImdbScraper\Parser\YearParser;
+use ImdbScraper\Parser\Home\ColorParser;
+use ImdbScraper\Parser\Home\CountryParser;
+use ImdbScraper\Parser\Home\DurationParser;
+use ImdbScraper\Parser\Home\EpisodeNumberParser;
+use ImdbScraper\Parser\Home\GenreParser;
+use ImdbScraper\Parser\Home\LanguageParser;
+use ImdbScraper\Parser\Home\OriginalTitleParser;
+use ImdbScraper\Parser\Home\RecommendationParser;
+use ImdbScraper\Parser\Home\ScoreParser;
+use ImdbScraper\Parser\Home\SeasonNumberParser;
+use ImdbScraper\Parser\Home\SoundParser;
+use ImdbScraper\Parser\Home\TotalSeasonsParser;
+use ImdbScraper\Parser\Home\TitleParser;
+use ImdbScraper\Parser\Home\TvShowParser;
+use ImdbScraper\Parser\Home\VoteParser;
+use ImdbScraper\Parser\Home\YearParser;
 
 class HomeMapper extends AbstractPageMapper
 {
@@ -184,7 +184,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getVotes(): int
     {
-        $votes = (new VotesParser($this))->setPosition(1)->getValue();
+        $votes = (new VoteParser($this))->setPosition(1)->getValue();
         return $votes ?? 0;
     }
 

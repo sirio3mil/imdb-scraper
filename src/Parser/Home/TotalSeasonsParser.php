@@ -6,7 +6,7 @@
  * Time: 17:06
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class TotalSeasonsParser extends AbstractCounterParser

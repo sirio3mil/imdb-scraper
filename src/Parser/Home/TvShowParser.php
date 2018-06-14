@@ -6,7 +6,7 @@
  * Time: 17:15
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class TvShowParser extends AbstractIntegerParser

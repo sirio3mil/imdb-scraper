@@ -6,7 +6,7 @@
  * Time: 22:44
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class EpisodeNumberParser extends AbstractIntegerParser

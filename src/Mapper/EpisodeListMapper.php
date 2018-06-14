@@ -10,7 +10,7 @@ namespace ImdbScraper\Mapper;
 
 
 use ImdbScraper\Iterator\EpisodeIterator;
-use ImdbScraper\Parser\EpisodeListParser;
+use ImdbScraper\Parser\EpisodeList\EpisodeListParser;
 
 class EpisodeListMapper extends AbstractPageMapper
 {

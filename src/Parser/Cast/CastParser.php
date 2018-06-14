@@ -6,7 +6,7 @@
  * Time: 23:25
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Cast;
 
 
 use ImdbScraper\Mapper\CastMapper;

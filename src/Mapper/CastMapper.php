@@ -10,9 +10,9 @@ namespace ImdbScraper\Mapper;
 
 use ImdbScraper\Iterator\CastIterator;
 use ImdbScraper\Iterator\PersonIterator;
-use ImdbScraper\Parser\CastParser;
-use ImdbScraper\Parser\DirectorParser;
-use ImdbScraper\Parser\WriterParser;
+use ImdbScraper\Parser\Cast\CastParser;
+use ImdbScraper\Parser\Cast\DirectorParser;
+use ImdbScraper\Parser\Cast\WriterParser;
 
 class CastMapper extends AbstractPageMapper
 {

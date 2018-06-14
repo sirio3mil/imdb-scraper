@@ -6,7 +6,7 @@
  * Time: 22:46
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class SeasonNumberParser extends AbstractIntegerParser

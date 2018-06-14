@@ -6,10 +6,10 @@
  * Time: 17:31
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
-class VotesParser extends AbstractIntegerParser
+class VoteParser extends AbstractIntegerParser
 {
     /** @var string */
     protected const PATTERN = '|<span class="small" itemprop="ratingCount">([^>]+)</span>|U';

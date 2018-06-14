@@ -6,8 +6,10 @@
  * Time: 22:39
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
+
+use ImdbScraper\Parser\StringValidator;
 
 class GenreParser extends AbstractArrayParser
 {

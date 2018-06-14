@@ -6,8 +6,10 @@
  * Time: 22:30
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
+
+use ImdbScraper\Parser\IntegerValidator;
 
 class RecommendationParser extends AbstractArrayParser
 {

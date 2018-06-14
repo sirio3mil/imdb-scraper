@@ -6,7 +6,7 @@
  * Time: 23:38
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\EpisodeList;
 
 
 use ImdbScraper\Mapper\EpisodeListMapper;

@@ -6,10 +6,11 @@
  * Time: 22:48
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 use ImdbScraper\Helper\CountryName;
+use ImdbScraper\Parser\StringValidator;
 
 class CountryParser extends AbstractArrayParser
 {

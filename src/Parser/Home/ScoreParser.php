@@ -6,7 +6,7 @@
  * Time: 17:03
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class ScoreParser extends AbstractIntegerParser

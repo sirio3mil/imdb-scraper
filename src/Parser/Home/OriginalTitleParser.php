@@ -6,7 +6,7 @@
  * Time: 16:51
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class OriginalTitleParser extends AbstractStringParser

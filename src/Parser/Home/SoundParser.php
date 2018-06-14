@@ -6,8 +6,10 @@
  * Time: 22:28
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
+
+use ImdbScraper\Parser\StringValidator;
 
 class SoundParser extends AbstractArrayParser
 {

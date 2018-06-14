@@ -6,7 +6,7 @@
  * Time: 17:35
  */
 
-namespace ImdbScraper\Parser;
+namespace ImdbScraper\Parser\Home;
 
 
 class ColorParser extends AbstractStringParser
