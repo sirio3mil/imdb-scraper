@@ -29,14 +29,6 @@ abstract class AbstractParser
     }
 
     /**
-     * @return AbstractPageMapper
-     */
-    protected function getPageMapper(): AbstractPageMapper
-    {
-        return $this->pageMapper;
-    }
-
-    /**
      * @param mixed $iteratorClassName
      * @return AbstractParser
      */
@@ -47,6 +39,14 @@ abstract class AbstractParser
     }
 
     /**
+     * @return AbstractPageMapper
+     */
+    protected function getPageMapper(): AbstractPageMapper
+    {
+        return $this->pageMapper;
+    }
+
+    /**
      * @param AbstractPageMapper $pageMapper
      * @return AbstractParser
      */
@@ -54,20 +54,5 @@ abstract class AbstractParser
     {
         $this->pageMapper = $pageMapper;
         return $this;
-    }
-
-    /**
-     * @return AbstractRegexIterator
-     */
-    public function getIterator(): AbstractRegexIterator
-    {
-        /** @var array $matches */
-        $matches = [];
-        /** @var string $content */
-        $content = $this->pageMapper->getContent();
-        if ($content) {
-            preg_match_all(static::PATTERN, $content, $matches);
-        }
-        return (new $this->iteratorClassName())->appendAll($matches);
     }
 }

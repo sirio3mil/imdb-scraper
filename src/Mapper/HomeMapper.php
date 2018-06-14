@@ -13,7 +13,6 @@ use ImdbScraper\Helper\Cleaner;
 
 class HomeMapper extends AbstractPageMapper
 {
-    protected const IMDB_NUMBER_PATTERN = '|title/tt([^>]+)/|U';
     protected const TITLE_PATTERN = '|<title>([^>]+) \(|U';
     protected const ORIGINAL_TITLE_PATTERN = '|<div class=\"originalTitle\">([^>]+)<span|U';
     protected const TV_SHOW_PATTERN = '|<div class=\"titleParent\"><a href=\"/title/tt([0-9]{7})|U';

@@ -11,7 +11,7 @@ namespace ImdbScraper\Parser;
 
 use ImdbScraper\Mapper\EpisodeListMapper;
 
-class EpisodeListParser extends AbstractParser
+class EpisodeListParser extends AbstractIteratorParser
 {
 
     /** @var string */

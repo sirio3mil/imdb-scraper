@@ -11,7 +11,7 @@ namespace ImdbScraper\Parser;
 
 use ImdbScraper\Mapper\CastMapper;
 
-class WriterParser extends AbstractParser
+class WriterParser extends AbstractIteratorParser
 {
 
     /** @var string */
