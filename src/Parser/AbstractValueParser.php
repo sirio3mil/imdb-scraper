@@ -9,10 +9,27 @@
 namespace ImdbScraper\Parser;
 
 
-class AbstractValueParser extends AbstractParser
+abstract class AbstractValueParser extends AbstractParser
 {
     /** @var int */
     protected $position;
+
+    public function getValue()
+    {
+        /** @var array $matches */
+        $matches = [];
+        /** @var string $content */
+        $content = $this->pageMapper->getContent();
+        if ($content) {
+            preg_match_all(static::PATTERN, $content, $matches);
+        }
+        $value = null;
+        $index = $this->getPosition();
+        if ($matches && array_key_exists($index, $matches) && !empty($matches[$index][0])) {
+            $value = static::validateValue($matches[$index][0]);
+        }
+        return $value;
+    }
 
     /**
      * @return int
@@ -21,7 +38,7 @@ class AbstractValueParser extends AbstractParser
     {
         return $this->position;
     }
-
+    
     /**
      * @param int $position
      * @return AbstractValueParser
@@ -31,4 +48,6 @@ class AbstractValueParser extends AbstractParser
         $this->position = $position;
         return $this;
     }
+
+    protected static abstract function validateValue($value);
 }

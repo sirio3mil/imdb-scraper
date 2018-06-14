@@ -10,6 +10,7 @@ namespace ImdbScraper\Mapper;
 
 use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
+use ImdbScraper\Parser\ColorParser;
 use ImdbScraper\Parser\OriginalTitleParser;
 use ImdbScraper\Parser\SeasonsParser;
 use ImdbScraper\Parser\TitleParser;
@@ -20,7 +21,6 @@ use ImdbScraper\Parser\YearParser;
 class HomeMapper extends AbstractPageMapper
 {
 
-    protected const COLOR_PATTERN = '|<a href=\"/search/title\?colors=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
     protected const SOUND_PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
     protected const COUNTRY_PATTERN = '|country_of_origin=([^>]+)>([^>]+)<|U';
     protected const LANGUAGE_PATTERN = '|primary_language=([^>]+)>([^>]+)<|U';
@@ -71,7 +71,7 @@ class HomeMapper extends AbstractPageMapper
     public function getTvShow(): ?int
     {
         if ($this->isEpisode()) {
-            return (new TvShowParser($this))->setPosition(1)->getInteger();
+            return (new TvShowParser($this))->setPosition(1)->getValue();
         }
         return null;
     }
@@ -155,13 +155,13 @@ class HomeMapper extends AbstractPageMapper
      */
     public function setTitle(): HomeMapper
     {
-        $title = (new TitleParser($this))->setPosition(1)->getString();
+        $title = (new TitleParser($this))->setPosition(1)->getValue();
         if ($this->isEpisode()) {
             $parts = explode("\"", $title);
             $title = end($parts);
         } else {
             if (strpos($this->content, "(original title)") !== false) {
-                $title = (new OriginalTitleParser($this))->setPosition(1)->getString();
+                $title = (new OriginalTitleParser($this))->setPosition(1)->getValue();
             } else {
                 $parts = explode("(", $title);
                 $title = trim($parts[0]);
@@ -170,7 +170,7 @@ class HomeMapper extends AbstractPageMapper
         if (empty($title)) {
             throw new \Exception("Error fetching original title");
         }
-        $this->title = Cleaner::clearField($title);
+        $this->title = $title;
         return $this;
     }
 
@@ -179,7 +179,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getYear(): ?int
     {
-        return (new YearParser($this))->setPosition(2)->getInteger();
+        return (new YearParser($this))->setPosition(2)->getValue();
     }
 
     /**
@@ -187,7 +187,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getDuration(): ?int
     {
-        return (new DurationParser($this))->setPosition(1)->getInteger();
+        return (new DurationParser($this))->setPosition(1)->getValue();
     }
 
     /**
@@ -195,7 +195,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getScore(): int
     {
-        $score = (new ScoreParser($this))->setPosition(1)->getInteger();
+        $score = (new ScoreParser($this))->setPosition(1)->getValue();
         return $score ?? 0;
     }
 
@@ -204,7 +204,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getVotes(): int
     {
-        $votes = (new VotesParser($this))->setPosition(1)->getInteger();
+        $votes = (new VotesParser($this))->setPosition(1)->getValue();
         return $votes ?? 0;
     }
 
@@ -213,9 +213,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getColor(): ?string
     {
-        $matches = array();
-        preg_match_all(static::COLOR_PATTERN, $this->content, $matches);
-        return (!empty($matches[2][0])) ? Cleaner::clearField(strip_tags($matches[2][0])) : null;
+        return (new ColorParser($this))->setPosition(2)->getValue();
     }
 
     /**

@@ -9,7 +9,7 @@
 namespace ImdbScraper\Parser;
 
 
-class AbstractCounterParser extends AbstractParser
+abstract class AbstractCounterParser extends AbstractParser
 {
     /**
      * @return null|int
