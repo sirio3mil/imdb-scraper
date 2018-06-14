@@ -11,6 +11,7 @@ namespace ImdbScraper\Mapper;
 use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Parser\ColorParser;
+use ImdbScraper\Parser\CountryParser;
 use ImdbScraper\Parser\DurationParser;
 use ImdbScraper\Parser\EpisodeNumberParser;
 use ImdbScraper\Parser\GenreParser;
@@ -28,7 +29,6 @@ use ImdbScraper\Parser\YearParser;
 class HomeMapper extends AbstractPageMapper
 {
 
-    protected const COUNTRY_PATTERN = '|country_of_origin=([^>]+)>([^>]+)<|U';
     protected const SEASON_SPLITTER = '<h4 class="float-left">Seasons</h4>';
 
     /** @var int */
@@ -218,15 +218,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getCountries(): array
     {
-        $countries = [];
-        $matches = [];
-        preg_match_all(static::COUNTRY_PATTERN, $this->content, $matches);
-        if (array_key_exists(2, $matches) && is_array($matches[2])) {
-            foreach ($matches[2] as $country) {
-                $countries[] = CountryName::getMappedValue(Cleaner::clearField($country));
-            }
-        }
-        return array_unique($countries);
+        return (new CountryParser($this))->setPosition(2)->getArray();
     }
 
     /**
