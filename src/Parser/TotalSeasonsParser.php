@@ -9,7 +9,7 @@
 namespace ImdbScraper\Parser;
 
 
-class SeasonsParser extends AbstractCounterParser
+class TotalSeasonsParser extends AbstractCounterParser
 {
     /** @var string */
     protected const PATTERN = '|episodes\?season=([0-9]{1,2})|U';

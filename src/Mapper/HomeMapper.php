@@ -12,7 +12,7 @@ use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Parser\ColorParser;
 use ImdbScraper\Parser\OriginalTitleParser;
-use ImdbScraper\Parser\SeasonsParser;
+use ImdbScraper\Parser\TotalSeasonsParser;
 use ImdbScraper\Parser\TitleParser;
 use ImdbScraper\Parser\TvShowParser;
 use ImdbScraper\Parser\VotesParser;
@@ -51,7 +51,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getSeasons(): int
     {
-        return (new SeasonsParser($this))->getTotal();
+        return (new TotalSeasonsParser($this))->getTotal();
     }
 
     /**

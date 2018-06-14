@@ -38,7 +38,7 @@ abstract class AbstractValueParser extends AbstractParser
     {
         return $this->position;
     }
-    
+
     /**
      * @param int $position
      * @return AbstractValueParser
