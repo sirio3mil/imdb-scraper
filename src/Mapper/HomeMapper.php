@@ -14,12 +14,12 @@ use ImdbScraper\Parser\OriginalTitleParser;
 use ImdbScraper\Parser\SeasonsParser;
 use ImdbScraper\Parser\TitleParser;
 use ImdbScraper\Parser\TvShowParser;
+use ImdbScraper\Parser\VotesParser;
 use ImdbScraper\Parser\YearParser;
 
 class HomeMapper extends AbstractPageMapper
 {
 
-    protected const VOTES_PATTERN = '|<span class="small" itemprop="ratingCount">([^>]+)</span>|U';
     protected const COLOR_PATTERN = '|<a href=\"/search/title\?colors=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
     protected const SOUND_PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
     protected const COUNTRY_PATTERN = '|country_of_origin=([^>]+)>([^>]+)<|U';
@@ -204,12 +204,8 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getVotes(): int
     {
-        $matches = array();
-        preg_match_all(static::VOTES_PATTERN, $this->content, $matches);
-        if (empty($matches[1][0])) {
-            return 0;
-        }
-        return intval(filter_var($matches[1][0], FILTER_SANITIZE_NUMBER_INT));
+        $votes = (new VotesParser($this))->setPosition(1)->getInteger();
+        return $votes ?? 0;
     }
 
     /**
