@@ -9,6 +9,8 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractIntegerParser;
+
 class ScoreParser extends AbstractIntegerParser
 {
     /** @var string */

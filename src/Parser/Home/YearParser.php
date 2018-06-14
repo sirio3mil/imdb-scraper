@@ -9,6 +9,8 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractIntegerParser;
+
 class YearParser extends AbstractIntegerParser
 {
     /** @var string */

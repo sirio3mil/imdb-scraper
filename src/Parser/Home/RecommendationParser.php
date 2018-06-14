@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractArrayParser;
 use ImdbScraper\Parser\IntegerValidator;
 
 class RecommendationParser extends AbstractArrayParser

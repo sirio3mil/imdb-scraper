@@ -10,6 +10,7 @@ namespace ImdbScraper\Parser\Cast;
 
 
 use ImdbScraper\Mapper\CastMapper;
+use ImdbScraper\Parser\AbstractIteratorParser;
 
 class DirectorParser extends AbstractIteratorParser
 {

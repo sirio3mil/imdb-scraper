@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractArrayParser;
 use ImdbScraper\Parser\StringValidator;
 
 class LanguageParser extends AbstractArrayParser

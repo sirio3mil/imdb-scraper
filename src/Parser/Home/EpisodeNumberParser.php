@@ -9,6 +9,8 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractIntegerParser;
+
 class EpisodeNumberParser extends AbstractIntegerParser
 {
     /** @var string */

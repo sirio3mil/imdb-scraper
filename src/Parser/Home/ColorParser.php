@@ -9,6 +9,8 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractStringParser;
+
 class ColorParser extends AbstractStringParser
 {
     /** @var string */

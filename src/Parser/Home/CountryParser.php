@@ -10,6 +10,7 @@ namespace ImdbScraper\Parser\Home;
 
 
 use ImdbScraper\Helper\CountryName;
+use ImdbScraper\Parser\AbstractArrayParser;
 use ImdbScraper\Parser\StringValidator;
 
 class CountryParser extends AbstractArrayParser

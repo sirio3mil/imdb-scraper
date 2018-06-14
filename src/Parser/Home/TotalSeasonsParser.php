@@ -9,6 +9,8 @@
 namespace ImdbScraper\Parser\Home;
 
 
+use ImdbScraper\Parser\AbstractCounterParser;
+
 class TotalSeasonsParser extends AbstractCounterParser
 {
     /** @var string */
