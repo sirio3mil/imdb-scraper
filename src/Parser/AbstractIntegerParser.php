@@ -11,9 +11,5 @@ namespace ImdbScraper\Parser;
 
 abstract class AbstractIntegerParser extends AbstractValueParser
 {
-
-    protected static function validateValue($value)
-    {
-        return intval(filter_var(trim($value), FILTER_SANITIZE_NUMBER_INT));
-    }
+    use IntegerValidator;
 }

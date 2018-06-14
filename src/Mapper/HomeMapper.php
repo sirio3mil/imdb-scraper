@@ -110,20 +110,6 @@ class HomeMapper extends AbstractPageMapper
     }
 
     /**
-     * @param null|string $content
-     * @return AbstractPageMapper
-     * @throws \Exception
-     */
-    public function setContent(?string $content): AbstractPageMapper
-    {
-        parent::setContent($content);
-        if (!$this->content) {
-            throw new \Exception("Error fetching content from " . $this->getFullUrl());
-        }
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function haveReleaseInfo(): bool
@@ -139,7 +125,6 @@ class HomeMapper extends AbstractPageMapper
 
     /**
      * @return null|string
-     * @throws \Exception
      */
     public function getTitle(): ?string
     {
@@ -151,7 +136,6 @@ class HomeMapper extends AbstractPageMapper
 
     /**
      * @return HomeMapper
-     * @throws \Exception
      */
     public function setTitle(): HomeMapper
     {
@@ -166,9 +150,6 @@ class HomeMapper extends AbstractPageMapper
                 $parts = explode("(", $title);
                 $title = trim($parts[0]);
             }
-        }
-        if (empty($title)) {
-            throw new \Exception("Error fetching original title");
         }
         $this->title = $title;
         return $this;

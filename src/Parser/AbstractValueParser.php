@@ -9,7 +9,7 @@
 namespace ImdbScraper\Parser;
 
 
-abstract class AbstractValueParser extends AbstractParser
+abstract class AbstractValueParser extends AbstractParser implements ValueValidator
 {
     /** @var int */
     protected $position;
@@ -48,6 +48,4 @@ abstract class AbstractValueParser extends AbstractParser
         $this->position = $position;
         return $this;
     }
-
-    protected static abstract function validateValue($value);
 }
