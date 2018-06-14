@@ -10,15 +10,15 @@ namespace ImdbScraper\Mapper;
 
 use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
+use ImdbScraper\Parser\OriginalTitleParser;
+use ImdbScraper\Parser\SeasonsParser;
+use ImdbScraper\Parser\TitleParser;
+use ImdbScraper\Parser\TvShowParser;
+use ImdbScraper\Parser\YearParser;
 
 class HomeMapper extends AbstractPageMapper
 {
-    protected const TITLE_PATTERN = '|<title>([^>]+) \(|U';
-    protected const ORIGINAL_TITLE_PATTERN = '|<div class=\"originalTitle\">([^>]+)<span|U';
-    protected const TV_SHOW_PATTERN = '|<div class=\"titleParent\"><a href=\"/title/tt([0-9]{7})|U';
-    protected const YEAR_PATTERN = '|<title>([^>]+)([1-2][0-9][0-9][0-9])([^>]+)</title>|U';
-    protected const DURATION_PATTERN = '|datetime=\"PT([0-9]{1,3})M\"|U';
-    protected const SCORE_PATTERN = '|<span itemprop="ratingValue">([^>]+)</span>|U';
+
     protected const VOTES_PATTERN = '|<span class="small" itemprop="ratingCount">([^>]+)</span>|U';
     protected const COLOR_PATTERN = '|<a href=\"/search/title\?colors=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
     protected const SOUND_PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
@@ -27,7 +27,6 @@ class HomeMapper extends AbstractPageMapper
     protected const RECOMMENDATIONS_PATTERN = '|data-tconst=\"tt([0-9]{7})\"|U';
     protected const GENRE_PATTERN = '|genre/([^>]+)>([^>]+)<|U';
     protected const SEASON_PATTERN = '|>Season ([0-9]{1,2}) <|U';
-    protected const SEASONS_PATTERN = '|episodes\?season=([0-9]{1,2})|U';
     protected const EPISODE_PATTERN = '|> Episode ([0-9]{1,2})<|U';
 
     protected const SEASON_SPLITTER = '<h4 class="float-left">Seasons</h4>';
@@ -52,12 +51,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getSeasons(): int
     {
-        $matches = [];
-        preg_match_all(static::SEASONS_PATTERN, $this->content, $matches);
-        if ($matches) {
-            return count($matches[0]);
-        }
-        return 0;
+        return (new SeasonsParser($this))->getTotal();
     }
 
     /**
@@ -77,10 +71,7 @@ class HomeMapper extends AbstractPageMapper
     public function getTvShow(): ?int
     {
         if ($this->isEpisode()) {
-            preg_match_all(static::TV_SHOW_PATTERN, $this->content, $matches);
-            if (!empty($matches[1][0])) {
-                return (int)($matches[1][0]);
-            }
+            return (new TvShowParser($this))->setPosition(1)->getInteger();
         }
         return null;
     }
@@ -164,19 +155,13 @@ class HomeMapper extends AbstractPageMapper
      */
     public function setTitle(): HomeMapper
     {
-        $matches = [];
-        preg_match_all(static::TITLE_PATTERN, $this->content, $matches);
-        if (empty($matches[1][0])) {
-            throw new \Exception("Error fetching original title");
-        }
-        $title = html_entity_decode(trim($matches[1][0]), ENT_QUOTES);
+        $title = (new TitleParser($this))->setPosition(1)->getString();
         if ($this->isEpisode()) {
             $parts = explode("\"", $title);
             $title = end($parts);
         } else {
             if (strpos($this->content, "(original title)") !== false) {
-                preg_match_all(static::ORIGINAL_TITLE_PATTERN, $this->content, $matches);
-                $title = html_entity_decode(trim($matches[1][0]), ENT_QUOTES);
+                $title = (new OriginalTitleParser($this))->setPosition(1)->getString();
             } else {
                 $parts = explode("(", $title);
                 $title = trim($parts[0]);
@@ -185,7 +170,6 @@ class HomeMapper extends AbstractPageMapper
         if (empty($title)) {
             throw new \Exception("Error fetching original title");
         }
-        $title = str_replace('"', '', trim(strip_tags($title)));
         $this->title = Cleaner::clearField($title);
         return $this;
     }
@@ -195,11 +179,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getYear(): ?int
     {
-        preg_match_all(static::YEAR_PATTERN, $this->content, $matches);
-        if (!empty($matches[2][0])) {
-            return (is_numeric($matches[2][0])) ? (int)$matches[2][0] : null;
-        }
-        return null;
+        return (new YearParser($this))->setPosition(2)->getInteger();
     }
 
     /**
@@ -207,8 +187,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getDuration(): ?int
     {
-        preg_match_all(static::DURATION_PATTERN, $this->content, $matches);
-        return (!empty($matches[1][0])) ? (int)trim($matches[1][0]) : null;
+        return (new DurationParser($this))->setPosition(1)->getInteger();
     }
 
     /**
@@ -216,12 +195,8 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getScore(): int
     {
-        $matches = array();
-        preg_match_all(static::SCORE_PATTERN, $this->content, $matches);
-        if (empty($matches[1][0])) {
-            return 0;
-        }
-        return intval(filter_var($matches[1][0], FILTER_SANITIZE_NUMBER_INT)) / 20;
+        $score = (new ScoreParser($this))->setPosition(1)->getInteger();
+        return $score ?? 0;
     }
 
     /**

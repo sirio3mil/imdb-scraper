@@ -17,25 +17,9 @@ abstract class AbstractParser
     /** @var AbstractPageMapper */
     protected $pageMapper;
 
-    /** @var AbstractRegexIterator */
-    protected $iterator;
-
-    /** @var string */
-    protected $iteratorClassName;
-
-    public function __construct(AbstractPageMapper $pageMapper, string $iteratorClassName)
+    public function __construct(AbstractPageMapper $pageMapper)
     {
-        $this->setPageMapper($pageMapper)->setIteratorClassName($iteratorClassName);
-    }
-
-    /**
-     * @param mixed $iteratorClassName
-     * @return AbstractParser
-     */
-    protected function setIteratorClassName($iteratorClassName): AbstractParser
-    {
-        $this->iteratorClassName = $iteratorClassName;
-        return $this;
+        $this->setPageMapper($pageMapper);
     }
 
     /**
