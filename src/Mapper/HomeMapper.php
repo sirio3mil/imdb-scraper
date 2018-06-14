@@ -8,8 +8,6 @@
 
 namespace ImdbScraper\Mapper;
 
-use ImdbScraper\Helper\CountryName;
-use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Parser\ColorParser;
 use ImdbScraper\Parser\CountryParser;
 use ImdbScraper\Parser\DurationParser;
