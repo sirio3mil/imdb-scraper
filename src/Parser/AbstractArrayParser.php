@@ -32,6 +32,6 @@ abstract class AbstractArrayParser extends AbstractPositionParser
                 }
             }
         }
-        return $values;
+        return array_unique($values);
     }
 }

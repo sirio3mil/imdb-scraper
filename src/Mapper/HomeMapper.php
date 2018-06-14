@@ -11,7 +11,11 @@ namespace ImdbScraper\Mapper;
 use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Parser\ColorParser;
+use ImdbScraper\Parser\GenreParser;
+use ImdbScraper\Parser\LanguageParser;
 use ImdbScraper\Parser\OriginalTitleParser;
+use ImdbScraper\Parser\RecommendationParser;
+use ImdbScraper\Parser\SoundParser;
 use ImdbScraper\Parser\TotalSeasonsParser;
 use ImdbScraper\Parser\TitleParser;
 use ImdbScraper\Parser\TvShowParser;
@@ -21,11 +25,7 @@ use ImdbScraper\Parser\YearParser;
 class HomeMapper extends AbstractPageMapper
 {
 
-    protected const SOUND_PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
     protected const COUNTRY_PATTERN = '|country_of_origin=([^>]+)>([^>]+)<|U';
-    protected const LANGUAGE_PATTERN = '|primary_language=([^>]+)>([^>]+)<|U';
-    protected const RECOMMENDATIONS_PATTERN = '|data-tconst=\"tt([0-9]{7})\"|U';
-    protected const GENRE_PATTERN = '|genre/([^>]+)>([^>]+)<|U';
     protected const SEASON_PATTERN = '|>Season ([0-9]{1,2}) <|U';
     protected const EPISODE_PATTERN = '|> Episode ([0-9]{1,2})<|U';
 
@@ -202,15 +202,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getSounds(): array
     {
-        $sounds = [];
-        $matches = [];
-        preg_match_all(static::SOUND_PATTERN, $this->content, $matches);
-        if (array_key_exists(2, $matches) && is_array($matches[2])) {
-            foreach ($matches[2] as $sound) {
-                $sounds[] = Cleaner::clearField($sound);
-            }
-        }
-        return $sounds;
+        return (new SoundParser($this))->setPosition(2)->getArray();
     }
 
     /**
@@ -218,15 +210,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getRecommendations(): array
     {
-        $recommended = [];
-        $matches = [];
-        preg_match_all(static::RECOMMENDATIONS_PATTERN, $this->content, $matches);
-        if (array_key_exists(1, $matches) && is_array($matches[1])) {
-            foreach ($matches[1] as $imdb) {
-                $recommended[] = (int)Cleaner::clearField($imdb);
-            }
-        }
-        return $recommended;
+        return (new RecommendationParser($this))->setPosition(1)->getArray();
     }
 
     /**
@@ -250,15 +234,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getLanguages(): array
     {
-        $languages = [];
-        $matches = [];
-        preg_match_all(static::LANGUAGE_PATTERN, $this->content, $matches);
-        if (array_key_exists(2, $matches) && is_array($matches[2])) {
-            foreach ($matches[2] as $language) {
-                $languages[] = Cleaner::clearField($language);
-            }
-        }
-        return array_unique($languages);
+        return (new LanguageParser($this))->setPosition(2)->getArray();
     }
 
     /**
@@ -266,17 +242,7 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getGenres(): array
     {
-        $genres = [];
-        $matches = [];
-        preg_match_all(static::GENRE_PATTERN, $this->content, $matches);
-        if (array_key_exists(2, $matches) && is_array($matches[2])) {
-            foreach ($matches[2] as $key => $genre) {
-                if (stripos($matches[1][$key], "tt_stry_gnr")) {
-                    $genres[] = Cleaner::clearField($genre);
-                }
-            }
-        }
-        return array_unique($genres);
+        return (new GenreParser($this))->setPosition(2)->getArray();
     }
 
     /**
