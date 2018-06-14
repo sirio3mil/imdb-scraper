@@ -149,7 +149,7 @@ class HomeMapper extends AbstractPageMapper
                 $title = trim($parts[0]);
             }
         }
-        $this->title = $title;
+        $this->title = trim($title);
         return $this;
     }
 
