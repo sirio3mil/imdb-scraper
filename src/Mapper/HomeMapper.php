@@ -11,6 +11,7 @@ namespace ImdbScraper\Mapper;
 use ImdbScraper\Helper\CountryName;
 use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Parser\ColorParser;
+use ImdbScraper\Parser\DurationParser;
 use ImdbScraper\Parser\GenreParser;
 use ImdbScraper\Parser\LanguageParser;
 use ImdbScraper\Parser\OriginalTitleParser;
