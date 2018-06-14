@@ -9,6 +9,8 @@
 namespace ImdbScraper\Parser;
 
 
+use ImdbScraper\Helper\CountryName;
+
 class CountryParser extends AbstractArrayParser
 {
     use StringValidator;
