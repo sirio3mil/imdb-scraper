@@ -25,6 +25,6 @@ class ParentalGuideMapper extends AbstractPageMapper
      */
     public function getCertificates(): CertificateIterator
     {
-        return (new CertificateParser($this))->getIterator();
+        return (new CertificateParser($this))->getRegexIterator();
     }
 }

@@ -67,6 +67,6 @@ class CreditsTest extends TestCase
     {
         /** @var People $director */
         $director = (new People())->setFullName('Gary Ross')->setImdbNumber(2657);
-        $this->assertEquals(new PersonIterator([$director]), $this->imdbScrapper->getDirectors());
+        $this->assertEquals($director, $this->imdbScrapper->getDirectors()->getIterator()->current());
     }
 }

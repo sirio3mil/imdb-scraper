@@ -27,7 +27,7 @@ class CastMapper extends AbstractPageMapper
      */
     public function getDirectors(): PersonIterator
     {
-        return (new DirectorParser($this))->getIterator();
+        return (new DirectorParser($this))->getRegexIterator();
     }
 
     /**
@@ -35,7 +35,7 @@ class CastMapper extends AbstractPageMapper
      */
     public function getWriters(): PersonIterator
     {
-        return (new WriterParser($this))->getIterator();
+        return (new WriterParser($this))->getRegexIterator();
     }
 
     /**
@@ -43,6 +43,6 @@ class CastMapper extends AbstractPageMapper
      */
     public function getCast(): CastIterator
     {
-        return (new CastParser($this))->getIterator();
+        return (new CastParser($this))->getRegexIterator();
     }
 }

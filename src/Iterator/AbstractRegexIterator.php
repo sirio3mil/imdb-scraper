@@ -9,10 +9,18 @@
 namespace ImdbScraper\Iterator;
 
 
+use ImdbScraper\Model\RegexMatchRawData;
+
 abstract class AbstractRegexIterator extends \ArrayObject
 {
     /** @var string */
-    protected $modelClassName;
+    protected $regexModel;
+
+    public function __construct(RegexMatchRawData $regexModel)
+    {
+        $this->regexModel = $regexModel;
+        parent::__construct();
+    }
 
     /**
      * @param array $matches
@@ -23,7 +31,7 @@ abstract class AbstractRegexIterator extends \ArrayObject
         if ($matches && !empty($matches[0])) {
             $keys = count($matches[0]);
             for ($i = 0; $i < $keys; ++$i) {
-                $this->append((new $this->modelClassName())->importData($matches, $i));
+                $this->append(clone $this->regexModel->importData($matches, $i));
             }
         }
         return $this;

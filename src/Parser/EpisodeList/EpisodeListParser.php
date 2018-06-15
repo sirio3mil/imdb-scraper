@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser\EpisodeList;
 
 
+use ImdbScraper\Iterator\EpisodeIterator;
 use ImdbScraper\Mapper\EpisodeListMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
 
@@ -20,6 +21,6 @@ class EpisodeListParser extends AbstractIteratorParser
 
     public function __construct(EpisodeListMapper $pageMapper)
     {
-        parent::__construct($pageMapper, 'ImdbScraper\Iterator\EpisodeIterator');
+        parent::__construct($pageMapper, new EpisodeIterator());
     }
 }

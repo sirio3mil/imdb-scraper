@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser\Keyword;
 
 
+use ImdbScraper\Iterator\KeywordIterator;
 use ImdbScraper\Mapper\KeywordMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
 
@@ -20,6 +21,6 @@ class KeywordParser extends AbstractIteratorParser
 
     public function __construct(KeywordMapper $pageMapper)
     {
-        parent::__construct($pageMapper, 'ImdbScraper\Iterator\KeywordIterator');
+        parent::__construct($pageMapper, new KeywordIterator());
     }
 }

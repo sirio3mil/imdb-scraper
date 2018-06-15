@@ -9,11 +9,15 @@
 namespace ImdbScraper\Iterator;
 
 
+use ImdbScraper\Model\Episode;
+
 class EpisodeIterator extends AbstractRegexIterator
 {
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct(Episode $regexModel = null)
     {
-        parent::__construct($input, $flags, $iterator_class);
-        $this->modelClassName = 'ImdbScraper\Model\Episode';
+        if (!$regexModel) {
+            $regexModel = new Episode();
+        }
+        parent::__construct($regexModel);
     }
 }

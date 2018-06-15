@@ -9,11 +9,15 @@
 namespace ImdbScraper\Iterator;
 
 
+use ImdbScraper\Model\AlsoKnownAs;
+
 class AlsoKnownAsIterator extends AbstractRegexIterator
 {
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct(AlsoKnownAs $regexModel = null)
     {
-        parent::__construct($input, $flags, $iterator_class);
-        $this->modelClassName = 'ImdbScraper\Model\AlsoKnownAs';
+        if (!$regexModel) {
+            $regexModel = new AlsoKnownAs();
+        }
+        parent::__construct($regexModel);
     }
 }

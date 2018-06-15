@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser\ParentalGuide;
 
 
+use ImdbScraper\Iterator\CertificateIterator;
 use ImdbScraper\Mapper\ParentalGuideMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
 
@@ -20,6 +21,6 @@ class CertificateParser extends AbstractIteratorParser
 
     public function __construct(ParentalGuideMapper $pageMapper)
     {
-        parent::__construct($pageMapper, 'ImdbScraper\Iterator\CertificateIterator');
+        parent::__construct($pageMapper, new CertificateIterator());
     }
 }

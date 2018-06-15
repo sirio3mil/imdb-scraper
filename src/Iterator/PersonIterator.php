@@ -8,12 +8,16 @@
 
 namespace ImdbScraper\Iterator;
 
+use ImdbScraper\Model\People;
+
 class PersonIterator extends AbstractRegexIterator
 {
 
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct(People $regexModel = null)
     {
-        parent::__construct($input, $flags, $iterator_class);
-        $this->modelClassName = 'ImdbScraper\Model\People';
+        if (!$regexModel) {
+            $regexModel = new People();
+        }
+        parent::__construct($regexModel);
     }
 }

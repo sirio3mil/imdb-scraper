@@ -35,6 +35,6 @@ class KeywordMapper extends AbstractPageMapper
      */
     public function getKeywords(): KeywordIterator
     {
-        return (new KeywordParser($this))->getIterator();
+        return (new KeywordParser($this))->getRegexIterator();
     }
 }

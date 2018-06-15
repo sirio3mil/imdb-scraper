@@ -9,12 +9,16 @@
 namespace ImdbScraper\Iterator;
 
 
+use ImdbScraper\Model\Keyword;
+
 class KeywordIterator extends AbstractRegexIterator
 {
 
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct(Keyword $regexModel = null)
     {
-        parent::__construct($input, $flags, $iterator_class);
-        $this->modelClassName = 'ImdbScraper\Model\Keyword';
+        if (!$regexModel) {
+            $regexModel = new Keyword();
+        }
+        parent::__construct($regexModel);
     }
 }

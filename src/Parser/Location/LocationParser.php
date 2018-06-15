@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser\Location;
 
 
+use ImdbScraper\Iterator\LocationIterator;
 use ImdbScraper\Mapper\LocationMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
 
@@ -20,6 +21,6 @@ class LocationParser extends AbstractIteratorParser
 
     public function __construct(LocationMapper $pageMapper)
     {
-        parent::__construct($pageMapper, 'ImdbScraper\Iterator\LocationIterator');
+        parent::__construct($pageMapper, new LocationIterator());
     }
 }

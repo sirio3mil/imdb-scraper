@@ -9,12 +9,16 @@
 namespace ImdbScraper\Iterator;
 
 
+use ImdbScraper\Model\Location;
+
 class LocationIterator extends AbstractRegexIterator
 {
 
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct(Location $regexModel = null)
     {
-        parent::__construct($input, $flags, $iterator_class);
-        $this->modelClassName = 'ImdbScraper\Model\Location';
+        if (!$regexModel) {
+            $regexModel = new Location();
+        }
+        parent::__construct($regexModel);
     }
 }

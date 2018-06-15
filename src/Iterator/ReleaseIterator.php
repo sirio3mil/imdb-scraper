@@ -9,11 +9,15 @@
 namespace ImdbScraper\Iterator;
 
 
+use ImdbScraper\Model\Release;
+
 class ReleaseIterator extends AbstractRegexIterator
 {
-    public function __construct($input = array(), int $flags = 0, string $iterator_class = "ArrayIterator")
+    public function __construct(Release $regexModel = null)
     {
-        parent::__construct($input, $flags, $iterator_class);
-        $this->modelClassName = 'ImdbScraper\Model\Release';
+        if (!$regexModel) {
+            $regexModel = new Release();
+        }
+        parent::__construct($regexModel);
     }
 }

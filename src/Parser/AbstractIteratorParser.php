@@ -15,31 +15,18 @@ use ImdbScraper\Mapper\AbstractPageMapper;
 abstract class AbstractIteratorParser extends AbstractParser
 {
     /** @var AbstractRegexIterator */
-    protected $iterator;
+    protected $regexIterator;
 
-    /** @var string */
-    protected $iteratorClassName;
-
-    public function __construct(AbstractPageMapper $pageMapper, string $iteratorClassName)
+    public function __construct(AbstractPageMapper $pageMapper, AbstractRegexIterator $regexIterator)
     {
-        $this->setIteratorClassName($iteratorClassName);
+        $this->regexIterator = $regexIterator;
         parent::__construct($pageMapper);
-    }
-
-    /**
-     * @param mixed $iteratorClassName
-     * @return AbstractParser
-     */
-    protected function setIteratorClassName($iteratorClassName): AbstractParser
-    {
-        $this->iteratorClassName = $iteratorClassName;
-        return $this;
     }
 
     /**
      * @return AbstractRegexIterator
      */
-    public function getIterator(): AbstractRegexIterator
+    public function getRegexIterator(): AbstractRegexIterator
     {
         /** @var array $matches */
         $matches = [];
@@ -48,6 +35,6 @@ abstract class AbstractIteratorParser extends AbstractParser
         if ($content) {
             preg_match_all(static::PATTERN, $content, $matches);
         }
-        return (new $this->iteratorClassName())->appendAll($matches);
+        return $this->regexIterator->appendAll($matches);
     }
 }

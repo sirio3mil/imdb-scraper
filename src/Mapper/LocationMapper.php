@@ -25,6 +25,6 @@ class LocationMapper extends AbstractPageMapper
      */
     public function getLocations(): LocationIterator
     {
-        return (new LocationParser($this))->getIterator();
+        return (new LocationParser($this))->getRegexIterator();
     }
 }
