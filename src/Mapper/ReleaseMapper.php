@@ -34,6 +34,6 @@ class ReleaseMapper extends AbstractPageMapper
      */
     public function getAlsoKnownAs(): AlsoKnownAsIterator
     {
-        return (new AlsoKnownAsParser())->getRegexIterator();
+        return (new AlsoKnownAsParser($this))->getRegexIterator();
     }
 }
