@@ -10,12 +10,11 @@ namespace ImdbScraper\Mapper;
 
 use ImdbScraper\Iterator\AlsoKnownAsIterator;
 use ImdbScraper\Iterator\ReleaseIterator;
+use ImdbScraper\Parser\Release\AlsoKnownAsParser;
+use ImdbScraper\Parser\Release\ReleaseParser;
 
 class ReleaseMapper extends AbstractPageMapper
 {
-
-    protected const RELEASE_DATE_PATTERN = '|<td><a href=\"([^>]+)\">([^>]+)</a></td><td class=\"release_date\">([^>]+)</td><td>([^>]*)</td>|U';
-    protected const OTHER_TITLES_PATTERN = '|<tr class="([^>]+)"><td>([^>]+)</td><td>([^>]+)</td></tr>|U';
 
     public function __construct()
     {
@@ -27,9 +26,7 @@ class ReleaseMapper extends AbstractPageMapper
      */
     public function getReleaseDates(): ReleaseIterator
     {
-        $matches = [];
-        preg_match_all(static::RELEASE_DATE_PATTERN, $this->getContent(), $matches);
-        return (new ReleaseIterator())->appendAll($matches);
+        return (new ReleaseParser($this))->getRegexIterator();
     }
 
     /**
@@ -37,8 +34,6 @@ class ReleaseMapper extends AbstractPageMapper
      */
     public function getAlsoKnownAs(): AlsoKnownAsIterator
     {
-        $matches = [];
-        preg_match_all(static::OTHER_TITLES_PATTERN, $this->getContent(), $matches);
-        return (new AlsoKnownAsIterator())->appendAll($matches);
+        return (new AlsoKnownAsParser())->getRegexIterator();
     }
 }
