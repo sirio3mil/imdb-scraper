@@ -10,12 +10,10 @@ namespace ImdbScraper\Mapper;
 
 
 use ImdbScraper\Iterator\LocationIterator;
+use ImdbScraper\Parser\Location\LocationParser;
 
 class LocationMapper extends AbstractPageMapper
 {
-
-    /** @var string */
-    protected const LOCATIONS_PATTERN = '|<dt><a ([^>]+)>([^>]+)</a></dt><dd>([^>]+)</dd><div class="did-you-know-actions"><a ([^>]+)>([^>]+)</a>|U';
 
     public function __construct()
     {
@@ -27,10 +25,6 @@ class LocationMapper extends AbstractPageMapper
      */
     public function getLocations(): LocationIterator
     {
-        $matches = [];
-        if (!empty($this->content)) {
-            preg_match_all(static::LOCATIONS_PATTERN, $this->content, $matches);
-        }
-        return (new LocationIterator())->appendAll($matches);
+        return (new LocationParser($this))->getIterator();
     }
 }
