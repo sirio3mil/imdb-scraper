@@ -17,12 +17,4 @@ class Cleaner
             preg_replace('/\s+/', ' ',
                 str_replace(["\r\n", "\n\r", "\n", "\r"], "", $value)));
     }
-
-    public static function clearField(string $value): ?string
-    {
-        if (empty($value)) {
-            return null;
-        }
-        return trim(str_replace("%20", " ", str_replace("\"", "", strip_tags($value))));
-    }
 }
