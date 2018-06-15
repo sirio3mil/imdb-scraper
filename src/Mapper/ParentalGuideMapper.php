@@ -10,12 +10,10 @@ namespace ImdbScraper\Mapper;
 
 
 use ImdbScraper\Iterator\CertificateIterator;
+use ImdbScraper\Parser\ParentalGuide\CertificateParser;
 
 class ParentalGuideMapper extends AbstractPageMapper
 {
-
-    /** @var string */
-    protected const CERTIFICATE_PATTERN = '|<a href="/search/title\?certificates=([A-Z]+):([^>]+)">([^>]+):([^>]+)</a>([^<]*)<|U';
 
     public function __construct()
     {
@@ -27,10 +25,6 @@ class ParentalGuideMapper extends AbstractPageMapper
      */
     public function getCertificates(): CertificateIterator
     {
-        $matches = [];
-        if (!empty($this->content)) {
-            preg_match_all(static::CERTIFICATE_PATTERN, $this->content, $matches);
-        }
-        return (new CertificateIterator())->appendAll($matches);
+        return (new CertificateParser($this))->getIterator();
     }
 }
