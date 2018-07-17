@@ -171,9 +171,9 @@ class HomeMapper extends AbstractPageMapper
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getScore(): int
+    public function getScore(): float
     {
         $score = (new ScoreParser($this))->setPosition(1)->getValue();
         return $score ?? 0;
