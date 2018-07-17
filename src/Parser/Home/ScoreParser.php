@@ -9,9 +9,9 @@
 namespace ImdbScraper\Parser\Home;
 
 
-use ImdbScraper\Parser\AbstractIntegerParser;
+use ImdbScraper\Parser\AbstractFloatParser;
 
-class ScoreParser extends AbstractIntegerParser
+class ScoreParser extends AbstractFloatParser
 {
     /** @var string */
     protected const PATTERN = '|<span itemprop="ratingValue">([^>]+)</span>|U';
