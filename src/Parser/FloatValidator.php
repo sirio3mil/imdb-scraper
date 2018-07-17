@@ -13,6 +13,7 @@ trait FloatValidator
 {
     public static function validateValue($value)
     {
-        return floatval(filter_var(trim(str_replace(',', '.', $value)), FILTER_SANITIZE_NUMBER_FLOAT));
+        return floatval(filter_var(trim(str_replace(',', '.', $value)), FILTER_SANITIZE_NUMBER_FLOAT,
+            FILTER_FLAG_ALLOW_FRACTION));
     }
 }
