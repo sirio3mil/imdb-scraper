@@ -23,7 +23,7 @@ trait VoteParser
      */
     public function getRelevantVotes(): int
     {
-        return $this->relevantVotes;
+        return $this->relevantVotes ?? 0;
     }
 
     /**
@@ -41,7 +41,7 @@ trait VoteParser
      */
     public function getTotalVotes(): int
     {
-        return $this->totalVotes;
+        return $this->totalVotes ?? 0;
     }
 
     /**
