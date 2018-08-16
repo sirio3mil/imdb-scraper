@@ -52,7 +52,7 @@ class AlsoKnownAs implements RegexMatchRawData
      * @param string $description
      * @return AlsoKnownAs
      */
-    public function setDescription(string $description): AlsoKnownAs
+    public function setDescription(?string $description): AlsoKnownAs
     {
         $this->description = $description;
         return $this;
