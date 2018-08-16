@@ -105,9 +105,7 @@ class AlsoKnownAs implements RegexMatchRawData
             $description = trim($parts[1]);
         }
         $this->setCountry(CountryName::getMappedValue($countryName));
-        if ($description) {
-            $this->setDescription($description);
-        }
+        $this->setDescription($description);
         return $this;
     }
 }
