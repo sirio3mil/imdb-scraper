@@ -14,5 +14,5 @@ use ImdbScraper\Parser\AbstractStringParser;
 class ColorParser extends AbstractStringParser
 {
     /** @var string */
-    protected const PATTERN = '|<a href=\"/search/title\?colors=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
+    protected const PATTERN = '|<a href=\"/search/title\?colors=([^>]+)\">([^>]+)</a>|U';
 }

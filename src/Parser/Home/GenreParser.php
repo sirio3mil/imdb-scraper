@@ -17,5 +17,5 @@ class GenreParser extends AbstractArrayParser
     use StringValidator;
 
     /** @var string */
-    protected const PATTERN = '|/genre/([^>]+)\?ref_=tt_stry_gnr">([^>]+)<|U';
+    protected const PATTERN = '|/search/title\?genres=([^>]+)&explore=title_type,genres&ref_=tt_ov_inf">([^>]+)<|U';
 }

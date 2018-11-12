@@ -17,5 +17,5 @@ class SoundParser extends AbstractArrayParser
     use StringValidator;
 
     /** @var string */
-    protected const PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\"itemprop=\'url\'>([^>]+)</a>|U';
+    protected const PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\">([^>]+)</a>|U';
 }
