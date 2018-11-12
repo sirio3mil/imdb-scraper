@@ -34,13 +34,21 @@ class KeywordsTest extends TestCase
     {
         /** @var KeywordIterator $keywords */
         $keywords = $this->imdbScrapper->getKeywords();
+        /** @var ArrayIterator $iterator */
+        $iterator = $keywords->getIterator();
+        $this->assertEquals($this->imdbScrapper->getTotalKeywords(), $iterator->count());
+        $matches = 0;
         /** @var Keyword $keyword */
-        $keyword = $keywords->getIterator()->current();
-        $this->assertEquals($this->imdbScrapper->getTotalKeywords(), $keywords->getIterator()->count());
-        $this->assertEquals('breaking-the-fourth-wall', $keyword->getUrl());
-        $this->assertEquals('breaking the fourth wall', $keyword->getKeyword());
-        $this->assertEquals(12410, $keyword->getImdbNumber());
-        $this->assertGreaterThanOrEqual(3, $keyword->getRelevantVotes());
-        $this->assertGreaterThanOrEqual(3, $keyword->getTotalVotes());
+        foreach ($keywords as $keyword) {
+            $url = $keyword->getUrl();
+            if ($url == 'breaking-the-fourth-wall') {
+                $this->assertEquals('breaking the fourth wall', $keyword->getKeyword());
+                $this->assertEquals(12410, $keyword->getImdbNumber());
+                $this->assertGreaterThanOrEqual(3, $keyword->getRelevantVotes());
+                $this->assertGreaterThanOrEqual(3, $keyword->getTotalVotes());
+                $matches++;
+            }
+        }
+        $this->assertEquals(1, $matches);
     }
 }
