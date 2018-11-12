@@ -17,7 +17,7 @@ class CastParser extends AbstractIteratorParser
 {
 
     /** @var string */
-    protected const PATTERN = '|<a href=\"/name/nm([^>]+)/([^>]+)\"itemprop=\'url\'><span class=\"itemprop\" itemprop=\"name\">([^>]+)</span></a></td><td class=\"ellipsis\">(.*)</td><td class=\"character\">(.*)</td>|U';
+    protected const PATTERN = '|<a href=\"/name/nm([^>]+)/([^>]+)\">([^>]+)</a></td><td class=\"ellipsis\">(.*)</td><td class=\"character\">(.*)</td>|U';
 
     public function __construct(CastMapper $pageMapper)
     {
