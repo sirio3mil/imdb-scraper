@@ -43,7 +43,7 @@ class CreditsTest extends TestCase
                 case 939026:
                     ++$found;
                     $this->assertEquals('Daniel May Wong', $actor->getFullName());
-                    $this->assertEquals('Costume Exhibit Guard', $actor->getCharacter());
+                    $this->assertEquals('Costume Exhibit Security Guard', $actor->getCharacter());
                     $this->assertEquals('Daniel M. Wong', $actor->getAlias());
                     break;
             }
