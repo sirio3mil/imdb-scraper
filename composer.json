@@ -3,9 +3,7 @@
   "description": "Internet movie database's website scraper in PHP",
   "type": "library",
   "require": {
-    "php": ">=7.2"
-  },
-  "require": {
+    "php": ">=7.2",
     "php-curl-class/php-curl-class": "@dev",
     "devster/ubench": "2.0.0"
   },
