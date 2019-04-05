@@ -17,7 +17,7 @@ class KeywordParser extends AbstractIteratorParser
 {
 
     /** @var string */
-    protected const PATTERN = '|<a href="/keyword/([^>]+)\?ref_=ttkw_kw_([0-9]+)">([^>]+)</a></div><div class="did-you-know-actions"><div class="interesting-count-text"><a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
+    protected const PATTERN = '|<a href="/search/keyword\?keywords=([^>]+)\&ref_=ttkw_kw_([0-9]+)">([^>]+)</a></div><div class="did-you-know-actions"><div class="interesting-count-text"><a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
 
     public function __construct(KeywordMapper $pageMapper)
     {
