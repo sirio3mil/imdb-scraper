@@ -17,7 +17,7 @@ class AlsoKnownAsParser extends AbstractIteratorParser
 {
 
     /** @var string */
-    protected const PATTERN = '|<tr class="([^>]+)"><td>([^>]+)</td><td>([^>]+)</td></tr>|U';
+    protected const PATTERN = '|<tr class="([^>]+)"><td class="aka-item__name">([^>]+)</td><td class="aka-item__title">([^>]+)</td></tr>|U';
 
     public function __construct(ReleaseMapper $pageMapper)
     {
