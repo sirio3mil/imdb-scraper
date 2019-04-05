@@ -38,7 +38,8 @@ class ParentalGuideTest extends TestCase
                     ++$found;
                     $this->assertThat($certificate->getCertification(), $this->logicalOr(
                         $this->equalTo('18'),
-                        $this->equalTo('16')
+                        $this->equalTo('16'),
+                        $this->equalTo('14')
                     ));
                     $this->assertThat($certificate->getDetails(), $this->logicalOr(
                         $this->equalTo('original rating'),
