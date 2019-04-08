@@ -74,7 +74,7 @@ class Certificate implements RegexMatchRawData
      */
     public function setCountryName(string $countryName): Certificate
     {
-        $this->countryName = $countryName;
+        $this->countryName = CountryName::getMappedValue($countryName);
         return $this;
     }
 
@@ -106,7 +106,7 @@ class Certificate implements RegexMatchRawData
     public function importData(array $rawData, int $position): RegexMatchRawData
     {
         return $this->setIsoCountryCode($rawData[1][$position])
-            ->setCountryName(CountryName::getMappedValue($rawData[3][$position]))
+            ->setCountryName($rawData[3][$position])
             ->setCertification($rawData[4][$position])
             ->parseDetails($rawData[5][$position]);
     }

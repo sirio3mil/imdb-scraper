@@ -9,6 +9,8 @@
 namespace ImdbScraper\Model;
 
 
+use ImdbScraper\Helper\CountryName;
+
 class Release implements RegexMatchRawData
 {
 
@@ -34,7 +36,7 @@ class Release implements RegexMatchRawData
      */
     public function setCountry(string $country): Release
     {
-        $this->country = $country;
+        $this->country = CountryName::getMappedValue($country);
         return $this;
     }
 

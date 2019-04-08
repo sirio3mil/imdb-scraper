@@ -36,7 +36,7 @@ class AlsoKnownAs implements RegexMatchRawData
      */
     public function setCountry(?string $country): AlsoKnownAs
     {
-        $this->country = $country;
+        $this->country = CountryName::getMappedValue($country);
         return $this;
     }
 
@@ -103,9 +103,6 @@ class AlsoKnownAs implements RegexMatchRawData
             $parts = explode("(", str_replace(")", "", $rawData));
             $countryName = trim($parts[0]);
             $description = trim($parts[1]);
-        }
-        if($countryName){
-            $countryName = CountryName::getMappedValue($countryName);
         }
         if(!$countryName){
             $countryName = null;
