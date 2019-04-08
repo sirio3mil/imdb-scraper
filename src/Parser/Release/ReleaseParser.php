@@ -17,7 +17,7 @@ class ReleaseParser extends AbstractIteratorParser
 {
 
     /** @var string */
-    protected const PATTERN = '|<td class="release-date-item__country-name"><a href="([^>]+)">([^>]+)</a></td><td class="release-date-item__date" align="right">([^>]+)</td><td class="release-date-item__attributes--empty">([^>]*)</td>|U';
+    protected const PATTERN = '|<td class="release-date-item__country-name"><a href="([^>]+)">([^>]+)</a></td><td class="release-date-item__date" align="right">([^>]+)</td><td([^>]+)>([^>]*)</td>|U';
 
     public function __construct(ReleaseMapper $pageMapper)
     {

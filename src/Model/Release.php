@@ -67,7 +67,7 @@ class Release implements RegexMatchRawData
     {
         return $this->setCountry($rawData[2][$position])
             ->parseDate($rawData[3][$position])
-            ->parseDetails($rawData[4][$position]);
+            ->parseDetails($rawData[5][$position]);
     }
 
     /**

@@ -72,6 +72,6 @@ class ReleaseInfoTest extends TestCase
                     break;
             }
         }
-        $this->assertGreaterThanOrEqual(1, $found);
+        $this->assertEquals(2, $found);
     }
 }
