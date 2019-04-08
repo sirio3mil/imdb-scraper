@@ -14,6 +14,10 @@ class CountryName
     public static function getMappedValue(string $value): string
     {
         switch ($value) {
+            case "USA":
+                return "United States";
+            case "UK":
+                return "United Kingdom";
             case "PuertoRico":
                 return "Puerto Rico";
             case "HongKong":
