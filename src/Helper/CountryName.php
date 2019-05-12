@@ -11,7 +11,12 @@ namespace ImdbScraper\Helper;
 
 class CountryName
 {
-    public static function getMappedValue(string $value): string
+
+    /**
+     * @param string|null $value
+     * @return string|null
+     */
+    public static function getMappedValue(?string $value): ?string
     {
         switch ($value) {
             case "USA":
