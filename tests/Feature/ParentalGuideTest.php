@@ -8,6 +8,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use ImdbScraper\Iterator\CertificateIterator;
 use ImdbScraper\Model\Certificate;
 use ImdbScraper\Mapper\ParentalGuideMapper;
@@ -19,6 +20,13 @@ class ParentalGuideTest extends TestCase
     /** @var ParentalGuideMapper $imdbScrapper */
     protected $imdbScrapper;
 
+    /**
+     * ParentalGuideTest constructor.
+     * @param string|null $name
+     * @param array $data
+     * @param string $dataName
+     * @throws Exception
+     */
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         $this->imdbScrapper = (new ParentalGuideMapper())->setImdbNumber(5463162)->setContentFromUrl();
@@ -43,12 +51,13 @@ class ParentalGuideTest extends TestCase
                     ));
                     $this->assertThat($certificate->getDetails(), $this->logicalOr(
                         $this->equalTo('original rating'),
-                        $this->equalTo('re-rating')
+                        $this->equalTo('re-rating'),
+                        $this->equalTo('edited version')
                     ));
                     $this->assertEquals('Brazil', $certificate->getCountryName());
                     break;
             }
         }
-        $this->assertEquals(2, $found);
+        $this->assertEquals(3, $found);
     }
 }

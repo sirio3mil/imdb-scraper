@@ -8,6 +8,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use ImdbScraper\Mapper\HomeMapper;
 use PHPUnit\Framework\TestCase;
 
@@ -17,6 +18,13 @@ class MovieHomeTest extends TestCase
     /** @var HomeMapper $imdbScrapper */
     protected $imdbScrapper;
 
+    /**
+     * MovieHomeTest constructor.
+     * @param string|null $name
+     * @param array $data
+     * @param string $dataName
+     * @throws Exception
+     */
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         $this->imdbScrapper = (new HomeMapper())->setImdbNumber(1563742)->setContentFromUrl();
@@ -70,7 +78,7 @@ class MovieHomeTest extends TestCase
 
     public function testGetCountries()
     {
-        $this->assertEquals(['USA'], $this->imdbScrapper->getCountries());
+        $this->assertEquals(['United States'], $this->imdbScrapper->getCountries());
     }
 
     public function testIsEpisode()

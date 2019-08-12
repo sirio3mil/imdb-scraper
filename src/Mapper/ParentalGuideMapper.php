@@ -8,16 +8,16 @@
 
 namespace ImdbScraper\Mapper;
 
-
 use ImdbScraper\Iterator\CertificateIterator;
 use ImdbScraper\Parser\ParentalGuide\CertificateParser;
+use function strtolower;
 
 class ParentalGuideMapper extends AbstractPageMapper
 {
 
     public function __construct()
     {
-        $this->setFolder('parentalguide');
+        $this->setFolder(strtolower('parentalGuide'));
     }
 
     /**
@@ -25,6 +25,8 @@ class ParentalGuideMapper extends AbstractPageMapper
      */
     public function getCertificates(): CertificateIterator
     {
-        return (new CertificateParser($this))->getRegexIterator();
+        /** @var CertificateIterator $iterator */
+        $iterator = (new CertificateParser($this))->getRegexIterator();
+        return $iterator;
     }
 }
