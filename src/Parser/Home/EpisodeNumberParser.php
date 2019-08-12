@@ -13,6 +13,12 @@ use ImdbScraper\Parser\AbstractIntegerParser;
 
 class EpisodeNumberParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|> Episode ([0-9]{1,2})<|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|> Episode ([0-9]{1,2})<|U';
+    }
 }

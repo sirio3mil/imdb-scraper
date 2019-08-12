@@ -8,11 +8,16 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractStringParser;
 
 class TitleParser extends AbstractStringParser
 {
-    /** @var string */
-    protected const PATTERN = '|<title>([^>]+) \(|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<title>([^>]+) \(|U';
+    }
 }

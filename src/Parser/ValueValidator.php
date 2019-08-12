@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser;
 
-
 interface ValueValidator
 {
     public static function validateValue($value);

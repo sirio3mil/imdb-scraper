@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\Cast;
 
-
 use ImdbScraper\Iterator\CastIterator;
 use ImdbScraper\Mapper\CastMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
@@ -26,8 +25,9 @@ class CastParser extends AbstractIteratorParser
     /**
      * @return string
      */
-    function getPattern(): string
+    public function getPattern(): string
     {
-        return '|<a href=\"/name/nm([0-9]+)/\">([^>]+)</a></td><td class=\"ellipsis\">(.*)</td><td class=\"character\">(.*)</td>|U';
+        return '|<a href="/name/nm([0-9]+)/">([^>]+)</a></td>' .
+            '<td class="ellipsis">(.*)</td><td class="character">(.*)</td>|U';
     }
 }

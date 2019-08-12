@@ -8,11 +8,16 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractIntegerParser;
 
 class TvShowParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|<div class=\"titleParent\"><a href=\"/title/tt([0-9]{7})|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<div class="titleParent"><a href="/title/tt([0-9]{7})|U';
+    }
 }

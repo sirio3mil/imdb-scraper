@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser;
 
-
 abstract class AbstractPositionParser extends AbstractParser implements ValueValidator
 {
     /** @var int */

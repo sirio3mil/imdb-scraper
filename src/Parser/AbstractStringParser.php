@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser;
 
-
 abstract class AbstractStringParser extends AbstractValueParser
 {
     use StringValidator;

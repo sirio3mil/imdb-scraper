@@ -8,6 +8,10 @@
 
 namespace ImdbScraper\Parser;
 
+use function floatval;
+use function filter_var;
+use function trim;
+use function str_replace;
 
 trait FloatValidator
 {

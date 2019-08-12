@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractArrayParser;
 use ImdbScraper\Parser\StringValidator;
 
@@ -16,6 +15,11 @@ class SoundParser extends AbstractArrayParser
 {
     use StringValidator;
 
-    /** @var string */
-    protected const PATTERN = '|<a href=\"/search/title\?sound_mixes=([^>]+)\">([^>]+)</a>|U';
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<a href="/search/title\?sound_mixes=([^>]+)">([^>]+)</a>|U';
+    }
 }

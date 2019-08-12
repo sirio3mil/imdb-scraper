@@ -8,6 +8,9 @@
 
 namespace ImdbScraper\Parser;
 
+use function html_entity_decode;
+use function trim;
+use function strip_tags;
 
 trait StringValidator
 {

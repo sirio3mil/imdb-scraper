@@ -8,6 +8,9 @@
 
 namespace ImdbScraper\Parser;
 
+use function array_key_exists;
+use function is_array;
+use function array_unique;
 
 abstract class AbstractArrayParser extends AbstractPositionParser
 {
@@ -19,13 +22,10 @@ abstract class AbstractArrayParser extends AbstractPositionParser
         /** @var array $values */
         $values = [];
         /** @var array $matches */
-        $matches = [];
-        /** @var string $content */
-        $content = $this->pageMapper->getContent();
+        $matches = $this->getMatches();
         /** @var int $index */
         $index = $this->getPosition();
-        if ($content) {
-            preg_match_all(static::PATTERN, $content, $matches);
+        if ($matches) {
             if (array_key_exists($index, $matches) && is_array($matches[$index])) {
                 foreach ($matches[$index] as $value) {
                     $values[] = static::validateValue($value);

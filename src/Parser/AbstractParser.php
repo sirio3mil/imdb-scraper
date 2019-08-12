@@ -9,6 +9,7 @@
 namespace ImdbScraper\Parser;
 
 use ImdbScraper\Mapper\AbstractPageMapper;
+use function preg_match_all;
 
 abstract class AbstractParser
 {
@@ -72,5 +73,5 @@ abstract class AbstractParser
     /**
      * @return string
      */
-    abstract function getPattern(): string;
+    abstract public function getPattern(): string;
 }

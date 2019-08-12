@@ -13,6 +13,12 @@ use ImdbScraper\Parser\AbstractFloatParser;
 
 class ScoreParser extends AbstractFloatParser
 {
-    /** @var string */
-    protected const PATTERN = '|<span itemprop="ratingValue">([^>]+)</span>|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<span itemprop="ratingValue">([^>]+)</span>|U';
+    }
 }

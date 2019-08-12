@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\EpisodeList;
 
-
 use ImdbScraper\Iterator\EpisodeIterator;
 use ImdbScraper\Mapper\EpisodeListMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
@@ -24,7 +23,7 @@ class EpisodeListParser extends AbstractIteratorParser
     /**
      * @return string
      */
-    function getPattern(): string
+    public function getPattern(): string
     {
         return '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"/>' .
             '<div class="airdate">([^>]+)</div>' .

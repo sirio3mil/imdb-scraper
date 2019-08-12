@@ -8,8 +8,7 @@
 
 namespace ImdbScraper\Parser;
 
-
-class AbstractFloatParser extends AbstractValueParser
+abstract class AbstractFloatParser extends AbstractValueParser
 {
     use FloatValidator;
 }

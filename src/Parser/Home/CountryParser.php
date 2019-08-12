@@ -17,9 +17,6 @@ class CountryParser extends AbstractArrayParser
 {
     use StringValidator;
 
-    /** @var string */
-    protected const PATTERN = '|country_of_origin=([^>]+)>([^>]+)<|U';
-
     /**
      * @return array
      */
@@ -31,5 +28,13 @@ class CountryParser extends AbstractArrayParser
             $value = CountryName::getMappedValue($value);
         });
         return array_unique($values);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|country_of_origin=([^>]+)>([^>]+)<|U';
     }
 }

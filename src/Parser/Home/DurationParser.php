@@ -13,6 +13,12 @@ use ImdbScraper\Parser\AbstractIntegerParser;
 
 class DurationParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|datetime=\"PT([0-9]{1,3})M\"|U';
+
+    /**
+     * @return string
+     */
+    function getPattern(): string
+    {
+        return '|datetime=\"PT([0-9]{1,3})M\"|U';
+    }
 }

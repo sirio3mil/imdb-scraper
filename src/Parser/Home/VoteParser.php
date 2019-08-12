@@ -8,11 +8,16 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractIntegerParser;
 
 class VoteParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|<span class="small" itemprop="ratingCount">([^>]+)</span>|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<span class="small" itemprop="ratingCount">([^>]+)</span>|U';
+    }
 }

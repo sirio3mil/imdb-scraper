@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractArrayParser;
 use ImdbScraper\Parser\StringValidator;
 
@@ -16,6 +15,11 @@ class LanguageParser extends AbstractArrayParser
 {
     use StringValidator;
 
-    /** @var string */
-    protected const PATTERN = '|primary_language=([^>]+)>([^>]+)<|U';
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|primary_language=([^>]+)>([^>]+)<|U';
+    }
 }

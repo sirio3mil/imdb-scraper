@@ -8,11 +8,16 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractIntegerParser;
 
 class SeasonNumberParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|>Season ([0-9]{1,2}) <|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|>Season ([0-9]{1,2}) <|U';
+    }
 }

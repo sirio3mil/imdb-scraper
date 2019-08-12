@@ -8,6 +8,9 @@
 
 namespace ImdbScraper\Parser;
 
+use function intval;
+use function filter_var;
+use function trim;
 
 trait IntegerValidator
 {

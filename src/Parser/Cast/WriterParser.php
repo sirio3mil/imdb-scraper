@@ -25,7 +25,7 @@ class WriterParser extends AbstractIteratorParser
     /**
      * @return string
      */
-    function getPattern(): string
+    public function getPattern(): string
     {
         return '|<a href="/name/nm([0-9]+)/">([^>]+)</a>|U';
     }

@@ -8,6 +8,7 @@
 
 namespace ImdbScraper\Parser;
 
+use function count;
 
 abstract class AbstractCounterParser extends AbstractParser
 {
@@ -16,13 +17,7 @@ abstract class AbstractCounterParser extends AbstractParser
      */
     public function getTotal(): int
     {
-        /** @var array $matches */
-        $matches = [];
-        /** @var string $content */
-        $content = $this->pageMapper->getContent();
-        if ($content) {
-            preg_match_all(static::PATTERN, $content, $matches);
-        }
+        $matches = $this->getMatches();
         if ($matches) {
             return count($matches[0]);
         }

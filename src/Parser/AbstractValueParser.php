@@ -8,6 +8,7 @@
 
 namespace ImdbScraper\Parser;
 
+use function array_key_exists;
 
 abstract class AbstractValueParser extends AbstractPositionParser
 {

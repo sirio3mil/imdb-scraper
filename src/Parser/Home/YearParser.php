@@ -8,11 +8,16 @@
 
 namespace ImdbScraper\Parser\Home;
 
-
 use ImdbScraper\Parser\AbstractIntegerParser;
 
 class YearParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|<title>([^>]+)([1-2][0-9][0-9][0-9])([^>]+)</title>|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<title>([^>]+)([1-2][0-9][0-9][0-9])([^>]+)</title>|U';
+    }
 }
