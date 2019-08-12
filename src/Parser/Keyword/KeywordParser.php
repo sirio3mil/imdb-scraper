@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\Keyword;
 
-
 use ImdbScraper\Iterator\KeywordIterator;
 use ImdbScraper\Mapper\KeywordMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
@@ -16,11 +15,18 @@ use ImdbScraper\Parser\AbstractIteratorParser;
 class KeywordParser extends AbstractIteratorParser
 {
 
-    /** @var string */
-    protected const PATTERN = '|<a href="/search/keyword\?keywords=([^>]+)\&ref_=ttkw_kw_([0-9]+)">([^>]+)</a></div><div class="did-you-know-actions"><div class="interesting-count-text"><a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
-
     public function __construct(KeywordMapper $pageMapper)
     {
         parent::__construct($pageMapper, new KeywordIterator());
+    }
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<a href="/search/keyword\?keywords=([^>]+)\&ref_=ttkw_kw_([0-9]+)">([^>]+)</a></div>' .
+            '<div class="did-you-know-actions"><div class="interesting-count-text">' .
+            '<a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
     }
 }

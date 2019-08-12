@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\Location;
 
-
 use ImdbScraper\Iterator\LocationIterator;
 use ImdbScraper\Mapper\LocationMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
@@ -16,11 +15,17 @@ use ImdbScraper\Parser\AbstractIteratorParser;
 class LocationParser extends AbstractIteratorParser
 {
 
-    /** @var string */
-    protected const PATTERN = '|<dt><a ([^>]+)>([^>]+)</a></dt><dd>([^>]+)</dd><div class="did-you-know-actions"><a ([^>]+)>([^>]+)</a>|U';
-
     public function __construct(LocationMapper $pageMapper)
     {
         parent::__construct($pageMapper, new LocationIterator());
+    }
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<dt><a ([^>]+)>([^>]+)</a></dt><dd>([^>]+)</dd>' .
+            '<div class="did-you-know-actions"><a ([^>]+)>([^>]+)</a>|U';
     }
 }

@@ -8,11 +8,16 @@
 
 namespace ImdbScraper\Parser\Keyword;
 
-
 use ImdbScraper\Parser\AbstractIntegerParser;
 
 class TotalKeywordsParser extends AbstractIntegerParser
 {
-    /** @var string */
-    protected const PATTERN = '|<div class="desc">Showing all ([0-9]+) plot keywords</div>|U';
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<div class="desc">Showing all ([0-9]+) plot keywords</div>|U';
+    }
 }

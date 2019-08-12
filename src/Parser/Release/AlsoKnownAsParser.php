@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\Release;
 
-
 use ImdbScraper\Iterator\AlsoKnownAsIterator;
 use ImdbScraper\Mapper\ReleaseMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
@@ -16,11 +15,17 @@ use ImdbScraper\Parser\AbstractIteratorParser;
 class AlsoKnownAsParser extends AbstractIteratorParser
 {
 
-    /** @var string */
-    protected const PATTERN = '|<tr class="([^>]+)"><td class="aka-item__name">([^>]+)</td><td class="aka-item__title">([^>]+)</td></tr>|U';
-
     public function __construct(ReleaseMapper $pageMapper)
     {
         parent::__construct($pageMapper, new AlsoKnownAsIterator());
+    }
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<tr class="([^>]+)"><td class="aka-item__name">([^>]+)</td>' .
+            '<td class="aka-item__title">([^>]+)</td></tr>|U';
     }
 }

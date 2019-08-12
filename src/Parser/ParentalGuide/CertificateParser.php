@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Parser\ParentalGuide;
 
-
 use ImdbScraper\Iterator\CertificateIterator;
 use ImdbScraper\Mapper\ParentalGuideMapper;
 use ImdbScraper\Parser\AbstractIteratorParser;
@@ -16,11 +15,16 @@ use ImdbScraper\Parser\AbstractIteratorParser;
 class CertificateParser extends AbstractIteratorParser
 {
 
-    /** @var string */
-    protected const PATTERN = '|<a href="/search/title\?certificates=([A-Z]+):([^>]+)">([^>]+):([^>]+)</a>([^<]*)<|U';
-
     public function __construct(ParentalGuideMapper $pageMapper)
     {
         parent::__construct($pageMapper, new CertificateIterator());
+    }
+
+    /**
+     * @return string
+     */
+    public function getPattern(): string
+    {
+        return '|<a href="/search/title\?certificates=([A-Z]+):([^>]+)">([^>]+):([^>]+)</a>([^<]*)<|U';
     }
 }
