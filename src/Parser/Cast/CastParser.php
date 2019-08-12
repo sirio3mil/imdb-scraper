@@ -16,11 +16,16 @@ use ImdbScraper\Parser\AbstractIteratorParser;
 class CastParser extends AbstractIteratorParser
 {
 
-    /** @var string */
-    protected const PATTERN = '|<a href=\"/name/nm([^>]+)/([^>]+)\">([^>]+)</a></td><td class=\"ellipsis\">(.*)</td><td class=\"character\">(.*)</td>|U';
-
     public function __construct(CastMapper $pageMapper)
     {
         parent::__construct($pageMapper, new CastIterator());
+    }
+
+    /**
+     * @return string
+     */
+    function getPattern(): string
+    {
+        return '|<a href=\"/name/nm([0-9]+)/\">([^>]+)</a></td><td class=\"ellipsis\">(.*)</td><td class=\"character\">(.*)</td>|U';
     }
 }

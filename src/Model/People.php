@@ -61,7 +61,7 @@ class People implements RegexMatchRawData
      */
     public function importData(array $rawData, int $position): RegexMatchRawData
     {
-        return $this->setFullName($rawData[3][$position])
+        return $this->setFullName($rawData[2][$position])
             ->setImdbNumber(intval($rawData[1][$position]));
     }
 }

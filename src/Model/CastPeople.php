@@ -19,8 +19,8 @@ class CastPeople extends People
      */
     public function importData(array $rawData, int $position): RegexMatchRawData
     {
-        return $this->setRawCharacter($rawData[5][$position])
-            ->setFullName($rawData[3][$position])
+        return $this->setRawCharacter($rawData[4][$position])
+            ->setFullName($rawData[2][$position])
             ->setImdbNumber(intval($rawData[1][$position]));
     }
 }

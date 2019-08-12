@@ -28,13 +28,6 @@ abstract class AbstractIteratorParser extends AbstractParser
      */
     public function getRegexIterator(): AbstractRegexIterator
     {
-        /** @var array $matches */
-        $matches = [];
-        /** @var string $content */
-        $content = $this->pageMapper->getContent();
-        if ($content) {
-            preg_match_all(static::PATTERN, $content, $matches);
-        }
-        return $this->regexIterator->appendAll($matches);
+        return $this->regexIterator->appendAll($this->getMatches());
     }
 }

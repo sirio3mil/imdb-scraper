@@ -11,15 +11,13 @@ namespace ImdbScraper\Parser;
 
 abstract class AbstractValueParser extends AbstractPositionParser
 {
+
+    /**
+     * @return mixed
+     */
     public function getValue()
     {
-        /** @var array $matches */
-        $matches = [];
-        /** @var string $content */
-        $content = $this->pageMapper->getContent();
-        if ($content) {
-            preg_match_all(static::PATTERN, $content, $matches);
-        }
+        $matches = $this->getMatches();
         $value = null;
         $index = $this->getPosition();
         if ($matches && array_key_exists($index, $matches) && !empty($matches[$index][0])) {

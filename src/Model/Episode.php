@@ -86,7 +86,7 @@ class Episode implements RegexMatchRawData
     {
         return $this->setEpisodeNumber(intval($rawData[1][$position]))
             ->setImdbNumber(intval($rawData[3][$position]))
-            ->setTitle($rawData[6][$position])
+            ->setTitle($rawData[5][$position])
             ->parseDate($rawData[2][$position]);
     }
 }
