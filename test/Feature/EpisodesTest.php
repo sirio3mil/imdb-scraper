@@ -31,6 +31,7 @@ class EpisodesTest extends TestCase
         $episodes = $this->imdbScrapper->getEpisodes();
         /** @var Episode $episode */
         $episode = $episodes->getIterator()->current();
+        $this->assertInstanceOf(Episode::class, $episode);
         $this->assertEquals('Dragonstone', $episode->getTitle());
         $this->assertEquals(1, $episode->getEpisodeNumber());
         $this->assertEquals(5654088, $episode->getImdbNumber());
