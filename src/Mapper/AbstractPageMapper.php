@@ -63,7 +63,6 @@ abstract class AbstractPageMapper
     public function setContent(?string $content): AbstractPageMapper
     {
         $this->content = $content;
-        echo $this->content;
         return $this;
     }
 

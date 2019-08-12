@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Mapper;
 
-
 use ImdbScraper\Iterator\KeywordIterator;
 use ImdbScraper\Parser\Keyword\KeywordParser;
 use ImdbScraper\Parser\Keyword\TotalKeywordsParser;
@@ -26,7 +25,9 @@ class KeywordMapper extends AbstractPageMapper
      */
     public function getTotalKeywords(): int
     {
-        $totalKeywords = (new TotalKeywordsParser($this))->setPosition(1)->getValue();
+        /** @var TotalKeywordsParser $parser */
+        $parser = (new TotalKeywordsParser($this))->setPosition(1);
+        $totalKeywords = $parser->getValue();
         return $totalKeywords ?? 0;
     }
 
@@ -35,6 +36,8 @@ class KeywordMapper extends AbstractPageMapper
      */
     public function getKeywords(): KeywordIterator
     {
-        return (new KeywordParser($this))->getRegexIterator();
+        /** @var KeywordIterator $iterator */
+        $iterator = (new KeywordParser($this))->getRegexIterator();
+        return $iterator;
     }
 }

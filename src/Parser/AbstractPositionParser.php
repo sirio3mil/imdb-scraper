@@ -23,9 +23,9 @@ abstract class AbstractPositionParser extends AbstractParser implements ValueVal
 
     /**
      * @param int $position
-     * @return AbstractValueParser
+     * @return self
      */
-    public function setPosition(int $position): AbstractPositionParser
+    public function setPosition(int $position): self
     {
         $this->position = $position;
         return $this;

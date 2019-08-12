@@ -8,6 +8,8 @@
 
 namespace ImdbScraper\Model;
 
+use function preg_match_all;
+use function intval;
 
 trait VoteParser
 {
@@ -28,11 +30,12 @@ trait VoteParser
 
     /**
      * @param int $relevantVotes
-     * @return RegexMatchRawData
+     * @return self
      */
-    public function setRelevantVotes(int $relevantVotes): RegexMatchRawData
+    public function setRelevantVotes(int $relevantVotes): self
     {
         $this->relevantVotes = $relevantVotes;
+
         return $this;
     }
 
@@ -46,26 +49,34 @@ trait VoteParser
 
     /**
      * @param int $totalVotes
-     * @return RegexMatchRawData
+     * @return self
      */
-    public function setTotalVotes(int $totalVotes): RegexMatchRawData
+    public function setTotalVotes(int $totalVotes): self
     {
         $this->totalVotes = $totalVotes;
+
         return $this;
     }
 
     /**
      * @param string $rawData
-     * @return RegexMatchRawData
+     * @return self
      */
-    protected function parseVotes(string $rawData): RegexMatchRawData
+    protected function parseVotes(string $rawData): self
     {
         $matches = [];
-        preg_match_all(static::VOTES_PATTERN, $rawData, $matches);
+        preg_match_all($this->getVotesPattern(), $rawData, $matches);
         if (!empty($matches[0])) {
             $this->setRelevantVotes(intval($matches[1][0]));
             $this->setTotalVotes(intval($matches[2][0]));
         }
+
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getVotesPattern(): string;
+
 }

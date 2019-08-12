@@ -8,6 +8,8 @@
 
 namespace Tests\Feature;
 
+use ArrayIterator;
+use Exception;
 use ImdbScraper\Iterator\KeywordIterator;
 use ImdbScraper\Model\Keyword;
 use ImdbScraper\Mapper\KeywordMapper;
@@ -19,6 +21,13 @@ class KeywordsTest extends TestCase
     /** @var KeywordMapper $imdbScrapper */
     protected $imdbScrapper;
 
+    /**
+     * KeywordsTest constructor.
+     * @param string|null $name
+     * @param array $data
+     * @param string $dataName
+     * @throws Exception
+     */
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         $this->imdbScrapper = (new KeywordMapper())->setImdbNumber(5463162)->setContentFromUrl();
@@ -36,7 +45,9 @@ class KeywordsTest extends TestCase
         $keywords = $this->imdbScrapper->getKeywords();
         /** @var ArrayIterator $iterator */
         $iterator = $keywords->getIterator();
-        $this->assertEquals($this->imdbScrapper->getTotalKeywords(), $iterator->count());
+        $total = $iterator->count();
+        $this->assertEquals($this->imdbScrapper->getTotalKeywords(), $total);
+        $this->assertGreaterThan(0, $total);
         $matches = 0;
         /** @var Keyword $keyword */
         foreach ($keywords as $keyword) {

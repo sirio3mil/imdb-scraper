@@ -19,6 +19,6 @@ class EpisodeNumberParser extends AbstractIntegerParser
      */
     public function getPattern(): string
     {
-        return '|> Episode ([0-9]{1,2})<|U';
+        return '|>Episode ([0-9]{1,2})<|U';
     }
 }

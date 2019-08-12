@@ -8,14 +8,12 @@
 
 namespace ImdbScraper\Model;
 
+use function intval;
 
 class Keyword implements RegexMatchRawData
 {
 
     use VoteParser;
-
-    /** @var string */
-    protected const VOTES_PATTERN = '|([0-9]+) of ([0-9]+) found this relevant|U';
 
     /** @var string */
     protected $url;
@@ -88,8 +86,16 @@ class Keyword implements RegexMatchRawData
     public function importData(array $rawData, int $position): RegexMatchRawData
     {
         return $this->setUrl($rawData[1][$position])
-            ->setKeyword($rawData[3][$position])
-            ->setImdbNumber(intval($rawData[4][$position]))
-            ->parseVotes($rawData[5][$position]);
+            ->setKeyword($rawData[2][$position])
+            ->setImdbNumber(intval($rawData[3][$position]))
+            ->parseVotes($rawData[4][$position]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVotesPattern(): string
+    {
+        return '|([0-9]+) of ([0-9]+) found this relevant|U';
     }
 }

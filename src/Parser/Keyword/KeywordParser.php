@@ -25,7 +25,7 @@ class KeywordParser extends AbstractIteratorParser
      */
     public function getPattern(): string
     {
-        return '|<a href="/search/keyword\?keywords=([^>]+)\&ref_=ttkw_kw_([0-9]+)">([^>]+)</a></div>' .
+        return '|<a href="/search/keyword\?keywords=([^>]+)">([^>]+)</a></div>' .
             '<div class="did-you-know-actions"><div class="interesting-count-text">' .
             '<a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
     }

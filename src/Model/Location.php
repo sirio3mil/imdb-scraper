@@ -8,14 +8,10 @@
 
 namespace ImdbScraper\Model;
 
-
 class Location implements RegexMatchRawData
 {
 
     use VoteParser;
-
-    /** @var string */
-    protected const VOTES_PATTERN = '|([0-9]+) of ([0-9]+) found this interesting|U';
 
     /** @var string */
     protected $location;
@@ -47,5 +43,13 @@ class Location implements RegexMatchRawData
     {
         return $this->setLocation($rawData[2][$position])
             ->parseVotes($rawData[5][$position]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getVotesPattern(): string
+    {
+        return '|([0-9]+) of ([0-9]+) found this interesting|U';
     }
 }

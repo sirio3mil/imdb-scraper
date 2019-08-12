@@ -24,6 +24,11 @@ use ImdbScraper\Parser\Home\TitleParser;
 use ImdbScraper\Parser\Home\TvShowParser;
 use ImdbScraper\Parser\Home\VoteParser;
 use ImdbScraper\Parser\Home\YearParser;
+use function strpos;
+use function is_null;
+use function explode;
+use function end;
+use function trim;
 
 class HomeMapper extends AbstractPageMapper
 {
@@ -70,7 +75,9 @@ class HomeMapper extends AbstractPageMapper
     public function getTvShow(): ?int
     {
         if ($this->isEpisode()) {
-            return (new TvShowParser($this))->setPosition(1)->getValue();
+            /** @var TvShowParser $parser */
+            $parser = (new TvShowParser($this))->setPosition(1);
+            return $parser->getValue();
         }
         return null;
     }
@@ -138,13 +145,17 @@ class HomeMapper extends AbstractPageMapper
      */
     public function setTitle(): HomeMapper
     {
-        $title = (new TitleParser($this))->setPosition(1)->getValue();
+        /** @var TitleParser $parser */
+        $parser = (new TitleParser($this))->setPosition(1);
+        $title = $parser->getValue();
         if ($this->isEpisode()) {
             $parts = explode("\"", $title);
             $title = end($parts);
         } else {
             if (strpos($this->content, "(original title)") !== false) {
-                $title = (new OriginalTitleParser($this))->setPosition(1)->getValue();
+                /** @var OriginalTitleParser $parser */
+                $parser = (new OriginalTitleParser($this))->setPosition(1);
+                $title = $parser->getValue();
             } else {
                 $parts = explode("(", $title);
                 $title = trim($parts[0]);
@@ -159,7 +170,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getYear(): ?int
     {
-        return (new YearParser($this))->setPosition(2)->getValue();
+        /** @var YearParser $parser */
+        $parser = (new YearParser($this))->setPosition(2);
+        return $parser->getValue();
     }
 
     /**
@@ -167,7 +180,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getDuration(): ?int
     {
-        return (new DurationParser($this))->setPosition(1)->getValue();
+        /** @var DurationParser $parser */
+        $parser = (new DurationParser($this))->setPosition(1);
+        return $parser->getValue();
     }
 
     /**
@@ -175,7 +190,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getScore(): float
     {
-        $score = (new ScoreParser($this))->setPosition(1)->getValue();
+        /** @var ScoreParser $parser */
+        $parser = (new ScoreParser($this))->setPosition(1);
+        $score = $parser->getValue();
         return $score ?? 0;
     }
 
@@ -184,7 +201,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getVotes(): int
     {
-        $votes = (new VoteParser($this))->setPosition(1)->getValue();
+        /** @var VoteParser $parser */
+        $parser = (new VoteParser($this))->setPosition(1);
+        $votes = $parser->getValue();
         return $votes ?? 0;
     }
 
@@ -193,7 +212,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getColor(): ?string
     {
-        return (new ColorParser($this))->setPosition(2)->getValue();
+        /** @var ColorParser $parser */
+        $parser = (new ColorParser($this))->setPosition(2);
+        return $parser->getValue();
     }
 
     /**
@@ -201,7 +222,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getSounds(): array
     {
-        return (new SoundParser($this))->setPosition(2)->getArray();
+        /** @var SoundParser $parser */
+        $parser = (new SoundParser($this))->setPosition(2);
+        return $parser->getArray();
     }
 
     /**
@@ -209,7 +232,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getRecommendations(): array
     {
-        return (new RecommendationParser($this))->setPosition(1)->getArray();
+        /** @var RecommendationParser $parser */
+        $parser = (new RecommendationParser($this))->setPosition(1);
+        return $parser->getArray();
     }
 
     /**
@@ -217,7 +242,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getCountries(): array
     {
-        return (new CountryParser($this))->setPosition(2)->getArray();
+        /** @var CountryParser $parser */
+        $parser = (new CountryParser($this))->setPosition(2);
+        return $parser->getArray();
     }
 
     /**
@@ -225,7 +252,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getLanguages(): array
     {
-        return (new LanguageParser($this))->setPosition(2)->getArray();
+        /** @var LanguageParser $parser */
+        $parser = (new LanguageParser($this))->setPosition(2);
+        return $parser->getArray();
     }
 
     /**
@@ -233,7 +262,9 @@ class HomeMapper extends AbstractPageMapper
      */
     public function getGenres(): array
     {
-        return (new GenreParser($this))->setPosition(2)->getArray();
+        /** @var GenreParser $parser */
+        $parser = (new GenreParser($this))->setPosition(2);
+        return $parser->getArray();
     }
 
     /**
@@ -252,7 +283,9 @@ class HomeMapper extends AbstractPageMapper
      */
     protected function setEpisodeNumber(): HomeMapper
     {
-        $this->episode = (new EpisodeNumberParser($this))->setPosition(1)->getValue();
+        /** @var EpisodeNumberParser $parser */
+        $parser = (new EpisodeNumberParser($this))->setPosition(1);
+        $this->episode = $parser->getValue();
         return $this;
     }
 
@@ -261,7 +294,9 @@ class HomeMapper extends AbstractPageMapper
      */
     protected function setSeasonNumber(): HomeMapper
     {
-        $this->season = (new SeasonNumberParser($this))->setPosition(1)->getValue();
+        /** @var SeasonNumberParser $parser */
+        $parser = (new SeasonNumberParser($this))->setPosition(1);
+        $this->season = $parser->getValue();
         return $this;
     }
 
