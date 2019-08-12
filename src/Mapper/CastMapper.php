@@ -13,6 +13,8 @@ use ImdbScraper\Iterator\PersonIterator;
 use ImdbScraper\Parser\Cast\CastParser;
 use ImdbScraper\Parser\Cast\DirectorParser;
 use ImdbScraper\Parser\Cast\WriterParser;
+use function strtolower;
+use function explode;
 
 class CastMapper extends AbstractPageMapper
 {
@@ -34,7 +36,7 @@ class CastMapper extends AbstractPageMapper
 
     public function __construct()
     {
-        $this->setFolder('fullcredits');
+        $this->setFolder(strtolower('fullCredits'));
     }
 
     /**
