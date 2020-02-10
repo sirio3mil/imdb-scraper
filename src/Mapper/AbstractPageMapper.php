@@ -8,6 +8,7 @@
 
 namespace ImdbScraper\Mapper;
 
+use Exception;
 use ImdbScraper\Helper\Cleaner;
 use ImdbScraper\Helper\Getter;
 
@@ -69,7 +70,7 @@ abstract class AbstractPageMapper
 
     /**
      * @return AbstractPageMapper
-     * @throws \Exception
+     * @throws Exception
      */
     public function setContentFromUrl(): AbstractPageMapper
     {

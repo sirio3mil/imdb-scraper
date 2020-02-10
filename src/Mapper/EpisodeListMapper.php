@@ -50,6 +50,8 @@ class EpisodeListMapper extends AbstractPageMapper
      */
     public function getEpisodes(): EpisodeIterator
     {
-        return (new EpisodeListParser($this))->getRegexIterator();
+        /** @var EpisodeIterator $iterator */
+        $iterator = (new EpisodeListParser($this))->getRegexIterator();
+        return $iterator;
     }
 }
