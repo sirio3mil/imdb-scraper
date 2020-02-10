@@ -27,6 +27,6 @@ class KeywordParser extends AbstractIteratorParser
     {
         return '|<a href="/search/keyword\?keywords=([^>]+)">([^>]+)</a></div>' .
             '<div class="did-you-know-actions"><div class="interesting-count-text">' .
-            '<a href="\?item=kw([0-9]{7})">([^>]+)</a>|U';
+            '<a href="\?item=kw([0-9]{7,})">([^>]+)</a>|U';
     }
 }

@@ -18,6 +18,6 @@ class TvShowParser extends AbstractIntegerParser
      */
     public function getPattern(): string
     {
-        return '|<div class="titleParent"><a href="/title/tt([0-9]{7})|U';
+        return '|<div class="titleParent"><a href="/title/tt([0-9]{7,})|U';
     }
 }

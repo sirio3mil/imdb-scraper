@@ -28,7 +28,7 @@ class EpisodeListParser extends AbstractIteratorParser
         return '|<meta itemprop="episodeNumber" content="([0-9]{1,2})"/>' .
             '<div class="airdate">([^>]+)</div>' .
             '<strong>' .
-            '<a href="/title/tt([0-9]{7})/"title="([^>]+)" itemprop="name">([^>]+)</a>' .
+            '<a href="/title/tt([0-9]{7,})/"title="([^>]+)" itemprop="name">([^>]+)</a>' .
             '</strong>|U';
     }
 }

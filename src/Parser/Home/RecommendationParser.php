@@ -20,6 +20,6 @@ class RecommendationParser extends AbstractArrayParser
      */
     public function getPattern(): string
     {
-        return '|data-tconst=\"tt([0-9]{7})\"|U';
+        return '|data-tconst=\"tt([0-9]{7,})\"|U';
     }
 }
