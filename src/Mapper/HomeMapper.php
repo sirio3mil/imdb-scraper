@@ -100,7 +100,7 @@ class HomeMapper extends AbstractPageMapper
                 return $this;
             }
         }
-        $this->tvShow = (strpos($this->content, static::SEASON_SPLITTER) !== false) ? true : false;
+        $this->tvShow = strpos($this->content, static::SEASON_SPLITTER) !== false;
         return $this;
     }
 
