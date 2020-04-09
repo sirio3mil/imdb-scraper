@@ -19,7 +19,8 @@ class WriterParser extends AbstractIteratorParser
     {
         parent::__construct($pageMapper, new PersonIterator());
 
-        $this->setContent($pageMapper->getContentWriter());
+        $content = $pageMapper->getContentWriter() ?? '';
+        $this->setContent($content);
     }
 
     /**

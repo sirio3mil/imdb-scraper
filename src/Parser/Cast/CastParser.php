@@ -19,7 +19,8 @@ class CastParser extends AbstractIteratorParser
     {
         parent::__construct($pageMapper, new CastIterator());
 
-        $this->setContent($pageMapper->getContentCast());
+        $content = $pageMapper->getContentCast() ?? '';
+        $this->setContent($content);
     }
 
     /**

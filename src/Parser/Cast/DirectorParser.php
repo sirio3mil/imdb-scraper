@@ -19,7 +19,8 @@ class DirectorParser extends AbstractIteratorParser
     {
         parent::__construct($pageMapper, new PersonIterator());
 
-        $this->setContent($pageMapper->getContentDirector());
+        $content = $pageMapper->getContentDirector() ?? '';
+        $this->setContent($content);
     }
 
     /**
