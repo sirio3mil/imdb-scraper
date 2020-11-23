@@ -19,6 +19,10 @@
       "ImdbScraper\\": "src/"
     }
   },
+  "autoload-dev": {
+      "Tests\\": "tests/"
+    }
+  },
   "scripts": {
     "test": "phpunit",
     "md": "phpmd src/ text cleancode, codesize, controversial, design, naming, unusedcode",
