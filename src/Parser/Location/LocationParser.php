@@ -25,7 +25,7 @@ class LocationParser extends AbstractIteratorParser
      */
     public function getPattern(): string
     {
-        return '|<dt><a ([^>]+)>([^>]+)</a></dt><dd>([^>]+)</dd>' .
+        return '|<dt><a ([^>]+)>([^>]+)</a></dt><dd>([^>]*)</dd>' .
             '<div class="did-you-know-actions"><a ([^>]+)>([^>]+)</a>|U';
     }
 }

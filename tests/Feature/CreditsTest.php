@@ -8,6 +8,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use ImdbScraper\Model\CastPeople;
 use ImdbScraper\Iterator\CastIterator;
 use ImdbScraper\Model\People;
@@ -21,6 +22,14 @@ class CreditsTest extends TestCase
     /** @var CastMapper $imdbScrapper */
     protected $imdbScrapper;
 
+    /**
+     * CreditsTest constructor.
+     * @param string|null $name
+     * @param array $data
+     * @param string $dataName
+     * @throws Exception
+     * @link https://www.imdb.com/title/tt5164214/
+     */
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         $this->imdbScrapper = (new CastMapper())->setImdbNumber(5164214)->setContentFromUrl();
@@ -30,15 +39,14 @@ class CreditsTest extends TestCase
     public function testGetCast()
     {
         $found = 0;
-        /** @var CastIterator $cast */
         $cast = $this->imdbScrapper->getCast();
         /** @var CastPeople $actor */
         foreach ($cast as $actor) {
             switch ($actor->getImdbNumber()) {
-                case 8551937:
+                case 113:
                     ++$found;
-                    $this->assertEquals('Courtney Gonzalez', $actor->getFullName());
-                    $this->assertEquals('Bergdorf Patron (sin acreditar)', $actor->getCharacter());
+                    $this->assertEquals('Sandra Bullock', $actor->getFullName());
+                    $this->assertEquals('Debbie Ocean', $actor->getCharacter());
                     break;
                 case 939026:
                     ++$found;

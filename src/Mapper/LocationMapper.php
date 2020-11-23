@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Mapper;
 
-
 use ImdbScraper\Iterator\LocationIterator;
 use ImdbScraper\Parser\Location\LocationParser;
 

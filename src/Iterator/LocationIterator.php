@@ -8,7 +8,6 @@
 
 namespace ImdbScraper\Iterator;
 
-
 use ImdbScraper\Model\Location;
 
 class LocationIterator extends AbstractRegexIterator

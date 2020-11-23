@@ -64,7 +64,6 @@ abstract class AbstractParser
      */
     protected function getMatches(): array
     {
-        /** @var array $matches */
         $matches = [];
         preg_match_all($this->getPattern(), $this->getContent(), $matches);
         return $matches;

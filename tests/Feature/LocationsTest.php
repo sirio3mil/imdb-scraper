@@ -8,6 +8,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use ImdbScraper\Iterator\LocationIterator;
 use ImdbScraper\Model\Location;
 use ImdbScraper\Mapper\LocationMapper;
@@ -19,6 +20,14 @@ class LocationsTest extends TestCase
     /** @var LocationMapper $imdbScrapper */
     protected $imdbScrapper;
 
+    /**
+     * LocationsTest constructor.
+     * @param string|null $name
+     * @param array $data
+     * @param string $dataName
+     * @throws Exception
+     * @link https://www.imdb.com/title/tt3778644/
+     */
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         $this->imdbScrapper = (new LocationMapper())->setImdbNumber(3778644)->setContentFromUrl();
@@ -27,12 +36,19 @@ class LocationsTest extends TestCase
 
     public function testGetLocations()
     {
-        /** @var LocationIterator $locations */
         $locations = $this->imdbScrapper->getLocations();
-        /** @var Location $location */
-        $location = $locations->getIterator()->current();
-        $this->assertEquals('Tre Cime, Italy', $location->getLocation());
-        $this->assertGreaterThanOrEqual(16, $location->getRelevantVotes());
-        $this->assertGreaterThanOrEqual(16, $location->getTotalVotes());
+        $iterator = $locations->getIterator();
+        $found = 0;
+        while ($iterator->valid()) {
+            /** @var Location $location */
+            $location = $iterator->current();
+            if ($location->getLocation() === 'Tre Cime, Italy') {
+                ++$found;
+                $this->assertGreaterThanOrEqual(34, $location->getRelevantVotes());
+                $this->assertGreaterThanOrEqual(34, $location->getTotalVotes());
+            }
+            $iterator->next();
+        }
+        $this->assertEquals(1, $found);
     }
 }
