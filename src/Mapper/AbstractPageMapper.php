@@ -115,7 +115,7 @@ abstract class AbstractPageMapper
     /**
      * @return AbstractPageMapper
      */
-    protected function setBaseUrl(): AbstractPageMapper
+    public function setBaseUrl(): AbstractPageMapper
     {
         $this->baseUrl = 'https://www.imdb.com/title/tt' . str_pad($this->imdbNumber, 7, 0, STR_PAD_LEFT) . '/';
         return $this;
