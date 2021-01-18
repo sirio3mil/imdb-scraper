@@ -8,9 +8,10 @@
 
 namespace ImdbScraper\Mapper;
 
-
 use ImdbScraper\Iterator\EpisodeIterator;
 use ImdbScraper\Parser\EpisodeList\EpisodeListParser;
+use function sprintf;
+use function stripos;
 
 class EpisodeListMapper extends AbstractPageMapper
 {
@@ -50,6 +51,10 @@ class EpisodeListMapper extends AbstractPageMapper
      */
     public function getEpisodes(): EpisodeIterator
     {
+        $str = sprintf('<h3 id="episode_top" itemprop="name">Season %u</h3>', $this->season);
+        if (stripos($this->getContent(), $str) === false) {
+            $this->setContent('');
+        }
         /** @var EpisodeIterator $iterator */
         $iterator = (new EpisodeListParser($this))->getRegexIterator();
         return $iterator;
